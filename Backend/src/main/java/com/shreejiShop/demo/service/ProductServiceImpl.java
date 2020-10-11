@@ -108,4 +108,18 @@ public class ProductServiceImpl implements IProductService {
 		return response;
 	}
 
+	@Override
+	public Map<String, Object> getAllModels(Integer page, String sort) {
+		Map<String, Object> response = new HashMap<String, Object>();
+		Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+		Page<BrandModelRel> brandModelsPage = brandModelRelRepo.findAll(pageable);
+		response.put("paginationData", this.getPaginationData(brandModelsPage));
+		if (brandModelsPage.hasContent()) {
+			response.put("data", this.getModelsFrom(brandModelsPage.getContent(), sort));
+		} else {
+			response.put("data", new ArrayList<Object>());
+		}
+		return response;
+	}
+
 }

@@ -17,9 +17,12 @@ public class ProductController {
 
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping(path = "/f")
-	public Map<String, Object> listAllModelsByBrandIds(@RequestParam String brandIds, 
+	public Map<String, Object> listAllModelsByBrandIds(@RequestParam(required = false) String brandIds, 
 			@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String sort) {
-		return productService.getModelsByBrandIds(brandIds, page, sort);
+		if (brandIds != null) {
+			return productService.getModelsByBrandIds(brandIds, page, sort);			
+		}
+		return productService.getAllModels(page, sort);
 	}
 
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
