@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shreejiShop.demo.model.Brand;
+import com.shreejiShop.demo.model.BrandCount;
 import com.shreejiShop.demo.model.BrandModelRel;
 import com.shreejiShop.demo.repository.BrandModelRelRepo;
 import com.shreejiShop.demo.repository.BrandRepo;
@@ -60,8 +61,8 @@ public class ProductServiceImpl implements IProductService {
 		Map<Long, List<Long>> bmMap = this.generateBrandModelMap(brandModels);
 		return this.mapBrandsAndModels(bmMap, sortFlag);
 	}
-	
-	private Map<Long, List<Long>> generateBrandModelMap(List<BrandModelRel> brandModels){
+
+	private Map<Long, List<Long>> generateBrandModelMap(List<BrandModelRel> brandModels) {
 		Map<Long, List<Long>> _bmMap = new HashMap<Long, List<Long>>();
 		brandModels.forEach(bm -> {
 			_bmMap.putIfAbsent(bm.getBrand(), new ArrayList<Long>());
@@ -69,8 +70,8 @@ public class ProductServiceImpl implements IProductService {
 		});
 		return _bmMap;
 	}
-	
-	private List<Object> mapBrandsAndModels(Map<Long, List<Long>> bmMap, String sortFlag){
+
+	private List<Object> mapBrandsAndModels(Map<Long, List<Long>> bmMap, String sortFlag) {
 		List<Object> modelMap = new ArrayList<Object>();
 		bmMap.entrySet().forEach(bm -> {
 			Long brandId = bm.getKey();
@@ -88,7 +89,7 @@ public class ProductServiceImpl implements IProductService {
 		});
 		return modelMap;
 	}
-	
+
 	private Map<String, Object> getPaginationData(Page<BrandModelRel> page) {
 		Map<String, Object> response = new HashMap<String, Object>();
 		response.put("totalRecords", page.getTotalElements());
@@ -101,11 +102,20 @@ public class ProductServiceImpl implements IProductService {
 		Map<String, Object> response = new HashMap<String, Object>();
 		List<Brand> brands = brandRepo.findAll();
 		if (brands.size() > 0) {
-			response.put("brands", brands);
+			List<BrandCount> convertedBrands = new ArrayList<BrandCount>();
+			brands.forEach(brand -> {
+				BrandCount bCount = new BrandCount(brand.getId(), brand.getName(),this.getModelCountOfBrand(brand.getId()));
+				convertedBrands.add(bCount);
+			});
+			response.put("brands", convertedBrands);
 		} else {
 			response.put("brands", new ArrayList<Object>());
 		}
 		return response;
+	}
+
+	private Long getModelCountOfBrand(Long brandId) {
+		return brandModelRelRepo.countByBrandId(brandId);
 	}
 
 	@Override

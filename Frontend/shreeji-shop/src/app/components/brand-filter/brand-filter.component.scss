@@ -1,0 +1,123 @@
+$heading-color: #282c3f;
+$count-color: #94969f;
+$input-bg-color: #f5f5f6;
+$bootstrap-blue: #007bff;
+$box-shadow: rgba(0, 0, 0, 0.1);
+$indicator-color: #737373;
+
+.sub-heading {
+  font-size: 14px;
+  font-weight: 500;
+}
+input.search-bar {
+  position: absolute;
+  width: 90%;
+  left: 0.7rem;
+  border: none;
+  background: $input-bg-color;
+  padding: 5px 35px 5px 15px;
+  font-size: 14px;
+  border-radius: 50px;
+  outline: none;
+}
+button.search {
+  border-radius: 50%;
+  border: none;
+  padding: 0.7rem;
+  width: 30px;
+  height: 30px;
+  box-sizing: border-box;
+  box-shadow: none;
+  background-color: $input-bg-color;
+  position: absolute;
+  right: 0;
+  margin-right: 1rem;
+  outline: none;
+
+  svg {
+    position: relative;
+    top: -0.6rem;
+  }
+
+  svg.bi.bi-search {
+    left: -0.1rem;
+  }
+
+  svg.bi.bi-x {
+    left: -0.5rem;
+  }
+}
+input[type="checkbox"] {
+  border: none;
+  outline: none;
+}
+.form-check-label {
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  color: $heading-color;
+}
+.model-count {
+  color: $count-color;
+  font-size: 11px;
+  margin-left: 4px;
+}
+.more-brands {
+  color: $bootstrap-blue;
+  cursor: pointer;
+}
+.more-brands-container {
+  position: absolute;
+  width: 50rem;
+  height: 25rem;
+  top: 0;
+  box-shadow: 0 1px 8px $box-shadow;
+  overflow-x: auto;
+  overflow-y: hidden;
+  z-index: 5;
+
+  .top-bar {
+    position: fixed;
+    width: inherit;
+    padding-right: 1rem;
+  }
+
+  .card-body {
+    margin-top: 4rem;
+  }
+
+  input {
+    background-color: $input-bg-color;
+    border: none;
+    border-radius: 50px;
+    padding: 5px 15px;
+    outline: none;
+    font-size: 14px;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+
+  .brand-alphabets {
+    position: relative;
+    top: 0.5rem;
+    font-weight: 500;
+  }
+
+  .hover-pointer {
+    color: $indicator-color;
+  }
+
+  .hover-pointer:hover {
+    cursor: pointer;
+  }
+
+  .all-brands-list {
+    list-style-type: none;
+    height: 20rem;
+    width: 50rem;
+    margin-left: 1rem;
+  }
+}

@@ -1,1 +1,133 @@
-<p>brand-filter works!</p>
+<div class="card">
+  <div class="d-flex align-items-center">
+    <h6 class="text-uppercase sub-heading pt-3 pl-3">brands</h6>
+    <input
+      type="text"
+      class="search-bar mt-2"
+      placeholder="Search for Brands"
+      [hidden]="!searchClicked"
+      (keyup)="filterBrands($event)"
+    />
+    <button class="search mt-2" (click)="searchClicked = !searchClicked">
+      <!-- search icon -->
+      <svg
+        width="0.8em"
+        height="0.8em"
+        viewBox="0 0 16 16"
+        class="bi bi-search"
+        fill="#717288"
+        xmlns="http://www.w3.org/2000/svg"
+        *ngIf="!searchClicked"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
+        />
+      </svg>
+      <!-- search icon end -->
+      <!-- close icon -->
+      <svg
+        width="1.5em"
+        height="1.5em"
+        viewBox="0 0 16 16"
+        class="bi bi-x"
+        fill="#717288"
+        xmlns="http://www.w3.org/2000/svg"
+        *ngIf="searchClicked"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+        />
+      </svg>
+      <!-- close icon end -->
+    </button>
+  </div>
+  <div class="card-body py-1 ml-3">
+    <ng-container *ngFor="let b of brandsCopy; let i = index">
+      <div *ngIf="i < 10">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [value]="b.id"
+          [id]="b.id"
+          name="brand"
+        />
+        <label
+          class="form-check-label pl-1 d-flex align-items-center"
+          [for]="b.id"
+        >
+          {{ b.name }}
+          <span class="model-count"> ({{ b.count }}) </span>
+        </label>
+      </div>
+    </ng-container>
+    <p class="more-brands py-2 p-0 m-0" (click)="moreBrandsClicked = true">
+      +{{ brands.length }} more
+    </p>
+  </div>
+</div>
+<div
+  #moreBrandsContainer
+  class="card more-brands-container p-0"
+  *ngIf="moreBrandsClicked"
+>
+  <div
+    class="d-flex align-items-center justify-content-between top-bar border-bottom p-2"
+  >
+    <input
+      type="text"
+      placeholder="Search for Brands"
+      (keyup)="filterBrands($event)"
+    />
+    <div class="px-2 brand-alphabets d-flex flex-fill justify-content-around">
+      <p class="hover-pointer" *ngFor="let b of brandsMap | keyvalue">
+        {{ b.key }}
+      </p>
+    </div>
+    <button (click)="resetBrands()">
+      <!-- close icon -->
+      <svg
+        width="1.5em"
+        height="1.5em"
+        viewBox="0 0 16 16"
+        class="bi bi-x"
+        fill="#717288"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+        />
+      </svg>
+      <!-- close icon end -->
+    </button>
+  </div>
+  <ul class="card-body all-brands-list d-flex flex-column flex-wrap mb-0 pt-0">
+    <ng-container *ngFor="let bm of brandsMap | keyvalue">
+      <li class="pr-5">
+        <p class="m-0 font-weight-500">{{ bm.key }}</p>
+      </li>
+      <li class="pr-5" *ngFor="let b of bm.value">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [value]="b.id"
+          [id]="'_' + b.id"
+          name="all-brand"
+        />
+        <label
+          class="form-check-label d-flex align-items-center"
+          [for]="'_' + b.id"
+        >
+          {{ b.name }}
+          <span class="model-count"> ({{ b.count }}) </span>
+        </label>
+      </li>
+    </ng-container>
+  </ul>
+</div>

@@ -8,6 +8,10 @@ import { BrandFilterComponent } from './components/brand-filter/brand-filter.com
 import { HomeComponent } from './components/home/home.component';
 import { ModelFilterComponent } from './components/model-filter/model-filter.component';
 import { ModelsComponent } from './components/models/models.component';
+import { HttpService } from './services/http/http.service';
+import { CommonService } from './services/common/common.service';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,9 +24,11 @@ import { ModelsComponent } from './components/models/models.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [HttpService, CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

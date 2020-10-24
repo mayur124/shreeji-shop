@@ -13,5 +13,8 @@ public interface BrandModelRelRepo extends JpaRepository<BrandModelRel, Long> {
 
 	@Query(value = "from BrandModelRel where brand in ?1", countQuery = "select count(model) from BrandModelRel where brand in ?1")
 	public Page<BrandModelRel> findAllModelsInBrandIds(List<Long> brandIds, Pageable pageable);
+	
+	@Query(value = "select count(model) from BrandModelRel where brand in ?1")
+	public Long countByBrandId(Long brandId);
 
 }
