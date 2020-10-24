@@ -56,6 +56,7 @@
           [value]="b.id"
           [id]="b.id"
           [(ngModel)]="b.checked"
+          (change)="fetchModels()"
           name="brand"
         />
         <label
@@ -131,6 +132,7 @@
           type="checkbox"
           [value]="b.id"
           [(ngModel)]="b.checked"
+          (change)="fetchModels()"
           [id]="'_' + b.id"
           name="all-brand"
         />

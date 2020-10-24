@@ -1,7 +1,6 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { HttpService } from '../../services/http/http.service';
-import { Brand } from './brand.model';
+import { Brand } from '../../models/brand.model';
 
 @Component({
   selector: 'app-brand-filter',
@@ -15,11 +14,13 @@ export class BrandFilterComponent implements OnInit {
   moreBrandsClicked: boolean = false;
   brandsMap: { [letter: string]: Brand[] } = {};
   brandsMapCopy: { [letter: string]: Brand[] } = {};
-  selectedBrands: number[];
 
   @ViewChild('moreBrandsContainer') moreBrandsContainer: ElementRef;
   @ViewChildren('brandLetter') brandLetter: QueryList<ElementRef>
   @ViewChildren('brandCb') brandCb: QueryList<ElementRef>
+
+  @Output()
+  selectedBrands: EventEmitter<string> = new EventEmitter();
 
   constructor(
     private http: HttpService,
@@ -48,6 +49,12 @@ export class BrandFilterComponent implements OnInit {
         console.log('Error while getting all brands > ', error);
       }
     );
+  }
+
+  fetchModels() {
+    const selectedBrands = this.brands.filter(b => b.checked);
+    const brandIds = selectedBrands.map(b => b.id).join(",");
+    this.selectedBrands.emit(brandIds);
   }
 
   getBrandsMap(brands: Brand[]) {
