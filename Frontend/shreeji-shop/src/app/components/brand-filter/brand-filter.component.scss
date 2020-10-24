@@ -68,7 +68,7 @@ input[type="checkbox"] {
 .more-brands-container {
   position: absolute;
   width: 50rem;
-  height: 25rem;
+  height: 23rem;
   top: 0;
   box-shadow: 0 1px 8px $box-shadow;
   overflow-x: auto;
@@ -104,6 +104,13 @@ input[type="checkbox"] {
     position: relative;
     top: 0.5rem;
     font-weight: 500;
+
+    .disable-brand-letter-click {
+      opacity: 50%;
+      user-select: none;
+      cursor: default;
+      pointer-events: none;
+    }
   }
 
   .hover-pointer {
@@ -116,8 +123,6 @@ input[type="checkbox"] {
 
   .all-brands-list {
     list-style-type: none;
-    height: 20rem;
-    width: 50rem;
     margin-left: 1rem;
   }
 }

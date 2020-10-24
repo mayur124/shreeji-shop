@@ -55,6 +55,7 @@
           type="checkbox"
           [value]="b.id"
           [id]="b.id"
+          [(ngModel)]="b.checked"
           name="brand"
         />
         <label
@@ -82,10 +83,17 @@
     <input
       type="text"
       placeholder="Search for Brands"
-      (keyup)="filterBrands($event)"
+      (keyup)="filterMoreBrands($event)"
     />
-    <div class="px-2 brand-alphabets d-flex flex-fill justify-content-around">
-      <p class="hover-pointer" *ngFor="let b of brandsMap | keyvalue">
+    <div class="px-2 brand-alphabets d-flex flex-fill">
+      <p
+        (click)="scrollTo(i)"
+        (mouseenter)="reduceOpacity(i, b.key)"
+        (mouseleave)="resetOpacity()"
+        class="hover-pointer pr-2"
+        *ngFor="let b of brandsMap | keyvalue; let i = index"
+        [ngClass]="{ 'disable-brand-letter-click': !brandsMapCopy[b.key] }"
+      >
         {{ b.key }}
       </p>
     </div>
@@ -108,15 +116,21 @@
     </button>
   </div>
   <ul class="card-body all-brands-list d-flex flex-column flex-wrap mb-0 pt-0">
-    <ng-container *ngFor="let bm of brandsMap | keyvalue">
-      <li class="pr-5">
+    <ng-container *ngFor="let bm of brandsMapCopy | keyvalue; let i = index">
+      <li class="pr-5" #brandLetter [attr.id]="'brandId-' + i">
         <p class="m-0 font-weight-500">{{ bm.key }}</p>
       </li>
-      <li class="pr-5" *ngFor="let b of bm.value">
+      <li
+        class="pr-5"
+        #brandCb
+        [attr.id]="'brandCb-' + bm.key"
+        *ngFor="let b of bm.value; let i = index"
+      >
         <input
           class="form-check-input"
           type="checkbox"
           [value]="b.id"
+          [(ngModel)]="b.checked"
           [id]="'_' + b.id"
           name="all-brand"
         />
