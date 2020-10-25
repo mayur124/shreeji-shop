@@ -5,6 +5,11 @@ $bootstrap-blue: #007bff;
 $box-shadow: rgba(0, 0, 0, 0.1);
 $indicator-color: #737373;
 
+.brand-filter-container {
+  position: sticky;
+  top: 5.5rem;
+  z-index: 10;
+}
 .sub-heading {
   font-size: 14px;
   font-weight: 500;

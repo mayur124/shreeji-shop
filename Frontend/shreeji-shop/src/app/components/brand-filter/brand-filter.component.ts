@@ -85,6 +85,11 @@ export class BrandFilterComponent implements OnInit {
     );
   }
 
+  showMoreBrands() {
+    this.brandsMapCopy = JSON.parse(JSON.stringify(this.brandsMap));
+    this.moreBrandsClicked = true;
+  }
+
   filterMoreBrands(event: KeyboardEvent) {
     this.brandsMapCopy = {};
     for (const i in this.brandsMap) {

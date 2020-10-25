@@ -1,12 +1,11 @@
-<div class="container-fluid">
-  <ng-container *ngFor="let d of phoneData | keyvalue">
-    <div class="card">
+<div class="row">
+  <ng-container *ngFor="let m of models">
+    <div class="card mx-3 mb-3">
       <div class="card-body">
-        {{ d | json }}
+        <img [src]="m.imgUrl" [alt]="m.name" class="phone-image" />
+        <p class="p-0 m-0 font-weight-bold">{{ m.name }}</p>
+        <p class="p-0 m-0">{{ m.priceEur }}</p>
       </div>
-      <!-- <img [src]="d.imgUrl" [alt]="d.name" />
-    <p class="font-weight-bold">{{ d.name }}</p>
-    <p>{{ d.priceEur }}</p> -->
     </div>
   </ng-container>
 </div>

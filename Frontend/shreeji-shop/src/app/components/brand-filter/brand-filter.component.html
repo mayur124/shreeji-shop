@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card brand-filter-container">
   <div class="d-flex align-items-center">
     <h6 class="text-uppercase sub-heading pt-3 pl-3">brands</h6>
     <input
@@ -68,82 +68,84 @@
         </label>
       </div>
     </ng-container>
-    <p class="more-brands py-2 p-0 m-0" (click)="moreBrandsClicked = true">
+    <p class="more-brands py-2 p-0 m-0" (click)="showMoreBrands()">
       +{{ brands.length }} more
     </p>
   </div>
-</div>
-<div
-  #moreBrandsContainer
-  class="card more-brands-container p-0"
-  *ngIf="moreBrandsClicked"
->
   <div
-    class="d-flex align-items-center justify-content-between top-bar border-bottom p-2"
+    #moreBrandsContainer
+    class="card more-brands-container p-0"
+    *ngIf="moreBrandsClicked"
   >
-    <input
-      type="text"
-      placeholder="Search for Brands"
-      (keyup)="filterMoreBrands($event)"
-    />
-    <div class="px-2 brand-alphabets d-flex flex-fill">
-      <p
-        (click)="scrollTo(i)"
-        (mouseenter)="reduceOpacity(i, b.key)"
-        (mouseleave)="resetOpacity()"
-        class="hover-pointer pr-2"
-        *ngFor="let b of brandsMap | keyvalue; let i = index"
-        [ngClass]="{ 'disable-brand-letter-click': !brandsMapCopy[b.key] }"
-      >
-        {{ b.key }}
-      </p>
-    </div>
-    <button (click)="resetBrands()">
-      <!-- close icon -->
-      <svg
-        width="1.5em"
-        height="1.5em"
-        viewBox="0 0 16 16"
-        class="bi bi-x"
-        fill="#717288"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
-        />
-      </svg>
-      <!-- close icon end -->
-    </button>
-  </div>
-  <ul class="card-body all-brands-list d-flex flex-column flex-wrap mb-0 pt-0">
-    <ng-container *ngFor="let bm of brandsMapCopy | keyvalue; let i = index">
-      <li class="pr-5" #brandLetter [attr.id]="'brandId-' + i">
-        <p class="m-0 font-weight-500">{{ bm.key }}</p>
-      </li>
-      <li
-        class="pr-5"
-        #brandCb
-        [attr.id]="'brandCb-' + bm.key"
-        *ngFor="let b of bm.value; let i = index"
-      >
-        <input
-          class="form-check-input"
-          type="checkbox"
-          [value]="b.id"
-          [(ngModel)]="b.checked"
-          (change)="fetchModels()"
-          [id]="'_' + b.id"
-          name="all-brand"
-        />
-        <label
-          class="form-check-label d-flex align-items-center"
-          [for]="'_' + b.id"
+    <div
+      class="d-flex align-items-center justify-content-between top-bar border-bottom p-2"
+    >
+      <input
+        type="text"
+        placeholder="Search for Brands"
+        (keyup)="filterMoreBrands($event)"
+      />
+      <div class="px-2 brand-alphabets d-flex flex-fill">
+        <p
+          (click)="scrollTo(i)"
+          (mouseenter)="reduceOpacity(i, b.key)"
+          (mouseleave)="resetOpacity()"
+          class="hover-pointer pr-2"
+          *ngFor="let b of brandsMap | keyvalue; let i = index"
+          [ngClass]="{ 'disable-brand-letter-click': !brandsMapCopy[b.key] }"
         >
-          {{ b.name }}
-          <span class="model-count"> ({{ b.count }}) </span>
-        </label>
-      </li>
-    </ng-container>
-  </ul>
+          {{ b.key }}
+        </p>
+      </div>
+      <button (click)="resetBrands()">
+        <!-- close icon -->
+        <svg
+          width="1.5em"
+          height="1.5em"
+          viewBox="0 0 16 16"
+          class="bi bi-x"
+          fill="#717288"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
+        <!-- close icon end -->
+      </button>
+    </div>
+    <ul
+      class="card-body all-brands-list d-flex flex-column flex-wrap mb-0 pt-0"
+    >
+      <ng-container *ngFor="let bm of brandsMapCopy | keyvalue; let i = index">
+        <li class="pr-5" #brandLetter [attr.id]="'brandId-' + i">
+          <p class="m-0 font-weight-500">{{ bm.key }}</p>
+        </li>
+        <li
+          class="pr-5"
+          #brandCb
+          [attr.id]="'brandCb-' + bm.key"
+          *ngFor="let b of bm.value; let i = index"
+        >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [value]="b.id"
+            [(ngModel)]="b.checked"
+            (change)="fetchModels()"
+            [id]="'_' + b.id"
+            name="all-brand"
+          />
+          <label
+            class="form-check-label d-flex align-items-center"
+            [for]="'_' + b.id"
+          >
+            {{ b.name }}
+            <span class="model-count"> ({{ b.count }}) </span>
+          </label>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
 </div>
