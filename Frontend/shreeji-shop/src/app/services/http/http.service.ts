@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { URLS } from '../../constants/constants'
+import { SORT_TYPE, URLS } from '../../constants/constants'
 import { Brand } from '../../models/brand.model';
 import { PhoneData } from 'src/app/components/home/home.model';
 
@@ -14,11 +14,17 @@ export class HttpService {
     return this.http.get<{ brands: Brand[] }>(URLS.GET_ALL_BRANDS);
   }
 
-  getPhoneModelsByBrandIds(brandIds: string, page: number = 0, sort: string = "") {
+  getPhoneModelsByBrandIds(brandIds: string, page: number = 0, sort: SORT_TYPE = "") {
+    if (!sort.length) {
+      return this.http.get<PhoneData>(URLS.FILTER + "?brandIds=" + brandIds + "&page=" + page);
+    }
     return this.http.get<PhoneData>(URLS.FILTER + "?brandIds=" + brandIds + "&page=" + page + "&sort=" + sort);
   }
 
-  getDefaultPhoneModels() {
-    return this.http.get<PhoneData>(URLS.FILTER);
+  getDefaultPhoneModels(page: number = 0, sort: SORT_TYPE = "") {
+    if (!sort.length && page != 0) {
+      return this.http.get<PhoneData>(URLS.FILTER);
+    }
+    return this.http.get<PhoneData>(URLS.FILTER + "?page=" + page + "&sort=" + sort);
   }
 }

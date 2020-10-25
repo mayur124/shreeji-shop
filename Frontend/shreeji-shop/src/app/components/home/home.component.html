@@ -1,7 +1,7 @@
 <div class="d-flex offset-sm-auto offset-lg-1 p-2 home-container">
   <div class="col-sm-4 col-lg-3 col-xl-2 p-0">
     <app-brand-filter
-      (selectedBrands)="getModelsForSelectedBrandsSafe($event)"
+      (selectedBrands)="getPhonesForSelectedBrandsSafe($event)"
     ></app-brand-filter>
     <app-model-filter></app-model-filter>
   </div>
@@ -9,5 +9,38 @@
     <app-phone-model
       [phoneResponse]="phoneModelSubject.asObservable()"
     ></app-phone-model>
+    <div
+      *ngIf="page.totalPage > 0"
+      class="border-top pt-2 d-flex align-items-center justify-content-around"
+    >
+      <p>Page {{ currentPage + 1 }} of {{ page.totalPage + 1 }}</p>
+      <nav>
+        <ul class="pagination justify-content-center">
+          <li
+            class="page-item mr-3"
+            *ngIf="currentPage > 0"
+            (click)="gotoPrevPage()"
+          >
+            <a class="page-link" href="#">Previous</a>
+          </li>
+          <ng-container *ngFor="let p of getPageNumArray()">
+            <li
+              class="page-item"
+              [ngClass]="{ active: p == currentPage }"
+              (click)="gotoPage(p)"
+            >
+              <a class="page-link">{{ p + 1 }}</a>
+            </li>
+          </ng-container>
+          <li
+            class="page-item ml-3"
+            *ngIf="currentPage < page.totalPage"
+            (click)="gotoNextPage()"
+          >
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>

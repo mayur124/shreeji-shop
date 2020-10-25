@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Page } from 'src/app/models/page.model';
 import { PhoneModel } from 'src/app/models/phone-model.model';
+import { HttpService } from 'src/app/services/http/http.service';
 import { PhoneData } from '../home/home.model';
 
 @Component({
@@ -11,10 +13,9 @@ import { PhoneData } from '../home/home.model';
 export class PhoneModelComponent implements OnInit {
 
   @Input() phoneResponse: Observable<PhoneData>;
-  phoneData = new PhoneData();
   models: PhoneModel[] = [];
-
-  constructor() { }
+  
+  constructor(private http: HttpService) { }
 
   ngOnInit(): void {
     this.phoneResponse.subscribe(
