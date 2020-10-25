@@ -26,7 +26,6 @@ export class PaginationComponent implements OnInit {
       },
       (error) => {
         console.log("Error in pageinationResponse child-comp > ", error);
-
       }
     )
   }
@@ -42,12 +41,6 @@ export class PaginationComponent implements OnInit {
     } else {
       this.paginationReq.emit({ isBrandsSelected: true, pageNo });
     }
-    /**
-     * if brands are selected
-     *  call getModelsForSelectedBrands(brandIds, pagination, sort data)
-     * else 
-     *  call getDefaultPhones(pagination, sort data)
-     */
   }
 
   private _isValidePageNo(pageNo: number) {

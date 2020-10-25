@@ -13,6 +13,7 @@ export class BrandFilterComponent implements OnInit {
   brandsMap: { [letter: string]: Brand[] } = {};
   brandsMapCopy: { [letter: string]: Brand[] } = {};
   totalBrands: number = 0;
+  brandInput: string = '';
 
   @ViewChild('moreBrandsContainer') moreBrandsContainer: ElementRef;
   @ViewChildren('brandLetter') brandLetter: QueryList<ElementRef>
@@ -54,6 +55,7 @@ export class BrandFilterComponent implements OnInit {
     const brandIds = selectedBrands.map(b => b.id).join(",");
     this.selectedBrands.emit(brandIds);
   }
+
   private getSelectedBrands(): Brand[] {
     let selectedBrandsFromMap = new Array();
     for (const key in this.brandsMapCopy) {
@@ -64,6 +66,7 @@ export class BrandFilterComponent implements OnInit {
     }
     return selectedBrandsFromMap;
   }
+
   getBrandsMap(brands: Brand[]) {
     return brands.reduce(
       (acc, brand) => ({
@@ -87,18 +90,24 @@ export class BrandFilterComponent implements OnInit {
     this.moreBrandsClicked = true;
   }
 
-  filterBrands(event: KeyboardEvent) {
+  filterBrands() {
     this.brandsMapCopy = {};
     for (const i in this.brandsMap) {
       for (let j = 0; j < this.brandsMap[i].length; j++) {
         let filteredBrands = this.brandsMap[i].filter(b =>
-          b.name.toLowerCase().indexOf((event.target as HTMLInputElement).value.toLowerCase()) > -1
+          b.name.toLowerCase().indexOf(this.brandInput.toLowerCase()) > -1
         );
         if (filteredBrands.length > 0) {
           this.brandsMapCopy[i] = filteredBrands;
         }
       }
     }
+  }
+
+  handleInputText() {
+    this.searchClicked = !this.searchClicked;
+    this.brandInput = '';
+    this.filterBrands();
   }
 
   scrollTo(index: number) {

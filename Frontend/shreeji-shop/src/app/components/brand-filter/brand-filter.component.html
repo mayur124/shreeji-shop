@@ -6,9 +6,10 @@
       class="search-bar mt-2"
       placeholder="Search for Brands"
       [hidden]="!searchClicked"
-      (keyup)="filterBrands($event)"
+      [(ngModel)]="brandInput"
+      (keyup)="filterBrands()"
     />
-    <button class="search mt-2" (click)="searchClicked = !searchClicked">
+    <button class="search mt-2" (click)="handleInputText()">
       <!-- search icon -->
       <svg
         width="0.8em"
