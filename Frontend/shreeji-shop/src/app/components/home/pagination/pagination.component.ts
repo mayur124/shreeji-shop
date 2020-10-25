@@ -21,6 +21,9 @@ export class PaginationComponent implements OnInit {
   ngOnInit(): void {
     this.paginationResponse.subscribe(
       (response) => {
+        if (this.brandIds != response.brandIds) {
+          this.currentPage = 0;
+        }
         this.brandIds = response.brandIds;
         this.page = response.paginationData;
       },
