@@ -13,8 +13,9 @@ import { PhoneData } from "./home.model";
 export class HomeComponent implements OnInit {
 
   phoneModelSubject: Subject<PhoneData> = new Subject();
-  page: Page = new Page();
-  currentPage: number = 0;
+  paginationSub: Subject<{ brandIds: string, paginationData: Page }> = new Subject();
+
+  brandIds: string;
 
   constructor(private http: HttpService,) { }
 
@@ -23,9 +24,9 @@ export class HomeComponent implements OnInit {
   }
 
   private getDefaultPhones(page?: number, sort?: SORT_TYPE) {
-    this.http.getDefaultPhoneModels().subscribe(
+    this.http.getDefaultPhoneModels(page, sort).subscribe(
       (response: PhoneData) => {
-        this._setPaginationData(response.paginationData);
+        this.paginationSub.next({ brandIds: '', paginationData: response.paginationData });
         this.phoneModelSubject.next(response);
       },
       (error: any) => {
@@ -33,11 +34,11 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
   private getModelsForSelectedBrands(brandIds: string, page?: number, sort?: SORT_TYPE) {
-    this.http.getPhoneModelsByBrandIds(brandIds).subscribe(
+    this.http.getPhoneModelsByBrandIds(brandIds, page, sort).subscribe(
       (response: PhoneData) => {
-        this._setPaginationData(response.paginationData);
+        this.brandIds = brandIds;
+        this.paginationSub.next({ brandIds: brandIds, paginationData: response.paginationData });
         this.phoneModelSubject.next(response);
       },
       (error: any) => {
@@ -45,12 +46,6 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
-  private _setPaginationData(page: Page) {
-    this.page = page;
-    this.currentPage = 0;
-  }
-
   getPhonesForSelectedBrandsSafe(brandIds: string) {
     if (!brandIds.length) {
       this.getDefaultPhones();
@@ -58,39 +53,11 @@ export class HomeComponent implements OnInit {
       this.getModelsForSelectedBrands(brandIds);
     }
   }
-
-  getPageNumArray() {
-    return this.page ? [...Array(this.page.totalPage + 1).keys()] : [];
-  }
-
-  gotoPage(pageNo: number) {
-    this.currentPage = pageNo;
-    /**
-     * if brands are selected
-     *  call getModelsForSelectedBrands(brandIds, pagination, sort data)
-     * else 
-     *  call getDefaultPhones(pagination, sort data)
-     */
-  }
-
-  private _isValidePageNo(pageNo: number) {
-    return pageNo > 0 && pageNo < this.page.totalPage;
-  }
-
-  gotoPrevPage() {
-    if (this._isValidePageNo(this.currentPage - 1)) {
-      this.gotoPage(this.currentPage - 1);
+  performPagination(event: { isBrandsSelected: boolean, pageNo: number }) {
+    if (event.isBrandsSelected) {
+      this.getDefaultPhones(event.pageNo);
     } else {
-      this.gotoPage(0);
+      this.getModelsForSelectedBrands(this.brandIds, event.pageNo);
     }
   }
-
-  gotoNextPage() {
-    if (this._isValidePageNo(this.currentPage + 1)) {
-      this.gotoPage(this.currentPage + 1);
-    } else {
-      this.gotoPage(this.page.totalPage);
-    }
-  }
-
 }

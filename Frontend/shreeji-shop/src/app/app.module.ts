@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from "./components/header/header.component";
 import { BrandFilterComponent } from './components/brand-filter/brand-filter.component';
 import { HomeComponent } from './components/home/home.component';
+import { PaginationComponent } from "./components/home/pagination/pagination.component";
 import { ModelFilterComponent } from './components/model-filter/model-filter.component';
 import { PhoneModelComponent } from './components/phone-model/phone-model.component';
 import { HttpService } from './services/http/http.service';
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     BrandFilterComponent,
     HomeComponent,
     ModelFilterComponent,
-    PhoneModelComponent
+    PhoneModelComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

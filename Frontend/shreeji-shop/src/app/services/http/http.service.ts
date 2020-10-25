@@ -15,15 +15,15 @@ export class HttpService {
   }
 
   getPhoneModelsByBrandIds(brandIds: string, page: number = 0, sort: SORT_TYPE = "") {
-    if (!sort.length) {
+    if (sort == "") {
       return this.http.get<PhoneData>(URLS.FILTER + "?brandIds=" + brandIds + "&page=" + page);
     }
     return this.http.get<PhoneData>(URLS.FILTER + "?brandIds=" + brandIds + "&page=" + page + "&sort=" + sort);
   }
 
   getDefaultPhoneModels(page: number = 0, sort: SORT_TYPE = "") {
-    if (!sort.length && page != 0) {
-      return this.http.get<PhoneData>(URLS.FILTER);
+    if (sort == "") {
+      return this.http.get<PhoneData>(URLS.FILTER + "?page=" + page);
     }
     return this.http.get<PhoneData>(URLS.FILTER + "?page=" + page + "&sort=" + sort);
   }

@@ -1,6 +1,6 @@
 <div class="card brand-filter-container">
   <div class="d-flex align-items-center">
-    <h6 class="text-uppercase sub-heading pt-3 pl-3">brands</h6>
+    <h6 class="text-uppercase sub-heading pt-3 pl-3">brand</h6>
     <input
       type="text"
       class="search-bar mt-2"
@@ -48,28 +48,30 @@
     </button>
   </div>
   <div class="card-body py-1 ml-3">
-    <ng-container *ngFor="let b of brandsCopy; let i = index">
-      <div *ngIf="i < 10">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          [value]="b.id"
-          [id]="b.id"
-          [(ngModel)]="b.checked"
-          (change)="fetchModels()"
-          name="brand"
-        />
-        <label
-          class="form-check-label pl-1 d-flex align-items-center"
-          [for]="b.id"
-        >
-          {{ b.name }}
-          <span class="model-count"> ({{ b.count }}) </span>
-        </label>
-      </div>
+    <ng-container *ngFor="let bm of brandsMapCopy | keyvalue; let i = index">
+      <ng-container *ngFor="let b of bm.value">
+        <div *ngIf="i < 3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [value]="b.id"
+            [id]="b.id"
+            [(ngModel)]="b.checked"
+            (change)="fetchModels()"
+            name="brand"
+          />
+          <label
+            class="form-check-label pl-1 d-flex align-items-center"
+            [for]="b.id"
+          >
+            {{ b.name }}
+            <span class="model-count"> ({{ b.count }}) </span>
+          </label>
+        </div>
+      </ng-container>
     </ng-container>
     <p class="more-brands py-2 p-0 m-0" (click)="showMoreBrands()">
-      +{{ brands.length }} more
+      +{{ totalBrands }} more
     </p>
   </div>
   <div
@@ -83,7 +85,7 @@
       <input
         type="text"
         placeholder="Search for Brands"
-        (keyup)="filterMoreBrands($event)"
+        (keyup)="filterBrands($event)"
       />
       <div class="px-2 brand-alphabets d-flex flex-fill">
         <p
@@ -97,7 +99,7 @@
           {{ b.key }}
         </p>
       </div>
-      <button (click)="resetBrands()">
+      <button (click)="handleSelectedBrands()">
         <!-- close icon -->
         <svg
           width="1.5em"

@@ -8,12 +8,11 @@ import { Brand } from '../../models/brand.model';
   styleUrls: ['./brand-filter.component.scss'],
 })
 export class BrandFilterComponent implements OnInit {
-  brands: Brand[] = new Array();
-  brandsCopy: Brand[] = new Array();
   searchClicked: boolean = false;
   moreBrandsClicked: boolean = false;
   brandsMap: { [letter: string]: Brand[] } = {};
   brandsMapCopy: { [letter: string]: Brand[] } = {};
+  totalBrands: number = 0;
 
   @ViewChild('moreBrandsContainer') moreBrandsContainer: ElementRef;
   @ViewChildren('brandLetter') brandLetter: QueryList<ElementRef>
@@ -28,7 +27,7 @@ export class BrandFilterComponent implements OnInit {
   ) {
     this.renderer2.listen('document', 'mousedown', (event: MouseEvent) => {
       if (!this.moreBrandsContainer?.nativeElement.contains(event.target)) {
-        this.resetBrands();
+        this._hideMoreBrandsContainer();
       }
     });
   }
@@ -40,8 +39,7 @@ export class BrandFilterComponent implements OnInit {
   setBrands() {
     this.http.getAllBrands().subscribe(
       (response: { brands: Brand[] }) => {
-        this.brands = response.brands;
-        this.brandsCopy = response.brands;
+        this.totalBrands = response.brands.length;
         this.brandsMap = this.getBrandsMap(response.brands);
         this.brandsMapCopy = this.getBrandsMap(response.brands);
       },
@@ -52,11 +50,20 @@ export class BrandFilterComponent implements OnInit {
   }
 
   fetchModels() {
-    const selectedBrands = this.brands.filter(b => b.checked);
+    const selectedBrands = this.getSelectedBrands();
     const brandIds = selectedBrands.map(b => b.id).join(",");
     this.selectedBrands.emit(brandIds);
   }
-
+  private getSelectedBrands(): Brand[] {
+    let selectedBrandsFromMap = new Array();
+    for (const key in this.brandsMapCopy) {
+      let checkedBrands = this.brandsMapCopy[key].filter(bm => bm.checked);
+      if (checkedBrands.length > 0) {
+        checkedBrands.forEach(cb => selectedBrandsFromMap.push(cb));
+      }
+    }
+    return selectedBrandsFromMap;
+  }
   getBrandsMap(brands: Brand[]) {
     return brands.reduce(
       (acc, brand) => ({
@@ -76,21 +83,11 @@ export class BrandFilterComponent implements OnInit {
     );
   }
 
-  filterBrands(event: any) {
-    this.brandsCopy = this.brands.filter(
-      (brand) =>
-        brand.name
-          .toLowerCase()
-          .indexOf((event.target as HTMLInputElement).value.toLowerCase()) > -1
-    );
-  }
-
   showMoreBrands() {
-    this.brandsMapCopy = JSON.parse(JSON.stringify(this.brandsMap));
     this.moreBrandsClicked = true;
   }
 
-  filterMoreBrands(event: KeyboardEvent) {
+  filterBrands(event: KeyboardEvent) {
     this.brandsMapCopy = {};
     for (const i in this.brandsMap) {
       for (let j = 0; j < this.brandsMap[i].length; j++) {
@@ -137,7 +134,11 @@ export class BrandFilterComponent implements OnInit {
   }
 
   resetBrands() {
+    this._hideMoreBrandsContainer();
+    this.brandsMapCopy = JSON.parse(JSON.stringify(this.brandsMap));
+  }
+
+  private _hideMoreBrandsContainer() {
     this.moreBrandsClicked = false;
-    this.brandsCopy = [...this.brands];
   }
 }
