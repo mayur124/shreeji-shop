@@ -79,19 +79,16 @@ input[type="checkbox"] {
   height: 27rem;
   top: 0;
   box-shadow: 0 0.3rem 1.525rem -0.375rem $box-shadow;
-  overflow-x: auto;
-  overflow-y: hidden;
   z-index: 5;
   border-radius: 0.4375rem;
 
   .top-bar {
-    position: fixed;
+    position: sticky;
     width: inherit;
-    padding-right: 1rem;
   }
 
   .card-body {
-    margin-top: 4rem;
+    margin-top: 1rem;
   }
 
   input {
@@ -130,8 +127,9 @@ input[type="checkbox"] {
     cursor: pointer;
   }
 
-  .all-brands-list {
-    list-style-type: none;
-    margin-left: 1rem;
+  .all-brands {
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 45rem;
   }
 }

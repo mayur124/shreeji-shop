@@ -118,21 +118,21 @@
         <!-- close icon end -->
       </button>
     </div>
-    <ul
-      class="card-body all-brands-list d-flex flex-column flex-wrap mb-0 pt-0"
+    <div
+      #allBrands
+      class="card-body all-brands d-flex flex-column flex-wrap mb-0 py-0"
     >
       <ng-container *ngFor="let bm of brandsMapCopy | keyvalue; let i = index">
-        <li class="pr-5" #brandLetter [attr.id]="'brandId-' + i">
+        <div class="pr-5" #brandLetter [attr.id]="'brandId-' + i">
           <p class="m-0 font-weight-500">{{ bm.key }}</p>
-        </li>
-        <li
+        </div>
+        <div
           class="pr-5"
           #brandCb
           [attr.id]="'brandCb-' + bm.key"
           *ngFor="let b of bm.value; let i = index"
         >
           <input
-            class="form-check-input"
             type="checkbox"
             [value]="b.id"
             [(ngModel)]="b.checked"
@@ -140,15 +140,13 @@
             [id]="'_' + b.id"
             name="all-brand"
           />
-          <label
-            class="form-check-label d-flex align-items-center"
-            [for]="'_' + b.id"
-          >
+          <!-- class="form-check-input" -->
+          <label class="pl-2" [for]="'_' + b.id">
             {{ b.name }}
             <span class="model-count"> ({{ b.count }}) </span>
           </label>
-        </li>
+        </div>
       </ng-container>
-    </ul>
+    </div>
   </div>
 </div>

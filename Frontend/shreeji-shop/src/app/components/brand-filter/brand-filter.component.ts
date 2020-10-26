@@ -16,6 +16,7 @@ export class BrandFilterComponent implements OnInit {
   brandInput: string = '';
 
   @ViewChild('moreBrandsContainer') moreBrandsContainer: ElementRef;
+  @ViewChild('allBrands') allBrands: ElementRef;
   @ViewChildren('brandLetter') brandLetter: QueryList<ElementRef>
   @ViewChildren('brandCb') brandCb: QueryList<ElementRef>
 
@@ -112,12 +113,12 @@ export class BrandFilterComponent implements OnInit {
 
   scrollTo(index: number) {
     const el = this.brandLetter.find(bl => bl.nativeElement.id == 'brandId-' + index);
-    const containerCoordinates = (this.moreBrandsContainer.nativeElement as HTMLElement).getBoundingClientRect();
+    const containerCoordinates = (this.allBrands.nativeElement as HTMLElement).getBoundingClientRect();
     const x = (el.nativeElement as HTMLElement).getBoundingClientRect().x;
     const y = (el.nativeElement as HTMLElement).getBoundingClientRect().y;
-    const scrollX = x - containerCoordinates.x - 50;
+    const scrollX = x - containerCoordinates.x - 20;
     const scrollY = y - containerCoordinates.y;
-    (this.moreBrandsContainer.nativeElement as HTMLElement).scrollBy(scrollX, scrollY);
+    (this.allBrands.nativeElement as HTMLElement).scrollBy(scrollX, scrollY);
   }
 
   reduceOpacity(index: number, key: string) {
