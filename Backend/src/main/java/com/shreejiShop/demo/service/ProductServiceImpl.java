@@ -78,12 +78,13 @@ public class ProductServiceImpl implements IProductService {
 			List<Long> models = bm.getValue();
 			Map<String, Object> bmMapFinal = new HashMap<String, Object>();
 			bmMapFinal.put("brandId", brandId);
+			bmMapFinal.put("brandName", brandRepo.findById(brandId).orElse(null).getName());
 			if (sortFlag.equals("asc")) {
-				bmMapFinal.put("model", modelRepo.findAllModelsByIdOrderByPriceEurAsc(models));
+				bmMapFinal.put("model", modelRepo.findModelsByIdOrderByPriceEurAsc(models));
 			} else if (sortFlag.equals("desc")) {
-				bmMapFinal.put("model", modelRepo.findAllModelsByIdOrderByPriceEurDesc(models));
+				bmMapFinal.put("model", modelRepo.findModelsByIdOrderByPriceEurDesc(models));
 			} else {
-				bmMapFinal.put("model", modelRepo.findAllModelsById(models));
+				bmMapFinal.put("model", modelRepo.findModelsById(models));
 			}
 			modelMap.add(bmMapFinal);
 		});
@@ -104,7 +105,8 @@ public class ProductServiceImpl implements IProductService {
 		if (brands.size() > 0) {
 			List<BrandCount> convertedBrands = new ArrayList<BrandCount>();
 			brands.forEach(brand -> {
-				BrandCount bCount = new BrandCount(brand.getId(), brand.getName(),this.getModelCountOfBrand(brand.getId()));
+				BrandCount bCount = new BrandCount(brand.getId(), brand.getName(),
+						this.getModelCountOfBrand(brand.getId()));
 				convertedBrands.add(bCount);
 			});
 			response.put("brands", convertedBrands);

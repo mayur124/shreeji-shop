@@ -8,5 +8,6 @@ export class PhoneData {
 
 export class BrandModelMap {
     brandId: number;
+    brandName: string;
     model: PhoneModel[]
 }

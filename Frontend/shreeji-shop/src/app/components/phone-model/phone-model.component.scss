@@ -1,7 +1,15 @@
+$bootstrap-blue: #007bff;
 .phone-image {
   width: 180px;
   height: 250px;
 }
-.phone-name-width {
+.phone-name {
   width: 180px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+.card:hover {
+  cursor: pointer;
+  box-shadow: 0 1px 8px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
 }

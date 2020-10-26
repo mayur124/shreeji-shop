@@ -1,12 +1,13 @@
 <div class="row">
-  <ng-container *ngFor="let m of models">
-    <div class="card mx-3 mb-3">
+  <ng-container *ngFor="let p of phones">
+    <div class="card mx-3 mb-3" (click)="openPhoneDetails(p)">
       <div class="card-body">
-        <img [src]="m.imgUrl" [alt]="m.name" class="phone-image" />
-        <p class="p-0 m-0 font-weight-bold phone-name-width">{{ m.name }}</p>
-        <p class="p-0 m-0">{{ m.priceEur }}</p>
+        <img [src]="p.imgUrl" [alt]="p.name" class="phone-image" />
+        <p class="p-0 m-0 mt-2 phone-name">
+          {{ p.brandName }}-{{ p.name }}
+        </p>
+        <p class="p-0 m-0">Rs. {{ p.priceEur }}</p>
       </div>
     </div>
   </ng-container>
 </div>
-
