@@ -7,7 +7,8 @@ export class CommonService {
 
   constructor() { }
 
-  deepCopy(object: any) {
-    return JSON.parse(JSON.stringify(object));
+  getInrPrice(priceInEur: number): number {
+    const inrAmt = 87;
+    return priceInEur * inrAmt;
   }
 }

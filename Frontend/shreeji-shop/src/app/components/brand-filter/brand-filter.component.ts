@@ -28,7 +28,7 @@ export class BrandFilterComponent implements OnInit {
   ) {
     this.renderer2.listen('document', 'mousedown', (event: MouseEvent) => {
       if (!this.moreBrandsContainer?.nativeElement.contains(event.target)) {
-        this._hideMoreBrandsContainer();
+        this.hideMoreBrandsContainer();
       }
     });
   }
@@ -143,11 +143,11 @@ export class BrandFilterComponent implements OnInit {
   }
 
   resetBrands() {
-    this._hideMoreBrandsContainer();
+    this.hideMoreBrandsContainer();
     this.brandsMapCopy = JSON.parse(JSON.stringify(this.brandsMap));
   }
 
-  private _hideMoreBrandsContainer() {
+  hideMoreBrandsContainer() {
     this.moreBrandsClicked = false;
   }
 }

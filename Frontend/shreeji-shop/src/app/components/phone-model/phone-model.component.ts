@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { HttpService } from 'src/app/services/http/http.service';
+import { CommonService } from 'src/app/services/common/common.service';
 import { PhoneData } from '../home/home.model';
 
 @Component({
@@ -14,7 +15,8 @@ export class PhoneModelComponent implements OnInit {
 
   phones: any[] = [];
 
-  constructor(private http: HttpService) { }
+  constructor(private router: Router,
+    private common: CommonService) { }
 
   ngOnInit(): void {
     this.phoneResponse.subscribe(
@@ -25,7 +27,7 @@ export class PhoneModelComponent implements OnInit {
             d.model.forEach(m => {
               let phone = m;
               phone["brandName"] = d.brandName;
-              phone.priceEur = this._getEurToInr(phone.priceEur);
+              phone.priceEur = this.common.getInrPrice(phone.priceEur);
               this.phones.push(phone);
             })
           });
@@ -37,13 +39,8 @@ export class PhoneModelComponent implements OnInit {
     )
   }
 
-  private _getEurToInr(priceEur: number): number {
-    const inrAmt = 87;
-    return priceEur * inrAmt;
-  }
-
   openPhoneDetails(p: any) {
-    console.log(p);
+    this.router.navigate([`/phone/${p.brandName}/${p.id}`]);
   }
 
 }

@@ -9,6 +9,9 @@ $indicator-color: #737373;
   position: sticky;
   top: 5.5rem;
   z-index: 10;
+  box-shadow: 0 0.3rem 1.525rem -0.375rem $box-shadow;
+  border-radius: 0.4375rem;
+  margin-top: -4rem;
 }
 .sub-heading {
   font-size: 14px;
@@ -75,10 +78,11 @@ input[type="checkbox"] {
   width: 45rem;
   height: 27rem;
   top: 0;
-  box-shadow: 0 1px 8px $box-shadow;
+  box-shadow: 0 0.3rem 1.525rem -0.375rem $box-shadow;
   overflow-x: auto;
   overflow-y: hidden;
   z-index: 5;
+  border-radius: 0.4375rem;
 
   .top-bar {
     position: fixed;

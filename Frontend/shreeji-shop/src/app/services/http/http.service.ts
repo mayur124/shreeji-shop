@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { SORT_TYPE, URLS } from '../../constants/constants'
 import { Brand } from '../../models/brand.model';
 import { PhoneData } from 'src/app/components/home/home.model';
+import { PhoneModel } from 'src/app/models/phone-model.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,9 @@ export class HttpService {
       return this.http.get<PhoneData>(URLS.FILTER + "?page=" + page);
     }
     return this.http.get<PhoneData>(URLS.FILTER + "?page=" + page + "&sort=" + sort);
+  }
+
+  getPhoneDetails(phoneId: number) {
+    return this.http.get<PhoneModel>(URLS.PHONE_DETAIL + "?phoneId=" + phoneId);
   }
 }

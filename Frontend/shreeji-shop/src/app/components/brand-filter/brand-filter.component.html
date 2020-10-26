@@ -48,7 +48,7 @@
       <!-- close icon end -->
     </button>
   </div>
-  <div class="card-body py-1 ml-3">
+  <div class="card-body py-1 ml-3 mt-4">
     <ng-container *ngFor="let bm of brandsMapCopy | keyvalue; let i = index">
       <ng-container *ngFor="let b of bm.value">
         <div *ngIf="i < 3">
@@ -100,7 +100,7 @@
           {{ b.key }}
         </p>
       </div>
-      <button (click)="handleSelectedBrands()">
+      <button (click)="hideMoreBrandsContainer()">
         <!-- close icon -->
         <svg
           width="1.5em"

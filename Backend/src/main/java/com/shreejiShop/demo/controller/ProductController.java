@@ -5,10 +5,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shreejiShop.demo.model.Model;
 import com.shreejiShop.demo.service.IProductService;
 
 @RestController
@@ -29,5 +29,10 @@ public class ProductController {
 	@GetMapping(path = "/brands")
 	public Map<String, Object> listBrands() {
 		return productService.getAllBrands();
+	}
+	
+	@GetMapping(path = "/phone")
+	public Model getPhoneById(@RequestParam Long phoneId) {
+		return productService.getPhoneById(phoneId);
 	}
 }

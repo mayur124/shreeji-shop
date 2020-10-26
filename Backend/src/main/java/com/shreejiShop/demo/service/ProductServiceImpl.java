@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.shreejiShop.demo.model.Brand;
 import com.shreejiShop.demo.model.BrandCount;
 import com.shreejiShop.demo.model.BrandModelRel;
+import com.shreejiShop.demo.model.Model;
 import com.shreejiShop.demo.repository.BrandModelRelRepo;
 import com.shreejiShop.demo.repository.BrandRepo;
 import com.shreejiShop.demo.repository.ModelRepo;
@@ -132,6 +133,11 @@ public class ProductServiceImpl implements IProductService {
 			response.put("data", new ArrayList<Object>());
 		}
 		return response;
+	}
+
+	@Override
+	public Model getPhoneById(Long phoneId) {
+		return modelRepo.findById(phoneId).orElse(null);
 	}
 
 }

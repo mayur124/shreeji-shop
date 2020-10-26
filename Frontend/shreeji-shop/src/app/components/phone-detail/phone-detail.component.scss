@@ -1,0 +1,26 @@
+$brand-name-color: #282c3f;
+$phone-name-color: #535665;
+
+.phone-detail-container {
+  margin-top: 5rem;
+}
+img {
+  height: 25rem;
+}
+.brand-name {
+  padding: 0 20px 0 0;
+}
+.brand-name,
+.price {
+  color: $brand-name-color;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1;
+}
+.phone-name {
+  color: $phone-name-color;
+  padding: 5px 20px 14px 0;
+  font-size: 20px;
+  opacity: 0.8;
+  font-weight: 400;
+}
