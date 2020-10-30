@@ -1,8 +1,11 @@
 $brand-name-color: #282c3f;
 $phone-name-color: #535665;
+$box-shadow: rgba(0, 0, 0, 0.1);
 
 .phone-detail-container {
-  margin-top: 5rem;
+  margin-top: -4rem;
+  box-shadow: 0 0.3rem 1.525rem -0.375rem $box-shadow;
+  border-radius: 0.4375rem;
 }
 img {
   height: 25rem;

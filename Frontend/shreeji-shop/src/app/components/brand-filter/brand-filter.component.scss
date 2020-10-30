@@ -12,6 +12,10 @@ $indicator-color: #737373;
   box-shadow: 0 0.3rem 1.525rem -0.375rem $box-shadow;
   border-radius: 0.4375rem;
   margin-top: -4rem;
+
+  label {
+    letter-spacing: 0.5px;
+  }
 }
 .sub-heading {
   font-size: 14px;
