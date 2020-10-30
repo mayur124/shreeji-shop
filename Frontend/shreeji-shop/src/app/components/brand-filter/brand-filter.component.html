@@ -71,7 +71,11 @@
         </div>
       </ng-container>
     </ng-container>
-    <p class="more-brands py-2 p-0 m-0" (click)="showMoreBrands()">
+    <p
+      *ngIf="totalBrands > 0"
+      class="more-brands py-2 p-0 m-0"
+      (click)="showMoreBrands()"
+    >
       +{{ totalBrands }} more
     </p>
   </div>

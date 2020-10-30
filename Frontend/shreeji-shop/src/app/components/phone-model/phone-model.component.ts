@@ -27,7 +27,7 @@ export class PhoneModelComponent implements OnInit {
             d.model.forEach(m => {
               let phone = m;
               phone["brandName"] = d.brandName;
-              phone.priceEur = this.common.getInrPrice(phone.priceEur);
+              phone.priceEur = this.common.getInrPrice(Number(phone.priceEur));
               this.phones.push(phone);
             });
           });
@@ -40,7 +40,7 @@ export class PhoneModelComponent implements OnInit {
   }
 
   openPhoneDetails(p: any) {
-    this.router.navigate([`/phone/${p.brandName}/${p.id}`]);
+    this.router.navigate([]).then((result: never) => { window.open(`/phone/${p.brandName}/${p.id}`, '_blank') });
   }
 
 }

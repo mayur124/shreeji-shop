@@ -60,4 +60,10 @@ $button-bg-color: #fe696a;
   border-radius: 0.2rem;
   background-color: $button-bg-color;
   border: none;
+  box-shadow: 0 0.5rem 1.125rem -0.5rem rgba(254, 105, 106, 0.9);
+  transition: all 0.2s ease;
+}
+.add-to-cart-btn:hover {
+  background-color: #ff4142;
+  box-shadow: none;
 }

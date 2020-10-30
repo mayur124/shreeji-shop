@@ -10,9 +10,10 @@ export class CommonService {
 
   constructor() { }
 
-  getInrPrice(priceInEur: number): number {
+  getInrPrice(priceInEur: number): string {
     const inrAmt = 87;
-    return priceInEur * inrAmt;
+    const answer = priceInEur * inrAmt;
+    return answer.toLocaleString('en-IN', { maximumSignificantDigits: 3 });
   }
 
   setTagline(text: string) {

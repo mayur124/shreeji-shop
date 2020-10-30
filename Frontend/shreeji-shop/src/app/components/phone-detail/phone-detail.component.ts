@@ -14,6 +14,7 @@ export class PhoneDetailComponent implements OnInit {
 
   brandName: string;
   phoneDetail: PhoneModel;
+  phoneAttributes: { [category: string]: { [key: string]: string } } = {};
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -25,26 +26,70 @@ export class PhoneDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       params => {
         this.brandName = params["brandName"];
-        this.getPhoneDetails(Number(params["id"]));
+        this._setPhoneDetails(Number(params["id"]));
       },
       error => {
         console.log("Error in activatedRoute > ", error);
-
       });
   }
 
-  private getPhoneDetails(phoneId: number) {
+  private _setPhoneDetails(phoneId: number) {
     this.http.getPhoneDetails(phoneId).subscribe(
       response => {
         this.phoneDetail = response;
         this.phoneDetail.priceEur = this.common.getInrPrice(this.phoneDetail.priceEur);
         this.titleService.setTitle(`${this.brandName} ${this.phoneDetail.name} @ Rs.${this.phoneDetail.priceEur}`);
         this.common.setTagline(`${this.brandName} ${this.phoneDetail.name}`);
+        this._setPhoneAttributes(this.phoneDetail);
       },
       error => {
         console.log("Error while fetching phone details > ", error);
       }
     )
+  }
+
+  private _setPhoneAttributes(phoneData: PhoneModel) {
+    this.phoneAttributes["general"] = {
+      "ram": phoneData.ram,
+      "battery": phoneData.battery,
+      "bluetooth": phoneData.bluetooth,
+      "chipset": phoneData.chipset,
+      "colors": phoneData.colors,
+      "cpu": phoneData.cpu,
+      "gpu": phoneData.gpu,
+      "operating system": phoneData.os,
+      "price": `Rs.${phoneData.priceEur}`,
+      "sensors": phoneData.sensors,
+      "speaker": phoneData.speaker,
+      "usb": phoneData.usb,
+      "weight in grams": phoneData.weightG,
+    };
+    this.phoneAttributes["display"] = {
+      "dimensions": phoneData.dimensions,
+      "display resolution": phoneData.displayResolution,
+      "display size": phoneData.displaySize,
+      "display type": phoneData.displayType,
+    };
+    this.phoneAttributes["camera"] = {
+      "primary camera": phoneData.primaryCamera,
+      "secondary camera": phoneData.secondaryCamera,
+    };
+    this.phoneAttributes["storage"] = {
+      "internal memory": phoneData.internalMemory,
+      "memory card": phoneData.memoryCard,
+    }
+    this.phoneAttributes["network"] = {
+      "2g bands": phoneData.bands2g,
+      "3g bands": phoneData.bands3g,
+      "4g bands": phoneData.bands4g,
+      "edge": phoneData.edge,
+      "gprs": phoneData.gprs,
+      "gps": phoneData.gps,
+      "network speed": phoneData.networkSpeed,
+      "network technology": phoneData.networkTechnology,
+      "sim": phoneData.sim,
+      "wlan": phoneData.wlan,
+    }
   }
 
 }
