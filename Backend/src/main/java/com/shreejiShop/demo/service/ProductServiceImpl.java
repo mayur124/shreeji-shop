@@ -23,7 +23,7 @@ import org.springframework.data.domain.Pageable;
 @Service
 public class ProductServiceImpl implements IProductService {
 
-	private static final Integer PAGE_SIZE = 50;
+	private static final Integer PAGE_SIZE = 52;
 
 	@Autowired
 	BrandModelRelRepo brandModelRelRepo;
