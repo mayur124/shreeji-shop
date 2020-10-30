@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SORT_TYPE } from 'src/app/constants/constants';
 import { Page } from 'src/app/models/page.model';
+import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
-import { PhoneData } from "./home.model";
+import { PhoneData } from "../../models/home.model";
 
 @Component({
   selector: 'app-home',
@@ -17,10 +18,12 @@ export class HomeComponent implements OnInit {
 
   brandIds: string;
 
-  constructor(private http: HttpService,) { }
+  constructor(private http: HttpService,
+    private common: CommonService) { }
 
   ngOnInit(): void {
     this.getDefaultPhones();
+    this.common.setTagline("Own your latest one");
   }
 
   private getDefaultPhones(page?: number, sort?: SORT_TYPE) {

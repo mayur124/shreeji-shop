@@ -39,6 +39,7 @@ export class PhoneDetailComponent implements OnInit {
         this.phoneDetail = response;
         this.phoneDetail.priceEur = this.common.getInrPrice(this.phoneDetail.priceEur);
         this.titleService.setTitle(`${this.brandName} ${this.phoneDetail.name} @ Rs.${this.phoneDetail.priceEur}`);
+        this.common.setTagline(`${this.brandName} ${this.phoneDetail.name}`);
       },
       error => {
         console.log("Error while fetching phone details > ", error);

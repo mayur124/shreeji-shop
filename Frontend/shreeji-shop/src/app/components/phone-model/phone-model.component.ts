@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
-import { PhoneData } from '../home/home.model';
+import { PhoneData } from '../../models/home.model';
 
 @Component({
   selector: 'app-phone-model',
@@ -29,7 +29,7 @@ export class PhoneModelComponent implements OnInit {
               phone["brandName"] = d.brandName;
               phone.priceEur = this.common.getInrPrice(phone.priceEur);
               this.phones.push(phone);
-            })
+            });
           });
         }
       },

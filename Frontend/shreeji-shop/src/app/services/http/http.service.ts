@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { SORT_TYPE, URLS } from '../../constants/constants'
 import { Brand } from '../../models/brand.model';
-import { PhoneData } from 'src/app/components/home/home.model';
+import { PhoneData } from 'src/app/models/home.model';
 import { PhoneModel } from 'src/app/models/phone-model.model';
 
 @Injectable({
