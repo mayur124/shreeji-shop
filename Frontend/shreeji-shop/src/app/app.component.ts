@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonService } from './services/common/common.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +8,5 @@ import { CommonService } from './services/common/common.service';
 export class AppComponent {
   title = 'shreeji-shop';
 
-  constructor(private common: CommonService) {
-    this.common.setTagline("Own your latest one");
-  }
+  constructor() { }
 }

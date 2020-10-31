@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SORT_TYPE } from 'src/app/constants/constants';
 import { Page } from 'src/app/models/page.model';
-import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
 import { PhoneData } from "../../models/home.model";
 
@@ -17,17 +16,16 @@ export class HomeComponent implements OnInit {
   paginationSub: Subject<{ brandIds: string, paginationData: Page }> = new Subject();
 
   brandIds: string;
+  sortType: SORT_TYPE;
 
-  constructor(private http: HttpService,
-    private common: CommonService) { }
+  constructor(private http: HttpService,) { }
 
   ngOnInit(): void {
     this.getDefaultPhones();
-    this.common.setTagline("Own your latest one");
   }
 
-  private getDefaultPhones(page?: number, sort?: SORT_TYPE) {
-    this.http.getDefaultPhoneModels(page, sort).subscribe(
+  private getDefaultPhones(page?: number) {
+    this.http.getDefaultPhoneModels(page, this.sortType).subscribe(
       (response: PhoneData) => {
         this.paginationSub.next({ brandIds: '', paginationData: response.paginationData });
         this.phoneModelSubject.next(response);
@@ -37,8 +35,8 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-  private getModelsForSelectedBrands(brandIds: string, page?: number, sort?: SORT_TYPE) {
-    this.http.getPhoneModelsByBrandIds(brandIds, page, sort).subscribe(
+  private getModelsForSelectedBrands(brandIds: string, page?: number) {
+    this.http.getPhoneModelsByBrandIds(brandIds, page, this.sortType).subscribe(
       (response: PhoneData) => {
         this.brandIds = brandIds;
         this.paginationSub.next({ brandIds: brandIds, paginationData: response.paginationData });
@@ -50,7 +48,7 @@ export class HomeComponent implements OnInit {
     );
   }
   getPhonesForSelectedBrandsSafe(brandIds: string) {
-    if (!brandIds.length) {
+    if (!brandIds || !brandIds.length) {
       this.getDefaultPhones();
     } else {
       this.getModelsForSelectedBrands(brandIds);
@@ -62,5 +60,9 @@ export class HomeComponent implements OnInit {
     } else {
       this.getModelsForSelectedBrands(this.brandIds, event.pageNo);
     }
+  }
+  sortPhones(sortType: SORT_TYPE) {
+    this.sortType = sortType;
+    this.getPhonesForSelectedBrandsSafe(this.brandIds);
   }
 }

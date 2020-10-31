@@ -2,4 +2,15 @@
   <div class="offset-sm-auto offset-lg-1">
     <h1 class="h3 m-0 text-light">{{ tagline }}</h1>
   </div>
+  <div
+    *ngIf="tagline == 'Own your latest one'"
+    class="filter-container d-flex align-items-center"
+  >
+    <span class="text-white mr-2">Sort by</span>
+    <select [(ngModel)]="sortType" (change)="sortPhones()" class="form-control">
+      <option value="">Recommended</option>
+      <option value="asc">Price Low to High</option>
+      <option value="desc">Price High to Low</option>
+    </select>
+  </div>
 </div>

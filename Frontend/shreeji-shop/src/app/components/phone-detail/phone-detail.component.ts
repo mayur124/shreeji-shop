@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
 import { PhoneModel } from 'src/app/models/phone-model.model';
 import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
@@ -15,6 +16,7 @@ export class PhoneDetailComponent implements OnInit {
   brandName: string;
   phoneDetail: PhoneModel;
   phoneAttributes: { [category: string]: { [key: string]: string } } = {};
+  tagLineSub: Subject<string> = new Subject();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -39,7 +41,7 @@ export class PhoneDetailComponent implements OnInit {
         this.phoneDetail = response;
         this.phoneDetail.priceEur = this.common.getInrPrice(this.phoneDetail.priceEur);
         this.titleService.setTitle(`${this.brandName} ${this.phoneDetail.name} @ Rs.${this.phoneDetail.priceEur}`);
-        this.common.setTagline(`${this.brandName} ${this.phoneDetail.name}`);
+        this.tagLineSub.next(`${this.brandName} ${this.phoneDetail.name}`);
         this._setPhoneAttributes(this.phoneDetail);
       },
       error => {

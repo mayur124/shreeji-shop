@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonService } from 'src/app/services/common/common.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { SORT_TYPE } from 'src/app/constants/constants';
+import { HttpService } from 'src/app/services/http/http.service';
 
 @Component({
   selector: 'app-tagline',
@@ -8,18 +10,26 @@ import { CommonService } from 'src/app/services/common/common.service';
 })
 export class TaglineComponent implements OnInit {
 
-  tagline: string = "Own your latest one";
+  @Input() tagLine: Observable<string>;
+  @Output() applySort: EventEmitter<string> = new EventEmitter();
 
-  constructor(private common: CommonService) { }
+  tagline: string = "Own your latest one";
+  sortType: SORT_TYPE = "";
+
+  constructor(private http: HttpService) { }
 
   ngOnInit(): void {
-    this.common.getTagLine().subscribe(
+    this.tagLine?.subscribe(
       response => {
         this.tagline = response;
       },
       error => {
         console.log("Error in tagline watcher > ", error);
       });
+  }
+
+  sortPhones() {
+    this.applySort.emit(this.sortType);
   }
 
 }

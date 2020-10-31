@@ -32,4 +32,7 @@ export class HttpService {
   getPhoneDetails(phoneId: number) {
     return this.http.get<PhoneModel>(URLS.PHONE_DETAIL + "?phoneId=" + phoneId);
   }
+
+  sortPhones(sortBy: SORT_TYPE) {
+  }
 }
