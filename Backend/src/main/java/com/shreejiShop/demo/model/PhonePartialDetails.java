@@ -1,55 +1,55 @@
 package com.shreejiShop.demo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.math.BigDecimal;
 
-@Entity
-@Table(name = "MODEL")
 public class PhonePartialDetails {
-	@Id
-	@Column(name = "ID")
-	private Long id;
-
-	@Column(name = "NAME")
-	private String name;
-	
-	@Column(name = "APPROX_PRICE_EUR")
-	private Long priceEur;
-
-	@Column(name = "IMG_URL")
+	private String brandName;
+	private BigDecimal phoneId;
+	private String phoneName;
+	private BigDecimal priceEur;
 	private String imgUrl;
 
-	public Long getId() {
-		return id;
+	public PhonePartialDetails() {
 	}
 
-	public PhonePartialDetails(Long id, String name, Long priceEur, String imgUrl) {
+	public PhonePartialDetails(String brandName, BigDecimal phoneId, String phoneName, BigDecimal priceEur, String imgUrl) {
 		super();
-		this.id = id;
-		this.name = name;
+		this.brandName = brandName;
+		this.phoneId = phoneId;
+		this.phoneName = phoneName;
 		this.priceEur = priceEur;
 		this.imgUrl = imgUrl;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public String getBrandName() {
+		return brandName;
 	}
 
-	public String getName() {
-		return name;
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public BigDecimal getPhoneId() {
+		return phoneId;
 	}
 
-	public Long getPriceEur() {
+	public void setPhoneId(BigDecimal phoneId) {
+		this.phoneId = phoneId;
+	}
+
+	public String getPhoneName() {
+		return phoneName;
+	}
+
+	public void setPhoneName(String phoneName) {
+		this.phoneName = phoneName;
+	}
+
+	public BigDecimal getPriceEur() {
 		return priceEur;
 	}
 
-	public void setPriceEur(Long priceEur) {
+	public void setPriceEur(BigDecimal priceEur) {
 		this.priceEur = priceEur;
 	}
 
@@ -61,9 +61,4 @@ public class PhonePartialDetails {
 		this.imgUrl = imgUrl;
 	}
 
-	@Override
-	public String toString() {
-		return "PhonePartialDetails [id=" + id + ", name=" + name + ", priceEur=" + priceEur + ", imgUrl=" + imgUrl
-				+ "]";
-	}
 }

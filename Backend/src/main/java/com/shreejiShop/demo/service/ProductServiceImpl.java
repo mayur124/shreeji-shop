@@ -1,5 +1,6 @@
 package com.shreejiShop.demo.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,8 @@ import com.shreejiShop.demo.repository.ModelRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
+import com.shreejiShop.demo.model.PhonePartialDetails;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -60,7 +63,7 @@ public class ProductServiceImpl implements IProductService {
 
 	private List<Object> getModelsFrom(List<BrandModelRel> brandModels, String sortFlag) {
 		Map<Long, List<Long>> bmMap = this.generateBrandModelMap(brandModels);
-		return this.mapBrandsAndModels(bmMap, sortFlag);
+		return this.getPhoneData(bmMap, sortFlag);
 	}
 
 	private Map<Long, List<Long>> generateBrandModelMap(List<BrandModelRel> brandModels) {
@@ -72,24 +75,24 @@ public class ProductServiceImpl implements IProductService {
 		return _bmMap;
 	}
 
-	private List<Object> mapBrandsAndModels(Map<Long, List<Long>> bmMap, String sortFlag) {
-		List<Object> modelMap = new ArrayList<Object>();
+	private List<Object> getPhoneData(Map<Long, List<Long>> bmMap, String sortFlag) {
+		List<Object> phoneList = new ArrayList<Object>();
 		bmMap.entrySet().forEach(bm -> {
-			Long brandId = bm.getKey();
 			List<Long> models = bm.getValue();
-			Map<String, Object> bmMapFinal = new HashMap<String, Object>();
-			bmMapFinal.put("brandId", brandId);
-			bmMapFinal.put("brandName", brandRepo.findById(brandId).orElse(null).getName());
+			List<Object[]> result;
 			if (sortFlag.equals("asc")) {
-				bmMapFinal.put("model", modelRepo.findModelsByIdOrderByPriceEurAsc(models));
+				result = modelRepo.findModelsByIdOrderByPriceEurAsc(models);
 			} else if (sortFlag.equals("desc")) {
-				bmMapFinal.put("model", modelRepo.findModelsByIdOrderByPriceEurDesc(models));
+				result = modelRepo.findModelsByIdOrderByPriceEurDesc(models);
 			} else {
-				bmMapFinal.put("model", modelRepo.findModelsById(models));
+				result = modelRepo.findModelsById(models);
 			}
-			modelMap.add(bmMapFinal);
+			result.forEach(p -> {
+				PhonePartialDetails pd = new PhonePartialDetails((String) p[0], (BigDecimal) p[1], (String) p[2], (BigDecimal) p[3], (String) p[4]);
+				phoneList.add(pd);
+			});
 		});
-		return modelMap;
+		return phoneList;
 	}
 
 	private Map<String, Object> getPaginationData(Page<BrandModelRel> page) {

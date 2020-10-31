@@ -6,16 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.shreejiShop.demo.model.Model;
-import com.shreejiShop.demo.model.PhonePartialDetails;
 
 public interface ModelRepo extends JpaRepository<Model, Long> {
 	
-	@Query("select NEW com.shreejiShop.demo.model.PhonePartialDetails(m.id, m.name, m.priceEur, m.imgUrl) from Model m where id in ?1 order by priceEur asc")
-	public List<PhonePartialDetails> findModelsByIdOrderByPriceEurAsc(List<Long> modelIds);
+	@Query(value="select b.name as BRAND_NAME, m.id, m.name as PHONE_NAME, m.approx_price_eur, m.img_url FROM brands b JOIN brand_model bm ON b.id = bm.brand_id JOIN model m ON bm.model_id = m.id WHERE bm.model_id in ?1 ORDER BY m.approx_price_eur asc", nativeQuery=true)
+	public List<Object[]> findModelsByIdOrderByPriceEurAsc(List<Long> modelIds);
 	
-	@Query("select NEW com.shreejiShop.demo.model.PhonePartialDetails(m.id, m.name, m.priceEur, m.imgUrl) from Model m where id in ?1 order by priceEur desc")
-	public List<PhonePartialDetails> findModelsByIdOrderByPriceEurDesc(List<Long> modelIds);
+	@Query(value="select b.name as BRAND_NAME, m.id, m.name as PHONE_NAME, m.approx_price_eur, m.img_url FROM brands b JOIN brand_model bm ON b.id = bm.brand_id JOIN model m ON bm.model_id = m.id WHERE bm.model_id in ?1 ORDER BY m.approx_price_eur desc", nativeQuery=true)
+	public List<Object[]> findModelsByIdOrderByPriceEurDesc(List<Long> modelIds);
 	
-	@Query("select NEW com.shreejiShop.demo.model.PhonePartialDetails(m.id, m.name, m.priceEur, m.imgUrl) from Model m where id in ?1")
-	public List<PhonePartialDetails> findModelsById(List<Long> modelIds);
+	@Query(value="select b.name as BRAND_NAME, m.id, m.name as PHONE_NAME, m.approx_price_eur, m.img_url FROM brands b JOIN brand_model bm ON b.id = bm.brand_id JOIN model m ON bm.model_id = m.id WHERE bm.model_id in ?1", nativeQuery=true)
+	public List<Object[]> findModelsById(List<Long> modelIds);
 }
