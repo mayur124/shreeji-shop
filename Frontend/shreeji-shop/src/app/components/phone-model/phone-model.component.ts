@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
-import { PhoneData } from '../../models/home.model';
+import { BrandModelMap, PhoneData } from '../../models/home.model';
 
 @Component({
   selector: 'app-phone-model',
@@ -13,7 +13,7 @@ export class PhoneModelComponent implements OnInit {
 
   @Input() phoneResponse: Observable<PhoneData>;
 
-  phones: any[] = [];
+  phones: BrandModelMap[] = [];
 
   constructor(private router: Router,
     private common: CommonService) { }
@@ -24,12 +24,10 @@ export class PhoneModelComponent implements OnInit {
         if (response.data.length > 0) {
           this.phones = new Array();
           response.data.forEach(d => {
-            d.model.forEach(m => {
-              let phone = m;
-              phone["brandName"] = d.brandName;
-              phone.priceEur = this.common.getInrPrice(Number(phone.priceEur));
-              this.phones.push(phone);
-            });
+            let phone = d;
+            phone.name = d["phoneName"];
+            phone.priceEur = this.common.getInrPrice(Number(phone.priceEur));
+            this.phones.push(phone);
           });
         }
       },
@@ -39,8 +37,9 @@ export class PhoneModelComponent implements OnInit {
     )
   }
 
-  openPhoneDetails(p: any) {
-    this.router.navigate([]).then((result: never) => { window.open(`/phone/${p.brandName}/${p.id}`, '_blank') });
+  openPhoneDetails(phoneDetails: BrandModelMap) {
+    phoneDetails.id = phoneDetails["phoneId"];
+    this.router.navigate([]).then((result: never) => { window.open(`/phone/${phoneDetails.brandName}/${phoneDetails.id}`, '_blank') });
   }
 
 }

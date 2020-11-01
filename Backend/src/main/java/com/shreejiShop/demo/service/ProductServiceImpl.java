@@ -62,35 +62,21 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	private List<Object> getModelsFrom(List<BrandModelRel> brandModels, String sortFlag) {
-		Map<Long, List<Long>> bmMap = this.generateBrandModelMap(brandModels);
-		return this.getPhoneData(bmMap, sortFlag);
-	}
-
-	private Map<Long, List<Long>> generateBrandModelMap(List<BrandModelRel> brandModels) {
-		Map<Long, List<Long>> _bmMap = new HashMap<Long, List<Long>>();
-		brandModels.forEach(bm -> {
-			_bmMap.putIfAbsent(bm.getBrand(), new ArrayList<Long>());
-			_bmMap.get(bm.getBrand()).add(bm.getModel());
-		});
-		return _bmMap;
-	}
-
-	private List<Object> getPhoneData(Map<Long, List<Long>> bmMap, String sortFlag) {
+		List<Long> modelIds = new ArrayList<Long>();
 		List<Object> phoneList = new ArrayList<Object>();
-		bmMap.entrySet().forEach(bm -> {
-			List<Long> models = bm.getValue();
-			List<Object[]> result;
-			if (sortFlag.equals("asc")) {
-				result = modelRepo.findModelsByIdOrderByPriceEurAsc(models);
-			} else if (sortFlag.equals("desc")) {
-				result = modelRepo.findModelsByIdOrderByPriceEurDesc(models);
-			} else {
-				result = modelRepo.findModelsById(models);
-			}
-			result.forEach(p -> {
-				PhonePartialDetails pd = new PhonePartialDetails((String) p[0], (BigDecimal) p[1], (String) p[2], (BigDecimal) p[3], (String) p[4]);
-				phoneList.add(pd);
-			});
+		List<Object[]> result;
+		brandModels.forEach(bm -> modelIds.add(bm.getModel()));
+		if (sortFlag.equals("asc")) {
+			result = modelRepo.findModelsByIdOrderByPriceEurAsc(modelIds);
+		} else if (sortFlag.equals("desc")) {
+			result = modelRepo.findModelsByIdOrderByPriceEurDesc(modelIds);
+		} else {
+			result = modelRepo.findModelsById(modelIds);
+		}
+		result.forEach(p -> {
+			PhonePartialDetails pd = new PhonePartialDetails((String) p[0], (BigDecimal) p[1], (String) p[2],
+					(BigDecimal) p[3], (String) p[4]);
+			phoneList.add(pd);
 		});
 		return phoneList;
 	}
@@ -125,10 +111,17 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Map<String, Object> getAllModels(Integer page, String sort) {
+	public Map<String, Object> getAllModels(Integer pageNo, String sort) {
 		Map<String, Object> response = new HashMap<String, Object>();
-		Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-		Page<BrandModelRel> brandModelsPage = brandModelRelRepo.findAll(pageable);
+		Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
+		Page<BrandModelRel> brandModelsPage;
+		if (sort.equals("asc")) {
+			brandModelsPage = brandModelRelRepo.findAllOrderByPriceAsc(pageable);
+		} else if (sort.equals("desc")) {
+			brandModelsPage = brandModelRelRepo.findAllOrderByPriceDesc(pageable);
+		} else {
+			brandModelsPage = brandModelRelRepo.findAll(pageable);
+		}
 		response.put("paginationData", this.getPaginationData(brandModelsPage));
 		if (brandModelsPage.hasContent()) {
 			response.put("data", this.getModelsFrom(brandModelsPage.getContent(), sort));

@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class PhonePartialDetails {
 	private String brandName;
-	private BigDecimal phoneId;
-	private String phoneName;
+	private BigDecimal id;
+	private String name;
 	private BigDecimal priceEur;
 	private String imgUrl;
 
@@ -15,8 +15,8 @@ public class PhonePartialDetails {
 	public PhonePartialDetails(String brandName, BigDecimal phoneId, String phoneName, BigDecimal priceEur, String imgUrl) {
 		super();
 		this.brandName = brandName;
-		this.phoneId = phoneId;
-		this.phoneName = phoneName;
+		this.id = phoneId;
+		this.name = phoneName;
 		this.priceEur = priceEur;
 		this.imgUrl = imgUrl;
 	}
@@ -30,19 +30,19 @@ public class PhonePartialDetails {
 	}
 
 	public BigDecimal getPhoneId() {
-		return phoneId;
+		return id;
 	}
 
 	public void setPhoneId(BigDecimal phoneId) {
-		this.phoneId = phoneId;
+		this.id = phoneId;
 	}
 
 	public String getPhoneName() {
-		return phoneName;
+		return name;
 	}
 
 	public void setPhoneName(String phoneName) {
-		this.phoneName = phoneName;
+		this.name = phoneName;
 	}
 
 	public BigDecimal getPriceEur() {

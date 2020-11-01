@@ -6,8 +6,6 @@ export class PhoneData {
     paginationData: Page;
 }
 
-export class BrandModelMap {
-    brandId: number;
+export class BrandModelMap extends PhoneModel {
     brandName: string;
-    model: PhoneModel[]
 }

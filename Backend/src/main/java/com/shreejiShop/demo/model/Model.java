@@ -10,10 +10,10 @@ import javax.persistence.Table;
 public class Model {
 	@Id
 	@Column(name = "ID")
-	private Long id;
+	private Long phoneId;
 
 	@Column(name = "NAME")
-	private String name;
+	private String phoneName;
 
 	@Column(name = "NETWORK_TECHNOLOGY")
 	private String networkTechnology;
@@ -121,19 +121,19 @@ public class Model {
 	private String imgUrl;
 
 	public Long getId() {
-		return id;
+		return phoneId;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.phoneId = id;
 	}
 
 	public String getName() {
-		return name;
+		return phoneName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.phoneName = name;
 	}
 
 	public String getNetworkTechnology() {
@@ -418,7 +418,7 @@ public class Model {
 
 	@Override
 	public String toString() {
-		return "Models [id=" + id + ", name=" + name + ", networkTechnology=" + networkTechnology + ", bands2g="
+		return "Models [id=" + phoneId + ", name=" + phoneName + ", networkTechnology=" + networkTechnology + ", bands2g="
 				+ bands2g + ", bands3g=" + bands3g + ", bands4g=" + bands4g + ", networkSpeed=" + networkSpeed
 				+ ", gprs=" + gprs + ", edge=" + edge + ", announced=" + announced + ", status=" + status
 				+ ", dimensions=" + dimensions + ", weightG=" + weightG + ", sim=" + sim + ", displayType="
