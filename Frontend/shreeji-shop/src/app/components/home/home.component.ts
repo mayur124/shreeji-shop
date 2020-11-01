@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   brandIds: string;
   sortType: SORT_TYPE;
+  pageNo: number;
 
   constructor(private http: HttpService,) { }
 
@@ -24,8 +25,8 @@ export class HomeComponent implements OnInit {
     this.getDefaultPhones();
   }
 
-  private getDefaultPhones(page?: number) {
-    this.http.getDefaultPhoneModels(page, this.sortType).subscribe(
+  private getDefaultPhones() {
+    this.http.getDefaultPhoneModels(this.pageNo, this.sortType).subscribe(
       (response: PhoneData) => {
         this.paginationSub.next({ brandIds: '', paginationData: response.paginationData });
         this.phoneModelSubject.next(response);
@@ -35,8 +36,8 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-  private getModelsForSelectedBrands(brandIds: string, page?: number) {
-    this.http.getPhoneModelsByBrandIds(brandIds, page, this.sortType).subscribe(
+  private getModelsForSelectedBrands(brandIds: string) {
+    this.http.getPhoneModelsByBrandIds(brandIds, this.pageNo, this.sortType).subscribe(
       (response: PhoneData) => {
         this.brandIds = brandIds;
         this.paginationSub.next({ brandIds: brandIds, paginationData: response.paginationData });
@@ -55,10 +56,11 @@ export class HomeComponent implements OnInit {
     }
   }
   performPagination(event: { isBrandsSelected: boolean, pageNo: number }) {
+    this.pageNo = event.pageNo;
     if (event.isBrandsSelected) {
-      this.getDefaultPhones(event.pageNo);
+      this.getDefaultPhones();
     } else {
-      this.getModelsForSelectedBrands(this.brandIds, event.pageNo);
+      this.getModelsForSelectedBrands(this.brandIds);
     }
   }
   sortPhones(sortType: SORT_TYPE) {
