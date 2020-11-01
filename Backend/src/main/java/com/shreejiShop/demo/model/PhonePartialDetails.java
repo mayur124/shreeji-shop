@@ -3,6 +3,7 @@ package com.shreejiShop.demo.model;
 import java.math.BigDecimal;
 
 public class PhonePartialDetails {
+	private BigDecimal brandId;
 	private String brandName;
 	private BigDecimal id;
 	private String name;
@@ -12,15 +13,24 @@ public class PhonePartialDetails {
 	public PhonePartialDetails() {
 	}
 
-	public PhonePartialDetails(String brandName, BigDecimal phoneId, String phoneName, BigDecimal priceEur, String imgUrl) {
+	public PhonePartialDetails(BigDecimal brandId, String brandName, BigDecimal phoneId, String phoneName, BigDecimal priceEur, String imgUrl) {
 		super();
+		this.brandId = brandId;
 		this.brandName = brandName;
 		this.id = phoneId;
 		this.name = phoneName;
 		this.priceEur = priceEur;
 		this.imgUrl = imgUrl;
 	}
+	
+	public BigDecimal getBrandId() {
+		return brandId;
+	}
 
+	public void setBrandId(BigDecimal brandId) {
+		this.brandId = brandId;
+	}
+	
 	public String getBrandName() {
 		return brandName;
 	}

@@ -1,5 +1,6 @@
 package com.shreejiShop.demo.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shreejiShop.demo.model.Model;
+import com.shreejiShop.demo.model.PhonePartialDetails;
 import com.shreejiShop.demo.service.IProductService;
 
 @RestController
@@ -34,5 +36,10 @@ public class ProductController {
 	@GetMapping(path = "/phone")
 	public Model getPhoneById(@RequestParam Long phoneId) {
 		return productService.getPhoneById(phoneId);
+	}
+	
+	@GetMapping(path = "/similar")
+	public List<PhonePartialDetails> getSimilarPhones(@RequestParam Long brandId, @RequestParam Long phoneId){
+		return productService.getSimilarPhones(brandId, phoneId);	
 	}
 }

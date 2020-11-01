@@ -26,7 +26,7 @@ import { PhoneDetailComponent } from './components/phone-detail/phone-detail.com
     PhoneModelComponent,
     PaginationComponent,
     TaglineComponent,
-    PhoneDetailComponent
+    PhoneDetailComponent,
   ],
   imports: [
     BrowserModule,

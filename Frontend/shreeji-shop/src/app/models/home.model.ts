@@ -7,5 +7,6 @@ export class PhoneData {
 }
 
 export class BrandModelMap extends PhoneModel {
+    brandId: number;
     brandName: string;
 }

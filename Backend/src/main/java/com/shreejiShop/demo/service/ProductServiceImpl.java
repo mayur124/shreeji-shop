@@ -74,8 +74,8 @@ public class ProductServiceImpl implements IProductService {
 			result = modelRepo.findModelsById(modelIds);
 		}
 		result.forEach(p -> {
-			PhonePartialDetails pd = new PhonePartialDetails((String) p[0], (BigDecimal) p[1], (String) p[2],
-					(BigDecimal) p[3], (String) p[4]);
+			PhonePartialDetails pd = new PhonePartialDetails((BigDecimal) p[0], (String) p[1], (BigDecimal) p[2],
+					(String) p[3], (BigDecimal) p[4], (String) p[5]);
 			phoneList.add(pd);
 		});
 		return phoneList;
@@ -134,6 +134,18 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public Model getPhoneById(Long phoneId) {
 		return modelRepo.findById(phoneId).orElse(null);
+	}
+
+	@Override
+	public List<PhonePartialDetails> getSimilarPhones(Long brandId, Long phoneId) {
+		List<PhonePartialDetails> phoneList = new ArrayList<PhonePartialDetails>();
+		List<Object[]> result = modelRepo.findSimilarPhones(brandId, phoneId);
+		result.forEach(p -> {
+			PhonePartialDetails pd = new PhonePartialDetails((BigDecimal) p[0], (String) p[1], (BigDecimal) p[2],
+					(String) p[3], (BigDecimal) p[4], (String) p[5]);
+			phoneList.add(pd);
+		});
+		return phoneList;
 	}
 
 }

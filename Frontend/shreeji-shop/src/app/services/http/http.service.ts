@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { SORT_TYPE, URLS } from '../../constants/constants'
 import { Brand } from '../../models/brand.model';
-import { PhoneData } from 'src/app/models/home.model';
+import { BrandModelMap, PhoneData } from 'src/app/models/home.model';
 import { PhoneModel } from 'src/app/models/phone-model.model';
 
 @Injectable({
@@ -33,6 +33,7 @@ export class HttpService {
     return this.http.get<PhoneModel>(URLS.PHONE_DETAIL + "?phoneId=" + phoneId);
   }
 
-  sortPhones(sortBy: SORT_TYPE) {
+  getSimilarPhones(brandId: number, phoneId: number) {
+    return this.http.get<BrandModelMap[]>(URLS.SIMILAR_PHONES + "?brandId=" + brandId + "&phoneId=" + phoneId);
   }
 }

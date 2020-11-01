@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'filter', component: HomeComponent },
   { path: 'search', component: HomeComponent },
-  { path: 'phone/:brandName/:id', component: PhoneDetailComponent }
+  { path: 'phone/:brandName/:brandId/:id', component: PhoneDetailComponent }
 ];
 
 @NgModule({

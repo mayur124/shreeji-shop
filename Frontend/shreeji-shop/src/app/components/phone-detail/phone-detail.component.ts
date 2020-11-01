@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
+import { PhoneData } from 'src/app/models/home.model';
 import { PhoneModel } from 'src/app/models/phone-model.model';
 import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
@@ -13,6 +14,7 @@ import { HttpService } from 'src/app/services/http/http.service';
 })
 export class PhoneDetailComponent implements OnInit {
 
+  phoneModelSubject: Subject<PhoneData> = new Subject();
   brandName: string;
   phoneDetail: PhoneModel;
   phoneAttributes: { [category: string]: { [key: string]: string } } = {};
@@ -27,11 +29,27 @@ export class PhoneDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(
       params => {
-        this.brandName = params["brandName"];
-        this._setPhoneDetails(Number(params["id"]));
+        const brandId = Number(params["brandId"]);
+        const phoneId = Number(params["id"]);
+        const brandName = params["brandName"];
+        this._getSimilarPhones(brandId, phoneId);
+        this.brandName = brandName;
+        this._setPhoneDetails(phoneId);
       },
       error => {
         console.log("Error in activatedRoute > ", error);
+      });
+  }
+
+  private _getSimilarPhones(brandId: number, phoneId: number) {
+    this.http.getSimilarPhones(brandId, phoneId).subscribe(
+      response => {
+        if (response.length > 0) {
+          this.phoneModelSubject.next({ data: response, paginationData: null });
+        }
+      },
+      error => {
+        console.log("Error while getting similar phones > ", error);
       });
   }
 
@@ -47,7 +65,7 @@ export class PhoneDetailComponent implements OnInit {
       error => {
         console.log("Error while fetching phone details > ", error);
       }
-    )
+    );
   }
 
   private _setPhoneAttributes(phoneData: PhoneModel) {
@@ -93,5 +111,4 @@ export class PhoneDetailComponent implements OnInit {
       "wlan": phoneData.wlan,
     }
   }
-
 }

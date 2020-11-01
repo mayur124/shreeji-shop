@@ -39,7 +39,7 @@ export class PhoneModelComponent implements OnInit {
 
   openPhoneDetails(phoneDetails: BrandModelMap) {
     phoneDetails.id = phoneDetails["phoneId"];
-    this.router.navigate([]).then((result: never) => { window.open(`/phone/${phoneDetails.brandName}/${phoneDetails.id}`, '_blank') });
+    this.router.navigate([]).then((result: never) => { window.open(`/phone/${phoneDetails.brandName}/${phoneDetails.brandId}/${phoneDetails.id}`, '_blank') });
   }
 
 }
