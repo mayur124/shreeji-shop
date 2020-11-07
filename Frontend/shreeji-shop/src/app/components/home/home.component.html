@@ -1,8 +1,24 @@
 <app-tagline (applySort)="sortPhones($event)"></app-tagline>
 <div class="d-flex offset-sm-auto offset-lg-2 p-2">
-  <div class="col-sm-4 col-lg-3 col-xl-2 p-0">
+  <div
+    class="col-sm-4 col-lg-3 col-xl-2 p-0 bg-white all-filters-container card h-100"
+  >
+    <div
+      class="d-flex align-items-center justify-content-between all-filters border-bottom w-100 px-3 mt-3"
+    >
+      <p class="heading text-uppercase">filters</p>
+      <p
+        class="clear-all text-uppercase"
+        *ngIf="showClearAll"
+        (click)="triggerClearAll()"
+      >
+        CLEAR ALL
+      </p>
+    </div>
     <app-brand-filter
+      [clearAll]="clearAllSub.asObservable()"
       (selectedBrands)="getPhonesForSelectedBrandsSafe($event)"
+      (hideClearAll)="hideClearAll()"
     ></app-brand-filter>
     <app-model-filter></app-model-filter>
   </div>

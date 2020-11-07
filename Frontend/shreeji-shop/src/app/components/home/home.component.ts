@@ -14,17 +14,18 @@ export class HomeComponent implements OnInit {
 
   phoneModelSubject: Subject<PhoneData> = new Subject();
   paginationSub: Subject<{ brandIds: string, paginationData: Page }> = new Subject();
+  clearAllSub: Subject<boolean> = new Subject();
 
   brandIds: string;
   sortType: SORT_TYPE;
   pageNo: number;
+  showClearAll: boolean = false;
 
   constructor(private http: HttpService,) { }
 
   ngOnInit(): void {
     this.getDefaultPhones();
   }
-
   private getDefaultPhones() {
     this.http.getDefaultPhoneModels(this.pageNo, this.sortType).subscribe(
       (response: PhoneData) => {
@@ -39,7 +40,6 @@ export class HomeComponent implements OnInit {
   private getModelsForSelectedBrands(brandIds: string) {
     this.http.getPhoneModelsByBrandIds(brandIds, this.pageNo, this.sortType).subscribe(
       (response: PhoneData) => {
-        this.brandIds = brandIds;
         this.paginationSub.next({ brandIds: brandIds, paginationData: response.paginationData });
         this.phoneModelSubject.next(response);
       },
@@ -48,10 +48,13 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-  getPhonesForSelectedBrandsSafe(brandIds: string) {
+  getPhonesForSelectedBrandsSafe(brandIds?: string) {
+    this.brandIds = brandIds;
     if (!brandIds || !brandIds.length) {
+      this.showClearAll = false;
       this.getDefaultPhones();
     } else {
+      this.showClearAll = true;
       this.getModelsForSelectedBrands(brandIds);
     }
   }
@@ -66,5 +69,12 @@ export class HomeComponent implements OnInit {
   sortPhones(sortType: SORT_TYPE) {
     this.sortType = sortType;
     this.getPhonesForSelectedBrandsSafe(this.brandIds);
+  }
+  triggerClearAll() {
+    this.clearAllSub.next(true);
+  }
+  hideClearAll() {
+    this.showClearAll = false;
+    this.getPhonesForSelectedBrandsSafe();
   }
 }

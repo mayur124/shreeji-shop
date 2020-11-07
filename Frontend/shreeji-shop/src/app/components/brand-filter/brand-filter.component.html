@@ -1,4 +1,4 @@
-<div class="card brand-filter-container">
+<div class="brand-filter-container">
   <div class="d-flex align-items-center">
     <h6 class="text-uppercase sub-heading pt-3 pl-3">brand</h6>
     <input
@@ -22,7 +22,7 @@
       />
     </button>
   </div>
-  <div class="card-body py-1 ml-3 mt-4">
+  <div class="card-body py-1 ml-3 mt-2">
     <ng-container *ngFor="let bm of brandsMapCopy | keyvalue; let i = index">
       <ng-container *ngFor="let b of bm.value">
         <div *ngIf="i < 3">

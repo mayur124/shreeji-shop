@@ -1,6 +1,7 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { HttpService } from '../../services/http/http.service';
 import { Brand } from '../../models/brand.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-brand-filter',
@@ -20,8 +21,9 @@ export class BrandFilterComponent implements OnInit {
   @ViewChildren('brandLetter') brandLetter: QueryList<ElementRef>
   @ViewChildren('brandCb') brandCb: QueryList<ElementRef>
 
-  @Output()
-  selectedBrands: EventEmitter<string> = new EventEmitter();
+  @Input() clearAll: Observable<boolean>;
+  @Output() selectedBrands: EventEmitter<string> = new EventEmitter();
+  @Output() hideClearAll: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private http: HttpService,
@@ -36,6 +38,15 @@ export class BrandFilterComponent implements OnInit {
 
   ngOnInit(): void {
     this.setBrands();
+    this.clearAll.subscribe(
+      (_response: never) => {
+        this.resetBrands();
+        this.hideClearAll.emit();
+      },
+      (error: any) => {
+        console.log("Error in clearAll > ", error);
+      }
+    );
   }
 
   setBrands() {
@@ -115,10 +126,8 @@ export class BrandFilterComponent implements OnInit {
     const el = this.brandLetter.find(bl => bl.nativeElement.id == 'brandId-' + index);
     const containerCoordinates = (this.allBrands.nativeElement as HTMLElement).getBoundingClientRect();
     const x = (el.nativeElement as HTMLElement).getBoundingClientRect().x;
-    const y = (el.nativeElement as HTMLElement).getBoundingClientRect().y;
     const scrollX = x - containerCoordinates.x - 20;
-    const scrollY = y - containerCoordinates.y;
-    (this.allBrands.nativeElement as HTMLElement).scrollBy(scrollX, scrollY);
+    (this.allBrands.nativeElement as HTMLElement).scrollBy({ left: scrollX });
   }
 
   reduceOpacity(index: number, key: string) {
@@ -145,7 +154,10 @@ export class BrandFilterComponent implements OnInit {
 
   resetBrands() {
     this.hideMoreBrandsContainer();
-    this.brandsMapCopy = JSON.parse(JSON.stringify(this.brandsMap));
+    for (const i in this.brandsMapCopy) {
+      this.brandsMapCopy[i].forEach(bm => bm.checked = false);
+      this.brandsMap[i].forEach(bm => bm.checked = false);
+    }
   }
 
   hideMoreBrandsContainer() {
