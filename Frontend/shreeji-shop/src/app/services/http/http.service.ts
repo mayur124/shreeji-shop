@@ -16,18 +16,18 @@ export class HttpService {
     return this.http.get<{ brands: Brand[] }>(URLS.GET_ALL_BRANDS);
   }
 
-  getPhoneModelsByBrandIds(brandIds: string, page: number = 0, sort: SORT_TYPE = "") {
+  getPhoneModelsByBrandIds(brandIds: string, page: number = 0, sort: SORT_TYPE = "", priceRange: PriceRange) {
     if (sort == "") {
-      return this.http.get<PhoneData>(URLS.FILTER + "?brandIds=" + brandIds + "&page=" + page);
+      return this.http.get<PhoneData>(URLS.FILTER + "?brandIds=" + brandIds + "&page=" + page + "&minPrice=" + priceRange.minPrice + "&maxPrice=" + priceRange.maxPrice);
     }
-    return this.http.get<PhoneData>(URLS.FILTER + "?brandIds=" + brandIds + "&page=" + page + "&sort=" + sort);
+    return this.http.get<PhoneData>(URLS.FILTER + "?brandIds=" + brandIds + "&page=" + page + "&sort=" + sort + "&minPrice=" + priceRange.minPrice + "&maxPrice=" + priceRange.maxPrice);
   }
 
-  getDefaultPhoneModels(page: number = 0, sort: SORT_TYPE = "") {
+  getDefaultPhoneModels(page: number = 0, sort: SORT_TYPE = "", priceRange: PriceRange) {
     if (sort == "") {
-      return this.http.get<PhoneData>(URLS.FILTER + "?page=" + page);
+      return this.http.get<PhoneData>(URLS.FILTER + "?page=" + page + "&minPrice=" + priceRange.minPrice + "&maxPrice=" + priceRange.maxPrice);
     }
-    return this.http.get<PhoneData>(URLS.FILTER + "?page=" + page + "&sort=" + sort);
+    return this.http.get<PhoneData>(URLS.FILTER + "?page=" + page + "&sort=" + sort + "&minPrice=" + priceRange.minPrice + "&maxPrice=" + priceRange.maxPrice);
   }
 
   getPhoneDetails(phoneId: number) {

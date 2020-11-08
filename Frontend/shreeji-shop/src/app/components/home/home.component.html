@@ -5,6 +5,7 @@
   >
     <app-filter
       (selectedBrands)="getPhonesForSelectedBrandsSafe($event)"
+      (priceRangeChange)="setPriceRange($event)"
     ></app-filter>
   </div>
   <div class="col-sm-7 col-lg-8 col-xl-9">

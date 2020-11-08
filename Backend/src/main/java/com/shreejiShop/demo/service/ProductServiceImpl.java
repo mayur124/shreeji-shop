@@ -39,11 +39,13 @@ public class ProductServiceImpl implements IProductService {
 	ModelRepo modelRepo;
 
 	@Override
-	public Map<String, Object> getModelsByBrandIds(String brandIds, Integer page, String sort) {
+	public Map<String, Object> getModelsByBrandIds(String brandIds, Integer page, String sort, Integer minPrice,
+			Integer maxPrice) {
 		Map<String, Object> response = new HashMap<String, Object>();
 		List<Long> brandIdList = this.splitBrandIds(brandIds);
 		Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-		Page<BrandModelRel> brandModelsPage = bmRelRepo.findAllModelsInBrandIds(brandIdList, pageable);
+		Page<BrandModelRel> brandModelsPage = bmRelRepo.findAllModelsInBrandIds(brandIdList, minPrice, maxPrice,
+				pageable);
 		response.put("paginationData", this.getPaginationData(brandModelsPage));
 		if (brandModelsPage.hasContent()) {
 			response.put("data", this.getModelsFrom(brandModelsPage.getContent(), sort));
@@ -54,16 +56,16 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Map<String, Object> getAllModels(Integer pageNo, String sort) {
+	public Map<String, Object> getAllModels(Integer pageNo, String sort, Integer minPrice, Integer maxPrice) {
 		Map<String, Object> response = new HashMap<String, Object>();
 		Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
 		Page<BrandModelRel> brandModelsPage;
 		if (sort.equals("asc")) {
-			brandModelsPage = bmRelRepo.findAllOrderByPriceAsc(pageable);
+			brandModelsPage = bmRelRepo.findAllOrderByPriceAsc(minPrice, maxPrice, pageable);
 		} else if (sort.equals("desc")) {
-			brandModelsPage = bmRelRepo.findAllOrderByPriceDesc(pageable);
+			brandModelsPage = bmRelRepo.findAllOrderByPriceDesc(minPrice, maxPrice, pageable);
 		} else {
-			brandModelsPage = bmRelRepo.findAll(pageable);
+			brandModelsPage = bmRelRepo.findAllBetweenPriceRange(minPrice, maxPrice, pageable);
 		}
 		response.put("paginationData", this.getPaginationData(brandModelsPage));
 		if (brandModelsPage.hasContent()) {

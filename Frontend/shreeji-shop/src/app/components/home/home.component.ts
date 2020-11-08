@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SORT_TYPE } from 'src/app/constants/constants';
 import { Page } from 'src/app/models/page.model';
+import { PriceRange } from 'src/app/models/PriceRange.model';
 import { HttpService } from 'src/app/services/http/http.service';
 import { PhoneData } from "../../models/home.model";
 
@@ -18,14 +19,14 @@ export class HomeComponent implements OnInit {
   brandIds: string;
   sortType: SORT_TYPE;
   pageNo: number;
+  priceRange: PriceRange;
 
   constructor(private http: HttpService,) { }
 
-  ngOnInit(): void {
-    this.getDefaultPhones();
-  }
+  ngOnInit(): void { }
+  
   private getDefaultPhones() {
-    this.http.getDefaultPhoneModels(this.pageNo, this.sortType).subscribe(
+    this.http.getDefaultPhoneModels(this.pageNo, this.sortType, this.priceRange).subscribe(
       (response: PhoneData) => {
         this.paginationSub.next({ brandIds: '', paginationData: response.paginationData });
         this.phoneModelSubject.next(response);
@@ -36,7 +37,7 @@ export class HomeComponent implements OnInit {
     );
   }
   private getModelsForSelectedBrands(brandIds: string) {
-    this.http.getPhoneModelsByBrandIds(brandIds, this.pageNo, this.sortType).subscribe(
+    this.http.getPhoneModelsByBrandIds(brandIds, this.pageNo, this.sortType, this.priceRange).subscribe(
       (response: PhoneData) => {
         this.paginationSub.next({ brandIds: brandIds, paginationData: response.paginationData });
         this.phoneModelSubject.next(response);
@@ -64,6 +65,10 @@ export class HomeComponent implements OnInit {
   }
   sortPhones(sortType: SORT_TYPE) {
     this.sortType = sortType;
+    this.getPhonesForSelectedBrandsSafe(this.brandIds);
+  }
+  setPriceRange(priceRange: PriceRange) {
+    this.priceRange = priceRange;
     this.getPhonesForSelectedBrandsSafe(this.brandIds);
   }
 }

@@ -27,6 +27,7 @@ export class FilterComponent implements OnInit {
   @Input() clearAll: Observable<boolean>;
   @Output() selectedBrands: EventEmitter<string> = new EventEmitter();
   @Output() hideClearAll: EventEmitter<boolean> = new EventEmitter();
+  @Output() priceRangeChange: EventEmitter<PriceRange> = new EventEmitter();
 
   constructor(
     private http: HttpService,
@@ -52,6 +53,7 @@ export class FilterComponent implements OnInit {
         this.brandsMapCopy = this.getBrandsMap(brandResponse.brands);
 
         this.priceRange = resp[1] as PriceRange;
+        this.priceRangeChange.emit(this.priceRange);
       }),
       error => {
         console.log("Error in forkJoin > ", error);
@@ -60,8 +62,8 @@ export class FilterComponent implements OnInit {
   }
 
   fetchModels() {
-    const selectedBrands = this.getSelectedBrands();
-    const brandIds = selectedBrands.map(b => b.id).join(",");
+    const brands = this.getSelectedBrands();
+    const brandIds = brands.map(b => b.id).join(",");
     if (brandIds.length > 0) {
       this.showClearAll = true;
     } else {

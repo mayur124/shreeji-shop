@@ -22,11 +22,12 @@ public class ProductController {
 
 	@GetMapping(path = "/f")
 	public Map<String, Object> listAllModelsByBrandIds(@RequestParam(required = false) String brandIds,
-			@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String sort) {
+			@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String sort,
+			@RequestParam Integer minPrice, @RequestParam Integer maxPrice) {
 		if (brandIds != null) {
-			return productService.getModelsByBrandIds(brandIds, page, sort);
+			return productService.getModelsByBrandIds(brandIds, page, sort, minPrice, maxPrice);
 		}
-		return productService.getAllModels(page, sort);
+		return productService.getAllModels(page, sort, minPrice, maxPrice);
 	}
 
 	@GetMapping(path = "/brands")
