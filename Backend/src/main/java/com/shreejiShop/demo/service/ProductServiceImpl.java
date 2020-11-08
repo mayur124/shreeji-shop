@@ -22,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.shreejiShop.demo.model.PhonePartialDetails;
+import com.shreejiShop.demo.model.PriceRange;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -29,7 +30,7 @@ public class ProductServiceImpl implements IProductService {
 	private static final Integer PAGE_SIZE = 52;
 
 	@Autowired
-	BrandModelRelRepo brandModelRelRepo;
+	BrandModelRelRepo bmRelRepo;
 
 	@Autowired
 	BrandRepo brandRepo;
@@ -42,7 +43,28 @@ public class ProductServiceImpl implements IProductService {
 		Map<String, Object> response = new HashMap<String, Object>();
 		List<Long> brandIdList = this.splitBrandIds(brandIds);
 		Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-		Page<BrandModelRel> brandModelsPage = brandModelRelRepo.findAllModelsInBrandIds(brandIdList, pageable);
+		Page<BrandModelRel> brandModelsPage = bmRelRepo.findAllModelsInBrandIds(brandIdList, pageable);
+		response.put("paginationData", this.getPaginationData(brandModelsPage));
+		if (brandModelsPage.hasContent()) {
+			response.put("data", this.getModelsFrom(brandModelsPage.getContent(), sort));
+		} else {
+			response.put("data", new ArrayList<Object>());
+		}
+		return response;
+	}
+
+	@Override
+	public Map<String, Object> getAllModels(Integer pageNo, String sort) {
+		Map<String, Object> response = new HashMap<String, Object>();
+		Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
+		Page<BrandModelRel> brandModelsPage;
+		if (sort.equals("asc")) {
+			brandModelsPage = bmRelRepo.findAllOrderByPriceAsc(pageable);
+		} else if (sort.equals("desc")) {
+			brandModelsPage = bmRelRepo.findAllOrderByPriceDesc(pageable);
+		} else {
+			brandModelsPage = bmRelRepo.findAll(pageable);
+		}
 		response.put("paginationData", this.getPaginationData(brandModelsPage));
 		if (brandModelsPage.hasContent()) {
 			response.put("data", this.getModelsFrom(brandModelsPage.getContent(), sort));
@@ -67,11 +89,11 @@ public class ProductServiceImpl implements IProductService {
 		List<Object[]> result;
 		brandModels.forEach(bm -> modelIds.add(bm.getModel()));
 		if (sortFlag.equals("asc")) {
-			result = modelRepo.findModelsByIdOrderByPriceEurAsc(modelIds);
+			result = bmRelRepo.findModelsByIdOrderByPriceAsc(modelIds);
 		} else if (sortFlag.equals("desc")) {
-			result = modelRepo.findModelsByIdOrderByPriceEurDesc(modelIds);
+			result = bmRelRepo.findModelsByIdOrderByPriceDesc(modelIds);
 		} else {
-			result = modelRepo.findModelsById(modelIds);
+			result = bmRelRepo.findModelsById(modelIds);
 		}
 		result.forEach(p -> {
 			PhonePartialDetails pd = new PhonePartialDetails((BigDecimal) p[0], (String) p[1], (BigDecimal) p[2],
@@ -107,28 +129,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	private Long getModelCountOfBrand(Long brandId) {
-		return brandModelRelRepo.countByBrandId(brandId);
-	}
-
-	@Override
-	public Map<String, Object> getAllModels(Integer pageNo, String sort) {
-		Map<String, Object> response = new HashMap<String, Object>();
-		Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
-		Page<BrandModelRel> brandModelsPage;
-		if (sort.equals("asc")) {
-			brandModelsPage = brandModelRelRepo.findAllOrderByPriceAsc(pageable);
-		} else if (sort.equals("desc")) {
-			brandModelsPage = brandModelRelRepo.findAllOrderByPriceDesc(pageable);
-		} else {
-			brandModelsPage = brandModelRelRepo.findAll(pageable);
-		}
-		response.put("paginationData", this.getPaginationData(brandModelsPage));
-		if (brandModelsPage.hasContent()) {
-			response.put("data", this.getModelsFrom(brandModelsPage.getContent(), sort));
-		} else {
-			response.put("data", new ArrayList<Object>());
-		}
-		return response;
+		return bmRelRepo.countByBrandId(brandId);
 	}
 
 	@Override
@@ -139,13 +140,28 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public List<PhonePartialDetails> getSimilarPhones(Long brandId, Long phoneId) {
 		List<PhonePartialDetails> phoneList = new ArrayList<PhonePartialDetails>();
-		List<Object[]> result = modelRepo.findSimilarPhones(brandId, phoneId);
+		List<Object[]> result = bmRelRepo.findSimilarPhones(brandId, phoneId);
 		result.forEach(p -> {
 			PhonePartialDetails pd = new PhonePartialDetails((BigDecimal) p[0], (String) p[1], (BigDecimal) p[2],
 					(String) p[3], (BigDecimal) p[4], (String) p[5]);
 			phoneList.add(pd);
 		});
 		return phoneList;
+	}
+
+	@Override
+	public PriceRange getPriceRange(String brandIds) {
+		Object[] response;
+		if (brandIds != null && brandIds.trim().length() > 0) {
+			List<Long> brandIdList = this.splitBrandIds(brandIds);
+			response = (Object[]) bmRelRepo.getPriceRangeBrandIds(brandIdList);
+		} else {
+			response = (Object[]) modelRepo.getPriceRangeAll();
+		}
+		PriceRange pr = new PriceRange();
+		pr.setMinPrice((BigDecimal) response[0]);
+		pr.setMaxPrice((BigDecimal) response[1]);
+		return pr;
 	}
 
 }

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from "./components/header/header.component";
-import { BrandFilterComponent } from './components/brand-filter/brand-filter.component';
+import { FilterComponent } from './components/filter/filter.component';
 import { HomeComponent } from './components/home/home.component';
 import { PaginationComponent } from "./components/home/pagination/pagination.component";
 import { TaglineComponent } from "./components/tagline/tagline.component";
@@ -20,7 +20,7 @@ import { PhoneDetailComponent } from './components/phone-detail/phone-detail.com
   declarations: [
     AppComponent,
     HeaderComponent,
-    BrandFilterComponent,
+    FilterComponent,
     HomeComponent,
     ModelFilterComponent,
     PhoneModelComponent,

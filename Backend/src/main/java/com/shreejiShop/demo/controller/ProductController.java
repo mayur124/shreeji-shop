@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shreejiShop.demo.model.Model;
 import com.shreejiShop.demo.model.PhonePartialDetails;
+import com.shreejiShop.demo.model.PriceRange;
 import com.shreejiShop.demo.service.IProductService;
 
 @RestController
@@ -20,10 +21,10 @@ public class ProductController {
 	private IProductService productService;
 
 	@GetMapping(path = "/f")
-	public Map<String, Object> listAllModelsByBrandIds(@RequestParam(required = false) String brandIds, 
+	public Map<String, Object> listAllModelsByBrandIds(@RequestParam(required = false) String brandIds,
 			@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String sort) {
 		if (brandIds != null) {
-			return productService.getModelsByBrandIds(brandIds, page, sort);			
+			return productService.getModelsByBrandIds(brandIds, page, sort);
 		}
 		return productService.getAllModels(page, sort);
 	}
@@ -32,14 +33,19 @@ public class ProductController {
 	public Map<String, Object> listBrands() {
 		return productService.getAllBrands();
 	}
-	
+
 	@GetMapping(path = "/phone")
 	public Model getPhoneById(@RequestParam Long phoneId) {
 		return productService.getPhoneById(phoneId);
 	}
-	
+
 	@GetMapping(path = "/similar")
-	public List<PhonePartialDetails> getSimilarPhones(@RequestParam Long brandId, @RequestParam Long phoneId){
-		return productService.getSimilarPhones(brandId, phoneId);	
+	public List<PhonePartialDetails> getSimilarPhones(@RequestParam Long brandId, @RequestParam Long phoneId) {
+		return productService.getSimilarPhones(brandId, phoneId);
+	}
+
+	@GetMapping(path = "/priceRange")
+	public PriceRange getPriceRange(@RequestParam(required = false) String brandIds) {
+		return productService.getPriceRange(brandIds);
 	}
 }

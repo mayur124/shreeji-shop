@@ -1,6 +1,6 @@
 <app-tagline [tagLine]="tagLineSub.asObservable()"></app-tagline>
 <div
-  class="d-flex offset-sm-auto offset-lg-2 col-sm-12 col-lg-8 p-2 mb-3 phone-detail-container bg-white"
+  class="d-flex offset-sm-auto offset-lg-2 col-sm-12 col-lg-8 p-2 mb-4 phone-detail-container bg-white"
 >
   <img
     [src]="phoneDetail?.imgUrl"
@@ -50,8 +50,11 @@
     </div>
   </div>
 </div>
-<div class="py-3 px-0 mb-3 d-flex offset-sm-auto offset-lg-2 col-sm-12 col-lg-8">
+<div
+  class="py-3 px-0 mb-3 d-flex flex-column offset-sm-auto offset-lg-2 col-sm-12 col-lg-8"
+>
+  <p class="other-phones">More from {{ brandName }}</p>
   <app-phone-model
-      [phoneResponse]="phoneModelSubject.asObservable()"
-    ></app-phone-model>
+    [phoneResponse]="phoneModelSubject.asObservable()"
+  ></app-phone-model>
 </div>

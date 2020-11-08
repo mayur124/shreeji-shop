@@ -1,20 +1,23 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { HttpService } from '../../services/http/http.service';
 import { Brand } from '../../models/brand.model';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
+import { PriceRange } from 'src/app/models/PriceRange.model';
 
 @Component({
-  selector: 'app-brand-filter',
-  templateUrl: './brand-filter.component.html',
-  styleUrls: ['./brand-filter.component.scss'],
+  selector: 'app-filter',
+  templateUrl: './filter.component.html',
+  styleUrls: ['./filter.component.scss'],
 })
-export class BrandFilterComponent implements OnInit {
+export class FilterComponent implements OnInit {
   searchClicked: boolean = false;
   moreBrandsClicked: boolean = false;
   brandsMap: { [letter: string]: Brand[] } = {};
   brandsMapCopy: { [letter: string]: Brand[] } = {};
   totalBrands: number = 0;
   brandInput: string = '';
+  showClearAll: boolean = false;
+  priceRange: PriceRange = new PriceRange();
 
   @ViewChild('moreBrandsContainer') moreBrandsContainer: ElementRef;
   @ViewChild('allBrands') allBrands: ElementRef;
@@ -38,26 +41,20 @@ export class BrandFilterComponent implements OnInit {
 
   ngOnInit(): void {
     this.setBrands();
-    this.clearAll.subscribe(
-      (_response: never) => {
-        this.resetBrands();
-        this.hideClearAll.emit();
-      },
-      (error: any) => {
-        console.log("Error in clearAll > ", error);
-      }
-    );
   }
 
   setBrands() {
-    this.http.getAllBrands().subscribe(
-      (response: { brands: Brand[] }) => {
-        this.totalBrands = response.brands.length;
-        this.brandsMap = this.getBrandsMap(response.brands);
-        this.brandsMapCopy = this.getBrandsMap(response.brands);
-      },
-      (error) => {
-        console.log('Error while getting all brands > ', error);
+    forkJoin([this.http.getAllBrands(), this.http.getPriceRange()]).subscribe(
+      ((resp: any[]) => {
+        const brandResponse = resp[0] as { brands: Brand[] };
+        this.totalBrands = brandResponse.brands.length;
+        this.brandsMap = this.getBrandsMap(brandResponse.brands);
+        this.brandsMapCopy = this.getBrandsMap(brandResponse.brands);
+
+        this.priceRange = resp[1] as PriceRange;
+      }),
+      error => {
+        console.log("Error in forkJoin > ", error);
       }
     );
   }
@@ -65,6 +62,11 @@ export class BrandFilterComponent implements OnInit {
   fetchModels() {
     const selectedBrands = this.getSelectedBrands();
     const brandIds = selectedBrands.map(b => b.id).join(",");
+    if (brandIds.length > 0) {
+      this.showClearAll = true;
+    } else {
+      this.showClearAll = false;
+    }
     this.selectedBrands.emit(brandIds);
   }
 
@@ -158,6 +160,8 @@ export class BrandFilterComponent implements OnInit {
       this.brandsMapCopy[i].forEach(bm => bm.checked = false);
       this.brandsMap[i].forEach(bm => bm.checked = false);
     }
+    this.showClearAll = false;
+    this.fetchModels();
   }
 
   hideMoreBrandsContainer() {
