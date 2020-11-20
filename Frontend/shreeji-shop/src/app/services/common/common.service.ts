@@ -8,9 +8,12 @@ export class CommonService {
 
   constructor() { }
 
-  getInrPrice(priceInEur: number): string {
+  getInrPrice(priceInEur: number, noToLocale?: boolean): string | number {
     const inrAmt = 87;
     const answer = priceInEur * inrAmt;
+    if (noToLocale) {
+      return answer;
+    }
     return answer.toLocaleString('en-IN', { maximumSignificantDigits: 3 });
   }
 }
