@@ -17,7 +17,9 @@ export class FilterComponent implements OnInit {
   totalBrands: number = 0;
   brandInput: string = '';
   showClearAll: boolean = false;
-  priceRange: PriceRange = new PriceRange();
+  priceRange: PriceRange;
+  selectedMinPrice: number;
+  selectedMaxPrice: number;
 
   @ViewChild('moreBrandsContainer') moreBrandsContainer: ElementRef;
   @ViewChild('allBrands') allBrands: ElementRef;
@@ -53,6 +55,8 @@ export class FilterComponent implements OnInit {
         this.brandsMapCopy = this.getBrandsMap(brandResponse.brands);
 
         this.priceRange = resp[1] as PriceRange;
+        this.selectedMinPrice = this.priceRange.minPrice;
+        this.selectedMaxPrice = this.priceRange.maxPrice;
         this.priceRangeChange.emit(this.priceRange);
       }),
       error => {
