@@ -18,6 +18,8 @@ import { PhoneDetailComponent } from './components/phone-detail/phone-detail.com
 import { HttpService } from './services/http/http.service';
 import { CommonService } from './services/common/common.service';
 
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +37,7 @@ import { CommonService } from './services/common/common.service';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    NgxSliderModule,
   ],
   providers: [HttpService, CommonService],
   bootstrap: [AppComponent]

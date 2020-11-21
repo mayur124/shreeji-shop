@@ -4,6 +4,7 @@ import { Brand } from '../../models/brand.model';
 import { forkJoin, Observable } from 'rxjs';
 import { PriceRange } from 'src/app/models/PriceRange.model';
 import { CommonService } from 'src/app/services/common/common.service';
+import { Options } from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'app-filter',
@@ -21,9 +22,10 @@ export class FilterComponent implements OnInit {
   priceRange: PriceRange;
   selectedMinPrice: number;
   selectedMaxPrice: number;
-  thumbLeftStyle: {} = { 'left': '0%' };
-  thumbRightStyle: {} = { 'right': '0%' };
-  rangeStyle: {} = { 'left': '0%', 'right': '0%' };
+  options: Options = {
+    floor: 0,
+    ceil: 100
+  };
 
   @ViewChild('moreBrandsContainer') moreBrandsContainer: ElementRef;
   @ViewChild('allBrands') allBrands: ElementRef;
@@ -38,7 +40,7 @@ export class FilterComponent implements OnInit {
   constructor(
     private http: HttpService,
     private renderer2: Renderer2,
-    private common: CommonService
+    private common: CommonService,
   ) {
     this.renderer2.listen('document', 'mousedown', (event: MouseEvent) => {
       if (!this.moreBrandsContainer?.nativeElement.contains(event.target)) {
@@ -60,10 +62,12 @@ export class FilterComponent implements OnInit {
         this.brandsMapCopy = this.getBrandsMap(brandResponse.brands);
 
         this.priceRange = JSON.parse(JSON.stringify(resp[1] as PriceRange));
-        this.priceRange.minPrice = this.common.getInrPrice(this.priceRange.minPrice, true) as number;
-        this.priceRange.maxPrice = this.common.getInrPrice(this.priceRange.maxPrice, true) as number;
+        this.priceRange.minPrice = this.common.getInrPriceNoLocale(this.priceRange.minPrice);
+        this.priceRange.maxPrice = this.common.getInrPriceNoLocale(this.priceRange.maxPrice);
         this.selectedMinPrice = this.priceRange.minPrice;
         this.selectedMaxPrice = this.priceRange.maxPrice;
+        this.options.floor = this.priceRange.minPrice;
+        this.options.ceil = this.priceRange.maxPrice;
         this.priceRangeChange.emit(resp[1] as PriceRange);
       }),
       error => {
@@ -179,29 +183,5 @@ export class FilterComponent implements OnInit {
 
   hideMoreBrandsContainer() {
     this.moreBrandsClicked = false;
-  }
-
-  setLeftThumb() {
-    if (this.selectedMinPrice <= this.selectedMaxPrice) {
-      const value = Math.min(this.selectedMinPrice, this.selectedMaxPrice);
-      const percent = ((value - this.priceRange.minPrice) / (this.priceRange.maxPrice - this.priceRange.minPrice)) * 100;
-      this.thumbLeftStyle = { 'left': `${percent}%` };
-      this.rangeStyle = { ...this.rangeStyle, 'left': `${percent}%` };
-    }
-    else if (this.selectedMinPrice > this.selectedMaxPrice) {
-      this.selectedMinPrice = this.selectedMaxPrice - 1;
-    }
-  }
-
-  setRightThumb() {
-    if (this.selectedMaxPrice >= this.selectedMinPrice) {
-      const value = Math.max(this.selectedMinPrice, this.selectedMaxPrice);
-      const percent = ((value - this.priceRange.minPrice) / (this.priceRange.maxPrice - this.priceRange.minPrice)) * 100;
-      this.thumbRightStyle = { 'right': (100 - percent) + '%' };
-      this.rangeStyle = { ...this.rangeStyle, 'right': (100 - percent) + '%' };
-    }
-    else if (this.selectedMaxPrice < this.selectedMinPrice) {
-      this.selectedMaxPrice = this.selectedMinPrice + 1;
-    }
   }
 }
