@@ -14,7 +14,16 @@ export class CommonService {
   }
 
   getInrPriceNoLocale(priceInEur: number): number {
-    const inrAmt = 87;
+    const inrAmt = this._getCurrentINRValue();
     return priceInEur * inrAmt;
+  }
+
+  getEurPrice(priceINR: number): number {
+    const inrAmt = this._getCurrentINRValue();
+    return Math.round(priceINR / inrAmt)
+  }
+
+  private _getCurrentINRValue(): number{
+    return 87;
   }
 }

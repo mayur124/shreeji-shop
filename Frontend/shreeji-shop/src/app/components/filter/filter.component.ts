@@ -64,10 +64,10 @@ export class FilterComponent implements OnInit {
         this.priceRange = JSON.parse(JSON.stringify(resp[1] as PriceRange));
         this.priceRange.minPrice = this.common.getInrPriceNoLocale(this.priceRange.minPrice);
         this.priceRange.maxPrice = this.common.getInrPriceNoLocale(this.priceRange.maxPrice);
-        this.selectedMinPrice = this.priceRange.minPrice;
-        this.selectedMaxPrice = this.priceRange.maxPrice;
-        this.options.floor = this.priceRange.minPrice;
-        this.options.ceil = this.priceRange.maxPrice;
+        this.selectedMinPrice = JSON.parse(JSON.stringify(this.priceRange.minPrice));
+        this.selectedMaxPrice = JSON.parse(JSON.stringify(this.priceRange.maxPrice));
+        this.options.floor = JSON.parse(JSON.stringify(this.priceRange.minPrice));
+        this.options.ceil = JSON.parse(JSON.stringify(this.priceRange.maxPrice));
         this.priceRangeChange.emit(resp[1] as PriceRange);
       }),
       error => {
@@ -177,11 +177,34 @@ export class FilterComponent implements OnInit {
       this.brandsMapCopy[i].forEach(bm => bm.checked = false);
       this.brandsMap[i].forEach(bm => bm.checked = false);
     }
+    this.selectedMinPrice = this.priceRange.minPrice;
+    this.selectedMaxPrice = this.priceRange.maxPrice;
+    this._emitPriceChange();
     this.showClearAll = false;
     this.fetchModels();
   }
 
   hideMoreBrandsContainer() {
     this.moreBrandsClicked = false;
+  }
+
+  private _debounce = (callback: Function, delay: number) => {
+    let timeout: any
+    return (...args: any[]) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => callback.apply(this, ...args), delay);
+    };
+  }
+
+  onUserChange = this._debounce(() => {
+    this.showClearAll = true;
+    this._emitPriceChange();
+  }, 500);
+
+  private _emitPriceChange() {
+    const priceRange = new PriceRange();
+    priceRange.minPrice = this.common.getEurPrice(this.selectedMinPrice);
+    priceRange.maxPrice = this.common.getEurPrice(this.selectedMaxPrice);
+    this.priceRangeChange.emit(priceRange);
   }
 }
