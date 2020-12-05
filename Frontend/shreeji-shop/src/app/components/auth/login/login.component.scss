@@ -1,0 +1,50 @@
+.modal {
+  display: block;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.card-header-tabs {
+  margin-bottom: -0.95rem;
+}
+.nav-tabs {
+  .nav-link {
+    transition: color 0.25s ease-in-out, background-color 0.25s ease-in-out,
+      box-shadow 0.25s ease-in-out, border-color 0.25s ease-in-out;
+    font-weight: 500;
+    border-color: transparent;
+    color: #4b566b;
+    &:hover,
+    &.active {
+      color: #fe696a;
+      cursor: pointer;
+    }
+    &.active {
+      border-bottom: 1px solid #fe696a;
+      border-color: transparent transparent #fe696a;
+    }
+  }
+}
+label {
+  padding-top: 0.0625rem;
+  font-size: 0.875rem;
+  margin-bottom: 0;
+}
+.form-group {
+  margin-bottom: 0.5rem;
+}
+.modal-body {
+  padding: 0;
+}
+.sign-in-btn {
+  font-size: 1rem;
+  border-radius: 0.2rem;
+  background-color: #fe696a;
+  border: none;
+  box-shadow: 0 0.5rem 1.125rem -0.5rem rgb(254 105 106 / 90%);
+  transition: all 0.2s ease;
+  color: white;
+}
+.sign-in-btn:hover {
+  background-color: #ff4142;
+  box-shadow: none;
+}
