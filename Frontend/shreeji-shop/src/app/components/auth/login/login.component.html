@@ -1,26 +1,28 @@
-<div class="modal fade" role="dialog">
+<div class="modal" role="dialog">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <ul class="nav nav-tabs card-header-tabs" role="tablist">
-          <li class="nav-item">
+          <li class="nav-item" (click)="currentTab = 'signIn'">
             <a
-              class="nav-link active"
+              class="nav-link"
+              [ngClass]="{ active: currentTab == 'signIn' }"
               data-toggle="tab"
               role="tab"
               aria-selected="true"
             >
-              <span>Sign in</span>
+              <span class="pl-2">Sign in</span>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" (click)="currentTab = 'signUp'">
             <a
               class="nav-link"
+              [ngClass]="{ active: currentTab == 'signUp' }"
               data-toggle="tab"
               role="tab"
               aria-selected="false"
             >
-              <span>Sign up</span>
+              <span class="pl-2">Sign up</span>
             </a>
           </li>
         </ul>
@@ -29,29 +31,22 @@
           type="button"
           data-dismiss="modal"
           aria-label="Close"
+          (click)="closeModal()"
         >
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body tab-content p-3">
         <form
-          class="needs-validation tab-pane fade show active"
+          class="needs-validation tab-pane show active"
           autocomplete="off"
           novalidate=""
           id="signin-tab"
+          *ngIf="currentTab == 'signIn'"
         >
           <div class="form-group">
-            <label for="si-email">Email address</label>
-            <input
-              class="form-control"
-              type="email"
-              id="si-email"
-              placeholder="johndoe@example.com"
-              required
-            />
-            <div class="invalid-feedback">
-              Please provide a valid email address.
-            </div>
+            <label for="si-email">Username</label>
+            <input class="form-control" id="si-email" required />
           </div>
           <div class="form-group mb-3">
             <label for="si-password">Password</label>
@@ -62,34 +57,28 @@
               required
             />
           </div>
-          <button class="btn sign-in-btn btn-block btn-shadow" type="submit">
-            Sign in
+          <button class="btn btn-theme btn-block btn-shadow p-2" type="submit">
+            <span class="text-white">Sign in</span>
           </button>
         </form>
         <form
-          class="needs-validation tab-pane fade"
+          class="needs-validation tab-pane"
           autocomplete="off"
           novalidate=""
           id="signup-tab"
+          *ngIf="currentTab == 'signUp'"
         >
           <div class="form-group">
             <label for="su-name">Full name</label>
-            <input
-              class="form-control"
-              type="text"
-              id="su-name"
-              placeholder="John Doe"
-              required=""
-            />
+            <input class="form-control" type="text" id="su-name" required />
             <div class="invalid-feedback">Please fill in your name.</div>
           </div>
           <div class="form-group">
-            <label for="su-email">Email address</label>
+            <label for="su-phone">Phone number</label>
             <input
               class="form-control"
-              type="email"
-              id="su-email"
-              placeholder="johndoe@example.com"
+              type="number"
+              id="su-phone"
               required=""
             />
             <div class="invalid-feedback">
@@ -97,40 +86,27 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="su-password">Password</label>
-            <div class="password-toggle">
-              <input
-                class="form-control"
-                type="password"
-                id="su-password"
-                required=""
-              />
-              <label class="password-toggle-btn">
-                <input class="custom-control-input" type="checkbox" /><i
-                  class="czi-eye password-toggle-indicator"
-                ></i
-                ><span class="sr-only">Show password</span>
-              </label>
+            <label for="su-email">Email address</label>
+            <input class="form-control" type="email" id="su-email" required />
+            <div class="invalid-feedback">
+              Please provide a valid email address.
             </div>
           </div>
           <div class="form-group">
-            <label for="su-password-confirm">Confirm password</label>
-            <div class="password-toggle">
-              <input
-                class="form-control"
-                type="password"
-                id="su-password-confirm"
-                required=""
-              />
-              <label class="password-toggle-btn">
-                <input class="custom-control-input" type="checkbox" />
-                <i class="czi-eye password-toggle-indicator"></i>
-                <span class="sr-only">Show password</span>
-              </label>
-            </div>
+            <label for="su-username">Username</label>
+            <input class="form-control" id="su-username" required />
           </div>
-          <button class="btn btn-primary btn-block btn-shadow" type="submit">
-            Sign up
+          <div class="form-group mb-3">
+            <label for="su-password">Password</label>
+            <input
+              class="form-control"
+              type="password"
+              id="su-password"
+              required
+            />
+          </div>
+          <button class="btn btn-theme btn-block btn-shadow p-2" type="submit">
+            <span class="text-white">Sign up</span>
           </button>
         </form>
       </div>

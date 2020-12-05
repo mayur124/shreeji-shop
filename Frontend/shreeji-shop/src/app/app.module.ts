@@ -19,6 +19,7 @@ import { HttpService } from './services/http/http.service';
 import { CommonService } from './services/common/common.service';
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { LoginComponent } from './components/auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     PaginationComponent,
     TaglineComponent,
     PhoneDetailComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
