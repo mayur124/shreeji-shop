@@ -88,13 +88,13 @@ input[type="checkbox"] {
   margin-left: 4px;
 }
 .more-brands {
-  color: $bootstrap-blue;
+  color: $custom-orange;
   cursor: pointer;
 }
 .more-brands-container {
   position: absolute;
   height: 30rem;
-  top: 7rem;
+  top: 9.5rem;
   left: 0;
   box-shadow: 0 0.3rem 1.525rem -0.375rem $box-shadow;
   z-index: 15;
