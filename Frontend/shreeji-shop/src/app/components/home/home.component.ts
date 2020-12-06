@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SORT_TYPE } from 'src/app/constants/constants';
 import { Page } from 'src/app/models/page.model';
-import { PriceRange } from 'src/app/models/PriceRange.model';
+import { PriceRange } from 'src/app/models/priceRange.model';
 import { HttpService } from 'src/app/services/http/http.service';
 import { PhoneData } from "../../models/home.model";
 

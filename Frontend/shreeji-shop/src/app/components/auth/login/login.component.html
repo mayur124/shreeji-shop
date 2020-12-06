@@ -45,6 +45,7 @@
           *ngIf="currentTab == 'signIn'"
           [formGroup]="signInForm"
         >
+          <span #progressSpan class="small py-2"></span>
           <div class="form-group">
             <label for="si-username">Username</label>
             <input
@@ -109,6 +110,7 @@
           [formGroup]="signUpForm"
         >
           <div class="form-group">
+            <span #progressSpan class="small py-2"></span>
             <label for="su-name">Full name</label>
             <input
               [formControlName]="'suName'"

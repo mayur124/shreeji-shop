@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { PhoneData } from 'src/app/models/home.model';
-import { PhoneModel } from 'src/app/models/phone-model.model';
+import { PhoneModel } from 'src/app/models/phoneModel.model';
 import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
 

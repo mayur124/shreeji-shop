@@ -17,6 +17,7 @@ import { PhoneDetailComponent } from './components/phone-detail/phone-detail.com
 
 import { HttpService } from './services/http/http.service';
 import { CommonService } from './services/common/common.service';
+import { AuthService } from './services/auth/auth.service';
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { LoginComponent } from './components/auth/login/login.component';
@@ -42,7 +43,7 @@ import { LoginComponent } from './components/auth/login/login.component';
     NgxSliderModule,
     ReactiveFormsModule
   ],
-  providers: [HttpService, CommonService],
+  providers: [HttpService, CommonService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

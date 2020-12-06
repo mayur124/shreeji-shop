@@ -1,8 +1,10 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ILoginRequest } from "../../../models/ILoginRequest.model";
-import { IRegisterRequest } from "../../../models/IRegisterRequest.model";
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { CommonService } from 'src/app/services/common/common.service';
+import { ILoginRequest, ILoginResponse, IRegisterRequest } from "../../../models/authentication.model";
 
 @Component({
   selector: 'app-login',
@@ -11,13 +13,16 @@ import { IRegisterRequest } from "../../../models/IRegisterRequest.model";
 })
 export class LoginComponent implements OnInit {
 
+  @ViewChild('progressSpan') progressSpan: ElementRef<HTMLElement>;
   currentTab: 'signIn' | 'signUp' = 'signIn';
   signInForm: FormGroup;
   signUpForm: FormGroup;
   loginRequest: ILoginRequest;
   signUpRequest: IRegisterRequest;
 
-  constructor(private location: Location) {
+  constructor(private location: Location,
+    private authService: AuthService,
+    private common: CommonService) {
     this.loginRequest = {
       userName: '',
       password: '',
@@ -66,8 +71,25 @@ export class LoginComponent implements OnInit {
 
   signIn() {
     this._validateForm(this.signInForm);
-    this.loginRequest.userName = this.signInForm.get('siUserName').value;
-    this.loginRequest.password = this.signInForm.get('siPassword').value;
+    if (this.signInForm.valid) {
+      this.loginRequest.userName = this.signInForm.get('siUserName').value;
+      this.loginRequest.password = this.signInForm.get('siPassword').value;
+      this.common.setSpanMessage(this.progressSpan.nativeElement, 'Signing in...');
+      this.common.setSpanType(this.progressSpan.nativeElement, 'progress');
+      this.authService.signIn(this.loginRequest).subscribe(
+        (response) => {
+          this._addDataInLocalStorage(response);
+          this.common.hideElement(this.progressSpan.nativeElement);
+          this.closeModal();
+        },
+        (error: HttpErrorResponse) => {
+          console.log('Error while signing in >\n', error);
+          this.common.setSpanMessage(this.progressSpan.nativeElement, 'Invalid username or password');
+          this.common.setSpanType(this.progressSpan.nativeElement, 'error');
+          this._clearLocalStorage();
+        }
+      );
+    }
   }
 
   signUp() {
@@ -80,4 +102,16 @@ export class LoginComponent implements OnInit {
     this.signUpRequest.address = this.signUpForm.get('suAddress').value;
     this.signUpRequest.pinCode = Number(this.signUpForm.get('suPinCode').value);
   }
+
+  private _addDataInLocalStorage(loginResponse: ILoginResponse) {
+    localStorage.setItem('authenticationToken', loginResponse.authenticationToken);
+    localStorage.setItem('username', loginResponse.username);
+    localStorage.setItem('expiresAt', new Date(loginResponse.expiresAt).toISOString());
+    localStorage.setItem('refreshToken', loginResponse.refreshToken);
+  }
+
+  private _clearLocalStorage() {
+    localStorage.clear();
+  }
+
 }

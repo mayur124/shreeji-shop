@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, 
 import { HttpService } from '../../services/http/http.service';
 import { Brand } from '../../models/brand.model';
 import { forkJoin, Observable } from 'rxjs';
-import { PriceRange } from 'src/app/models/PriceRange.model';
+import { PriceRange } from 'src/app/models/priceRange.model';
 import { CommonService } from 'src/app/services/common/common.service';
 import { Options } from '@angular-slider/ngx-slider';
 

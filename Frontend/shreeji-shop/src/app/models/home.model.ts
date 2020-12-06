@@ -1,5 +1,5 @@
 import { Page } from "./page.model";
-import { PhoneModel } from "./phone-model.model";
+import { PhoneModel } from "./phoneModel.model";
 
 export class PhoneData {
     data: BrandModelMap[];

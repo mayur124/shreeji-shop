@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http'
 import { SORT_TYPE, URLS } from '../../constants/constants'
 import { Brand } from '../../models/brand.model';
 import { BrandModelMap, PhoneData } from 'src/app/models/home.model';
-import { PhoneModel } from 'src/app/models/phone-model.model';
-import { PriceRange } from "../../models/PriceRange.model";
+import { PhoneModel } from 'src/app/models/phoneModel.model';
+import { PriceRange } from "../../models/priceRange.model";
 
 @Injectable({
   providedIn: 'root'

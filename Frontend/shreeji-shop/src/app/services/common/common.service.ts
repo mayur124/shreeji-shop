@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { SPAN_TYPES } from 'src/app/constants/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,32 @@ export class CommonService {
     return Math.round(priceINR / inrAmt)
   }
 
-  private _getCurrentINRValue(): number{
+  private _getCurrentINRValue(): number {
     return 87;
+  }
+
+  setSpanMessage(spanElement: HTMLElement, message: string) {
+    spanElement.innerText = message;
+  }
+
+  setSpanType(spanElement: HTMLElement, type: SPAN_TYPES) {
+    spanElement.classList.remove('text-danger', 'text-primary', 'text-success');
+    switch (type) {
+      case 'error':
+        spanElement.classList.add('text-danger');
+        break;
+      case 'progress':
+        spanElement.classList.add('text-primary');
+        break;
+      case 'success':
+        spanElement.classList.add('text-success');
+        break;
+      default:
+        break;
+    }
+  }
+
+  hideElement(spanElement: HTMLElement) {
+    spanElement.remove();
   }
 }
