@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openProfileSafe() {
-    this.router.navigate(['login'], {relativeTo: this.route});
+    this.router.navigate(['authenticate'], {relativeTo: this.route});
   }
 
 }

@@ -43,21 +43,60 @@
           novalidate=""
           id="signin-tab"
           *ngIf="currentTab == 'signIn'"
+          [formGroup]="signInForm"
         >
           <div class="form-group">
-            <label for="si-email">Username</label>
-            <input class="form-control" id="si-email" required />
+            <label for="si-username">Username</label>
+            <input
+              [formControlName]="'siUserName'"
+              class="form-control"
+              [ngClass]="{
+                'border border-danger':
+                  !signInForm.get('siUserName').valid &&
+                  signInForm.get('siUserName').touched
+              }"
+              id="si-username"
+              required
+            />
+            <span
+              class="text-danger small"
+              *ngIf="
+                !signInForm.get('siUserName').valid &&
+                signInForm.get('siUserName').touched
+              "
+            >
+              Username cannot be empty.
+            </span>
           </div>
           <div class="form-group mb-3">
             <label for="si-password">Password</label>
             <input
+              [formControlName]="'siPassword'"
               class="form-control"
+              [ngClass]="{
+                'border border-danger':
+                  !signInForm.get('siPassword').valid &&
+                  signInForm.get('siPassword').touched
+              }"
               type="password"
               id="si-password"
               required
             />
+            <span
+              class="text-danger small"
+              *ngIf="
+                !signInForm.get('siPassword').valid &&
+                signInForm.get('siPassword').touched
+              "
+            >
+              Password cannot be empty.
+            </span>
           </div>
-          <button class="btn btn-theme btn-block btn-shadow p-2" type="submit">
+          <button
+            class="btn btn-theme btn-block btn-shadow p-2"
+            type="submit"
+            (click)="signIn()"
+          >
             <span class="text-white">Sign in</span>
           </button>
         </form>
@@ -67,45 +106,179 @@
           novalidate=""
           id="signup-tab"
           *ngIf="currentTab == 'signUp'"
+          [formGroup]="signUpForm"
         >
           <div class="form-group">
             <label for="su-name">Full name</label>
-            <input class="form-control" type="text" id="su-name" required />
-            <div class="invalid-feedback">Please fill in your name.</div>
+            <input
+              [formControlName]="'suName'"
+              class="form-control"
+              [ngClass]="{
+                'border border-danger':
+                  !signUpForm.get('suName').valid &&
+                  signUpForm.get('suName').touched
+              }"
+              type="text"
+              id="su-name"
+              required
+            />
+            <span
+              class="text-danger small"
+              *ngIf="
+                !signUpForm.get('suName').valid &&
+                signUpForm.get('suName').touched
+              "
+            >
+              Please fill in your name.
+            </span>
           </div>
           <div class="form-group">
             <label for="su-phone">Phone number</label>
             <input
+              [formControlName]="'suPhone'"
               class="form-control"
+              [ngClass]="{
+                'border border-danger':
+                  !signUpForm.get('suPhone').valid &&
+                  signUpForm.get('suPhone').touched
+              }"
               type="number"
               id="su-phone"
-              required=""
+              required
             />
-            <div class="invalid-feedback">
-              Please provide a valid email address.
-            </div>
+            <span
+              class="text-danger small"
+              *ngIf="
+                !signUpForm.get('suPhone').valid &&
+                signUpForm.get('suPhone').touched
+              "
+            >
+              Please provide a valid phone number.
+            </span>
           </div>
           <div class="form-group">
             <label for="su-email">Email address</label>
-            <input class="form-control" type="email" id="su-email" required />
-            <div class="invalid-feedback">
+            <input
+              [formControlName]="'suEmail'"
+              class="form-control"
+              [ngClass]="{
+                'border border-danger':
+                  !signUpForm.get('suEmail').valid &&
+                  signUpForm.get('suEmail').touched
+              }"
+              type="email"
+              id="su-email"
+              required
+            />
+            <span
+              class="text-danger small"
+              *ngIf="
+                !signUpForm.get('suEmail').valid &&
+                signUpForm.get('suEmail').touched
+              "
+            >
               Please provide a valid email address.
-            </div>
+            </span>
           </div>
           <div class="form-group">
             <label for="su-username">Username</label>
-            <input class="form-control" id="su-username" required />
+            <input
+              [formControlName]="'suUsername'"
+              class="form-control"
+              [ngClass]="{
+                'border border-danger':
+                  !signUpForm.get('suUsername').valid &&
+                  signUpForm.get('suUsername').touched
+              }"
+              id="su-username"
+              required
+            />
+            <span
+              class="text-danger small"
+              *ngIf="
+                !signUpForm.get('suUsername').valid &&
+                signUpForm.get('suUsername').touched
+              "
+            >
+              Username cannot be empty.
+            </span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group">
             <label for="su-password">Password</label>
             <input
+              [formControlName]="'suPassword'"
               class="form-control"
+              [ngClass]="{
+                'border border-danger':
+                  !signUpForm.get('suPassword').valid &&
+                  signUpForm.get('suPassword').touched
+              }"
               type="password"
               id="su-password"
               required
             />
+            <span
+              class="text-danger small"
+              *ngIf="
+                !signUpForm.get('suPassword').valid &&
+                signUpForm.get('suPassword').touched
+              "
+            >
+              Password cannot be empty.
+            </span>
           </div>
-          <button class="btn btn-theme btn-block btn-shadow p-2" type="submit">
+          <div class="form-group">
+            <label for="su-address">Address</label>
+            <textarea
+              [formControlName]="'suAddress'"
+              class="form-control"
+              [ngClass]="{
+                'border border-danger':
+                  !signUpForm.get('suAddress').valid &&
+                  signUpForm.get('suAddress').touched
+              }"
+              id="su-address"
+              required
+            ></textarea>
+            <span
+              class="text-danger small"
+              *ngIf="
+                !signUpForm.get('suAddress').valid &&
+                signUpForm.get('suAddress').touched
+              "
+            >
+              Address cannot be empty.
+            </span>
+          </div>
+          <div class="form-group mb-3">
+            <label for="su-pincode">Pincode</label>
+            <input
+              [formControlName]="'suPinCode'"
+              class="form-control"
+              [ngClass]="{
+                'border border-danger':
+                  !signUpForm.get('suPinCode').valid &&
+                  signUpForm.get('suPinCode').touched
+              }"
+              type="number"
+              id="su-pincode"
+              required
+            />
+            <span
+              class="text-danger small"
+              *ngIf="
+                !signUpForm.get('suPinCode').valid &&
+                signUpForm.get('suPinCode').touched
+              "
+            >
+              Please enter valid pincode.
+            </span>
+          </div>
+          <button
+            class="btn btn-theme btn-block btn-shadow p-2"
+            type="submit"
+            (click)="signUp()"
+          >
             <span class="text-white">Sign up</span>
           </button>
         </form>
