@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './components/auth/login/login.component';
+import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
 import { PhoneDetailComponent } from './components/phone-detail/phone-detail.component';
 
@@ -10,14 +10,14 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     children: [
-      { path: 'authenticate', component: LoginComponent }
+      { path: 'authenticate', component: AuthComponent }
     ]
   },
   {
     path: 'phone/:brandName/:brandId/:id',
     component: PhoneDetailComponent,
     children: [
-      { path: 'authenticate', component: LoginComponent }
+      { path: 'authenticate', component: AuthComponent }
     ]
   },
 ];

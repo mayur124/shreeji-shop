@@ -1,9 +1,43 @@
 <nav class="navbar fixed-top header-top navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Shreeji Shop</a>
-  <input class="form-control col-sm-4 col-lg-5" type="search" placeholder="Search..." />
-  <div class="buttons">
-    <button class="btn btn-primary mr-2" type="button" (click)="openProfileSafe()">Profile</button>
+  <input
+    class="form-control col-sm-4 col-lg-5"
+    type="search"
+    placeholder="Search..."
+  />
+  <div class="user-actions">
+    <div class="header-btn profile-wrapper">
+      <img src="/assets/icons/person.svg" class="action-icon profile-icon" />
+      <span class="text-secondary">Profile</span>
+      <div class="p-2 border profile-options">
+        <ng-container *ngIf="isLoggedIn">
+          <p class="user-welcome-msg border-bottom">Hello {{ userName }}</p>
+          <p class="login-action m-0" (click)="showOrders()">Orders</p>
+          <p class="login-action m-0" (click)="showWishlist()">Wishlist</p>
+          <p class="login-action m-0" (click)="editProfile()">Edit Profile</p>
+          <p class="login-action m-0" (click)="logout()">Logout</p>
+        </ng-container>
+        <ng-container *ngIf="!isLoggedIn">
+          <button
+            class="btn auth-btn text-uppercase"
+            type="button"
+            (click)="navigateToAuthentication()"
+          >
+            login / signup
+          </button>
+        </ng-container>
+      </div>
+    </div>
+    <div class="header-btn wishlist">
+      <img src="/assets/icons/wishlist.svg" class="action-icon wishlist-icon" />
+      <span class="text-secondary">Wishlist</span>
+    </div>
+    <div class="header-btn bag">
+      <img src="/assets/icons/bag.svg" class="action-icon bag-icon" />
+      <span class="text-secondary">Bag</span>
+    </div>
+    <!-- <button class="btn btn-primary mr-2" type="button" (click)="openProfileSafe()">Profile</button>
     <button class="btn btn-primary mr-2" type="button">Wishlist</button>
-    <button class="btn btn-primary mr-2" type="button">Bag</button>
+    <button class="btn btn-primary mr-2" type="button">Bag</button> -->
   </div>
 </nav>

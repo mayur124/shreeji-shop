@@ -5,3 +5,74 @@ a {
   letter-spacing: 0.5px;
   font-size: xx-large;
 }
+.user-actions {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  .header-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 2rem;
+    span {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+  }
+  .profile-options {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 5rem;
+    width: 10rem;
+    box-shadow: 0 1px 10px rgb(0 0 0 / 8%);
+    background-color: #f8f9fa;
+    border-bottom-left-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+    transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+    &::before {
+      content: "";
+      position: absolute;
+      top: -1rem;
+      right: 4.5rem;
+      border: 8px solid #373f50;
+      border-right-color: transparent;
+      border-top-color: transparent;
+      border-left-color: transparent;
+    }
+    .user-welcome-msg {
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      padding-bottom: 5px;
+    }
+    p.login-action {
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      padding-bottom: 0.2rem;
+      &:hover {
+        font-weight: 500;
+      }
+    }
+    .auth-btn {
+      font-size: 12px;
+      width: 100%;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+      color: #fe696a;
+      transition: border 0.2s ease-out;
+      border: 1px solid #fe696a;
+    }
+  }
+  img.action-icon {
+    height: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+  .profile-wrapper:hover > .profile-options {
+    visibility: visible;
+    opacity: 1;
+  }
+}

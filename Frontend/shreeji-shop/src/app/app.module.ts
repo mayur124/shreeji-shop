@@ -20,7 +20,7 @@ import { CommonService } from './services/common/common.service';
 import { AuthService } from './services/auth/auth.service';
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
-import { LoginComponent } from './components/auth/login/login.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { LoginComponent } from './components/auth/login/login.component';
     PaginationComponent,
     TaglineComponent,
     PhoneDetailComponent,
-    LoginComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,

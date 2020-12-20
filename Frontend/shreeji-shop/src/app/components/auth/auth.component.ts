@@ -4,14 +4,14 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
-import { ILoginRequest, ILoginResponse, IRegisterRequest } from "../../../models/authentication.model";
+import { ILoginRequest, ILoginResponse, IRegisterRequest } from "../../models/authentication.model";
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class AuthComponent implements OnInit {
 
   @ViewChild('progressSpan') progressSpan: ElementRef<HTMLElement>;
   currentTab: 'signIn' | 'signUp' = 'signIn';
@@ -78,18 +78,25 @@ export class LoginComponent implements OnInit {
       this.common.setSpanType(this.progressSpan.nativeElement, 'progress');
       this.authService.signIn(this.loginRequest).subscribe(
         (response) => {
-          this._addDataInLocalStorage(response);
-          this.common.hideElement(this.progressSpan.nativeElement);
-          this.closeModal();
+          if (response) {
+            this.common.hideElement(this.progressSpan.nativeElement);
+            this.closeModal();
+          } else {
+            this._handleUnsuccessfulLogin();
+          }
         },
         (error: HttpErrorResponse) => {
           console.log('Error while signing in >\n', error);
-          this.common.setSpanMessage(this.progressSpan.nativeElement, 'Invalid username or password');
-          this.common.setSpanType(this.progressSpan.nativeElement, 'error');
-          this._clearLocalStorage();
+          this._handleUnsuccessfulLogin();
         }
       );
     }
+  }
+
+  private _handleUnsuccessfulLogin() {
+    this.common.setSpanMessage(this.progressSpan.nativeElement, 'Invalid username or password');
+    this.common.setSpanType(this.progressSpan.nativeElement, 'error');
+    this._clearLocalStorage();
   }
 
   signUp() {
