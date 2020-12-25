@@ -7,6 +7,7 @@ export const URLS = {
     PRICE_RANGE: BASE_URL + '/filter/priceRange',
     SIGN_UP: BASE_URL + '/auth/signup',
     LOGIN: BASE_URL + '/auth/login',
+    LOGOUT: BASE_URL + '/auth/logout',
 }
 export type SORT_TYPE = "" | "asc" | "desc";
 export type SPAN_TYPES = 'error' | 'progress' | 'success';

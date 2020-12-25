@@ -110,13 +110,6 @@ export class AuthComponent implements OnInit {
     this.signUpRequest.pinCode = Number(this.signUpForm.get('suPinCode').value);
   }
 
-  private _addDataInLocalStorage(loginResponse: ILoginResponse) {
-    localStorage.setItem('authenticationToken', loginResponse.authenticationToken);
-    localStorage.setItem('username', loginResponse.username);
-    localStorage.setItem('expiresAt', new Date(loginResponse.expiresAt).toISOString());
-    localStorage.setItem('refreshToken', loginResponse.refreshToken);
-  }
-
   private _clearLocalStorage() {
     localStorage.clear();
   }

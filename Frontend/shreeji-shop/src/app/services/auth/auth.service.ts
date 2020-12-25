@@ -3,6 +3,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ILoginRequest, ILoginResponse, IRegisterRequest } from 'src/app/models/authentication.model';
 import { URLS } from '../../constants/constants'
 import { map, tap } from 'rxjs/operators';
+import { RefreshTokenRequest } from "./../../models/refreshToken.model";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,11 @@ import { map, tap } from 'rxjs/operators';
 export class AuthService {
 
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
+
+  refreshTokenRequest: RefreshTokenRequest = {
+    refreshToken: this._getRefreshToken(),
+    username: this._getUsername(),
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -40,6 +46,19 @@ export class AuthService {
     return this.getJwtToken() != null;
   }
 
+  logout() {
+    this.http.post(URLS.LOGOUT, this.refreshTokenRequest, { responseType: 'text' })
+      .subscribe(
+        logoutResponse => {
+          this._clearLocalStorage();
+          this.loggedIn.emit(false);
+        },
+        error => {
+          console.log('Error in logout > ', error);
+        }
+      );
+  }
+
   private _addDataInLocalStorage(loginResponse: ILoginResponse) {
     localStorage.setItem('authenticationToken', loginResponse.authenticationToken);
     localStorage.setItem('username', loginResponse.username);
@@ -49,5 +68,13 @@ export class AuthService {
 
   private _clearLocalStorage() {
     localStorage.clear();
+  }
+
+  private _getRefreshToken() {
+    return localStorage.getItem('refreshToken');
+  }
+
+  private _getUsername() {
+    return localStorage.getItem('username');
   }
 }
