@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shreejiShop.demo.model.Cart;
 import com.shreejiShop.demo.model.Wishlist;
-import com.shreejiShop.demo.model.WishlistResponse;
+import com.shreejiShop.demo.model.CartAndWishlistResponse;
+import com.shreejiShop.demo.model.Order;
+import com.shreejiShop.demo.model.OrderItemResponse;
 import com.shreejiShop.demo.service.ITransactionService;
 
 @RestController
@@ -38,14 +40,44 @@ public class TransactionController {
 		}
 		return null;
 	}
-	
+
 	@GetMapping("/wishlist/get/{userId}")
-	public List<WishlistResponse> getWishlistsOfUser(@PathVariable Long userId){
-		return transactionService.getWishlistsOfUser(userId);
+	public List<CartAndWishlistResponse> getWishlistItemsOfUser(@PathVariable Long userId) {
+		return transactionService.getWishlistItemsOfUser(userId);
 	}
-	
+
 	@PostMapping("/cart/add")
 	public Cart addToCart(@RequestBody Cart cart) {
 		return transactionService.addToCart(cart);
+	}
+
+	@DeleteMapping("/cart/remove/{cartId}")
+	public Cart deleteCartRecord(@PathVariable Long cartId) {
+		try {
+			return transactionService.deleteCartRecord(cartId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@GetMapping("/cart/get/{userId}")
+	public List<CartAndWishlistResponse> getCartItemsOfUser(@PathVariable Long userId) {
+		return transactionService.getCartItemsOfUser(userId);
+	}
+
+	@PostMapping("/order/add")
+	public Order addOrder(@RequestBody Order order) {
+		return transactionService.addOrder(order);
+	}
+
+	@GetMapping("/order/list/{userId}")
+	public List<Order> getOrderList(@PathVariable Long userId) {
+		return transactionService.getOrdersOfUser(userId);
+	}
+
+	@GetMapping("/order/details/{orderId}")
+	public List<OrderItemResponse> getOrderItems(@PathVariable Long orderId) {
+		return transactionService.getOrderItems(orderId);
 	}
 }

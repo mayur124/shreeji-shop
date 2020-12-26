@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.shreejiShop.demo.model.Cart;
 import com.shreejiShop.demo.model.Wishlist;
-import com.shreejiShop.demo.model.WishlistResponse;
+import com.shreejiShop.demo.model.CartAndWishlistResponse;
+import com.shreejiShop.demo.model.Order;
+import com.shreejiShop.demo.model.OrderItemResponse;
 
 public interface ITransactionService {
 
@@ -12,8 +14,17 @@ public interface ITransactionService {
 
 	Wishlist deleteWishListRecord(Long wishlist_id) throws Exception;
 
-	List<WishlistResponse> getWishlistsOfUser(Long userId);
+	List<CartAndWishlistResponse> getWishlistItemsOfUser(Long userId);
 
 	Cart addToCart(Cart cart);
 
+	Cart deleteCartRecord(Long cartId) throws Exception;
+
+	List<CartAndWishlistResponse> getCartItemsOfUser(Long userId);
+
+	Order addOrder(Order order);
+
+	List<Order> getOrdersOfUser(Long userId);
+	
+	List<OrderItemResponse> getOrderItems(Long orderId);
 }

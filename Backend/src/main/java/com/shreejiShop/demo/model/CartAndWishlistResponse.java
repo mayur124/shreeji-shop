@@ -1,12 +1,12 @@
 package com.shreejiShop.demo.model;
 
-public class WishlistResponse {
+public class CartAndWishlistResponse {
 	private String brandName;
 	private String modelName;
 	private String modelImgUrl;
 	private Long priceEur;
 
-	public WishlistResponse(String brandName, String modelName, String modelImgUrl, Long priceEur) {
+	public CartAndWishlistResponse(String brandName, String modelName, String modelImgUrl, Long priceEur) {
 		super();
 		this.brandName = brandName;
 		this.modelName = modelName;
