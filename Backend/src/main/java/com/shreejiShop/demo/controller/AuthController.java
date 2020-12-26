@@ -16,7 +16,6 @@ import com.shreejiShop.demo.model.LoginRequest;
 import com.shreejiShop.demo.model.RefreshTokenRequest;
 import com.shreejiShop.demo.model.RegisterRequest;
 import com.shreejiShop.demo.model.User;
-import com.shreejiShop.demo.model.UserDetailsUpdateRequest;
 import com.shreejiShop.demo.service.IAuthService;
 import com.shreejiShop.demo.service.IRefreshTokenService;
 
@@ -54,13 +53,13 @@ public class AuthController {
 	}
 	
 	@GetMapping("/user/details")
-	public User getUserDetails(@RequestBody RefreshTokenRequest refreshTokenRequest) {
-		return authService.getUserDetails(refreshTokenRequest);
+	public User getUserDetails(@RequestBody String username) {
+		return authService.getUserDetails(username);
 	}
 	
 	@PutMapping("/user/update")
-	public ResponseEntity<String> updateUserDetails(@RequestBody UserDetailsUpdateRequest userDetailsUpdateRequest){
-		Boolean isUpdated = authService.updateUserDetails(userDetailsUpdateRequest);
+	public ResponseEntity<String> updateUserDetails(@RequestBody User user){
+		Boolean isUpdated = authService.updateUserDetails(user);
 		if (isUpdated == true) {
 			return ResponseEntity.status(HttpStatus.OK).body("User details updated successfully!");	
 		}

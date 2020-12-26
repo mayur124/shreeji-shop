@@ -17,7 +17,6 @@ import com.shreejiShop.demo.model.LoginRequest;
 import com.shreejiShop.demo.model.RefreshTokenRequest;
 import com.shreejiShop.demo.model.RegisterRequest;
 import com.shreejiShop.demo.model.User;
-import com.shreejiShop.demo.model.UserDetailsUpdateRequest;
 import com.shreejiShop.demo.repository.UserRepo;
 import com.shreejiShop.demo.security.IJwtProvider;
 
@@ -74,11 +73,11 @@ public class AuthServiceImpl implements IAuthService {
 	}
 
 	@Override
-	public User getUserDetails(RefreshTokenRequest refreshTokenRequest) {
-		refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
-		User userFullDetails = userRepo.findByUserName(refreshTokenRequest.getUsername());
+	public User getUserDetails(String username) {
+		User userFullDetails = userRepo.findByUserName(username);
 		if (userFullDetails != null) {
 			User user = new User();
+			user.setId(userFullDetails.getId());
 			user.setName(userFullDetails.getName());
 			user.setPinCode(userFullDetails.getPinCode());
 			user.setAddress(userFullDetails.getAddress());
@@ -91,16 +90,15 @@ public class AuthServiceImpl implements IAuthService {
 
 	@Override
 	@Transactional
-	public Boolean updateUserDetails(UserDetailsUpdateRequest userDetailsUpdateRequest) {
-		refreshTokenService.validateRefreshToken(userDetailsUpdateRequest.getRefreshToken());
-		User user = userRepo.findByUserName(userDetailsUpdateRequest.getUser().getUserName());
-		if (user != null) {
-			user.setName(userDetailsUpdateRequest.getUser().getName());
-			user.setPinCode(userDetailsUpdateRequest.getUser().getPinCode());
-			user.setAddress(userDetailsUpdateRequest.getUser().getAddress());
-			user.setPhoneNumber(userDetailsUpdateRequest.getUser().getPhoneNumber());
-			user.setEmail(userDetailsUpdateRequest.getUser().getEmail());
-			userRepo.save(user);
+	public Boolean updateUserDetails(User user) {
+		User _user = userRepo.findByUserName(user.getUserName());
+		if (_user != null) {
+			_user.setName(user.getName());
+			_user.setPinCode(user.getPinCode());
+			_user.setAddress(user.getAddress());
+			_user.setPhoneNumber(user.getPhoneNumber());
+			_user.setEmail(user.getEmail());
+			userRepo.save(_user);
 			return true;
 		}
 		return false;
