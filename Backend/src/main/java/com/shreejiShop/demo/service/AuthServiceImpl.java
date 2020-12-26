@@ -17,6 +17,7 @@ import com.shreejiShop.demo.model.LoginRequest;
 import com.shreejiShop.demo.model.RefreshTokenRequest;
 import com.shreejiShop.demo.model.RegisterRequest;
 import com.shreejiShop.demo.model.User;
+import com.shreejiShop.demo.model.UserDetailsUpdateRequest;
 import com.shreejiShop.demo.repository.UserRepo;
 import com.shreejiShop.demo.security.IJwtProvider;
 
@@ -58,7 +59,8 @@ public class AuthServiceImpl implements IAuthService {
 				new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String token = jwtProvider.generateToken(authentication);
-		return new AuthenticationResponse(token, loginRequest.getUserName(), refreshTokenService.generateRefreshToken().getToken(),
+		return new AuthenticationResponse(token, loginRequest.getUserName(),
+				refreshTokenService.generateRefreshToken().getToken(),
 				Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()));
 	}
 
@@ -69,6 +71,39 @@ public class AuthServiceImpl implements IAuthService {
 		return new AuthenticationResponse(token, refreshTokenRequest.getUsername(),
 				refreshTokenRequest.getRefreshToken(),
 				Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()));
+	}
+
+	@Override
+	public User getUserDetails(RefreshTokenRequest refreshTokenRequest) {
+		refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
+		User userFullDetails = userRepo.findByUserName(refreshTokenRequest.getUsername());
+		if (userFullDetails != null) {
+			User user = new User();
+			user.setName(userFullDetails.getName());
+			user.setPinCode(userFullDetails.getPinCode());
+			user.setAddress(userFullDetails.getAddress());
+			user.setPhoneNumber(userFullDetails.getPhoneNumber());
+			user.setEmail(userFullDetails.getEmail());
+			return user;
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public Boolean updateUserDetails(UserDetailsUpdateRequest userDetailsUpdateRequest) {
+		refreshTokenService.validateRefreshToken(userDetailsUpdateRequest.getRefreshToken());
+		User user = userRepo.findByUserName(userDetailsUpdateRequest.getUser().getUserName());
+		if (user != null) {
+			user.setName(userDetailsUpdateRequest.getUser().getName());
+			user.setPinCode(userDetailsUpdateRequest.getUser().getPinCode());
+			user.setAddress(userDetailsUpdateRequest.getUser().getAddress());
+			user.setPhoneNumber(userDetailsUpdateRequest.getUser().getPhoneNumber());
+			user.setEmail(userDetailsUpdateRequest.getUser().getEmail());
+			userRepo.save(user);
+			return true;
+		}
+		return false;
 	}
 
 }
