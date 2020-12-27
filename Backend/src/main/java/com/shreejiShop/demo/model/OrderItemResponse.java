@@ -1,16 +1,18 @@
 package com.shreejiShop.demo.model;
 
+import java.math.BigDecimal;
+
 public class OrderItemResponse {
-	private Long brandId;
+	private BigDecimal brandId;
 	private String brandName;
-	private Long modelId; // phoneId
+	private BigDecimal modelId; // phoneId
 	private String modelName; // phoneName
 	private String imgUrl;
-	private Long priceEur;
-	private Long quantity;
+	private BigDecimal priceEur;
+	private BigDecimal quantity;
 
-	public OrderItemResponse(Long brandId, String brandName, Long modelId, String modelName, String imgUrl,
-			Long priceEur, Long quantity) {
+	public OrderItemResponse(BigDecimal brandId, String brandName, BigDecimal modelId, String modelName, String imgUrl,
+			BigDecimal priceEur, BigDecimal quantity) {
 		super();
 		this.brandId = brandId;
 		this.brandName = brandName;
@@ -21,7 +23,7 @@ public class OrderItemResponse {
 		this.quantity = quantity;
 	}
 
-	public Long getBrandId() {
+	public BigDecimal getBrandId() {
 		return brandId;
 	}
 
@@ -29,7 +31,7 @@ public class OrderItemResponse {
 		return brandName;
 	}
 
-	public Long getModelId() {
+	public BigDecimal getModelId() {
 		return modelId;
 	}
 
@@ -41,11 +43,11 @@ public class OrderItemResponse {
 		return imgUrl;
 	}
 
-	public Long getPriceEur() {
+	public BigDecimal getPriceEur() {
 		return priceEur;
 	}
 
-	public Long getQuantity() {
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 

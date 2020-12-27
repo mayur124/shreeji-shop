@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shreejiShop.demo.model.AddOrderRequest;
 import com.shreejiShop.demo.model.Cart;
 import com.shreejiShop.demo.model.Wishlist;
 import com.shreejiShop.demo.model.CartAndWishlistResponse;
@@ -41,7 +42,7 @@ public class TransactionController {
 		return null;
 	}
 
-	@GetMapping("/wishlist/get/{userId}")
+	@GetMapping("/wishlist/list/{userId}")
 	public List<CartAndWishlistResponse> getWishlistItemsOfUser(@PathVariable Long userId) {
 		return transactionService.getWishlistItemsOfUser(userId);
 	}
@@ -61,14 +62,14 @@ public class TransactionController {
 		return null;
 	}
 
-	@GetMapping("/cart/get/{userId}")
+	@GetMapping("/cart/list/{userId}")
 	public List<CartAndWishlistResponse> getCartItemsOfUser(@PathVariable Long userId) {
 		return transactionService.getCartItemsOfUser(userId);
 	}
 
 	@PostMapping("/order/add")
-	public Order addOrder(@RequestBody Order order) {
-		return transactionService.addOrder(order);
+	public Order addOrder(@RequestBody AddOrderRequest orderRequest) {
+		return transactionService.addOrder(orderRequest);
 	}
 
 	@GetMapping("/order/list/{userId}")
