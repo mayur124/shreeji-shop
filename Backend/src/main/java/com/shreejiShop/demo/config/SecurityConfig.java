@@ -28,11 +28,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.cors().and().csrf().disable().authorizeRequests()
-				.antMatchers("/auth/**").permitAll()
-				.antMatchers("/transaction/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/transaction/wishlist/get/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/transaction/order/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/filter/**").permitAll().anyRequest().authenticated();
+				.antMatchers("/auth/refresh/token").authenticated()
+				.antMatchers(HttpMethod.PUT, "/auth/user/update").authenticated()
+				.antMatchers(HttpMethod.GET, "/auth/user/details/**").authenticated()
+				.antMatchers("/transaction/**").authenticated()
+				.antMatchers(HttpMethod.GET, "/transaction/**").authenticated()
+				.antMatchers("/auth/login").permitAll()
+				.antMatchers("/auth/logout").permitAll()
+				.antMatchers("/auth/signup").permitAll()
+				.antMatchers(HttpMethod.GET, "/filter/**").permitAll();
 		httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 

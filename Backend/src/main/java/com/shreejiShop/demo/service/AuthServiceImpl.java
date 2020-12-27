@@ -62,7 +62,12 @@ public class AuthServiceImpl implements IAuthService {
 				refreshTokenService.generateRefreshToken().getToken(),
 				Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()));
 	}
-
+	
+	public void logout(RefreshTokenRequest refreshTokenRequest) {
+		SecurityContextHolder.clearContext();
+		refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
+	}
+	
 	@Override
 	public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
 		refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());

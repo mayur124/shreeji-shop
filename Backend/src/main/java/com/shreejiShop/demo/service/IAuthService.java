@@ -12,4 +12,5 @@ public interface IAuthService {
 	public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
 	public User getUserDetails(String username);
 	public Boolean updateUserDetails(User user);
+	public void logout(RefreshTokenRequest refreshTokenRequest);
 }
