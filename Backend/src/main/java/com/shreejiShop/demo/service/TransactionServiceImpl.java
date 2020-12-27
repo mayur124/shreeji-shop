@@ -1,5 +1,8 @@
 package com.shreejiShop.demo.service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +50,8 @@ public class TransactionServiceImpl implements ITransactionService {
 
 	@Override
 	public List<CartAndWishlistResponse> getWishlistItemsOfUser(Long userId) {
-//		List<WishlistResponse> listOfWishList = new ArrayList<WishlistResponse>();
-		return wishlistRepo.getWishlistsOfUser(userId);
+		List<Object[]> wishlistResponse = wishlistRepo.getWishlistsOfUser(userId);
+		return _getListOfCartWishListResponse(wishlistResponse);
 	}
 
 	@Override
@@ -69,7 +72,8 @@ public class TransactionServiceImpl implements ITransactionService {
 
 	@Override
 	public List<CartAndWishlistResponse> getCartItemsOfUser(Long userId) {
-		return cartRepo.getCartItemsOfUser(userId);
+		List<Object[]> cartItemsResponse = cartRepo.getCartItemsOfUser(userId);
+		return _getListOfCartWishListResponse(cartItemsResponse);
 	}
 
 	@Override
@@ -84,7 +88,23 @@ public class TransactionServiceImpl implements ITransactionService {
 
 	@Override
 	public List<OrderItemResponse> getOrderItems(Long orderId) {
-		return cartItemRepo.getOrderedItemList(orderId);
+		List<OrderItemResponse> temp = cartItemRepo.getOrderedItemList(orderId);
+		return null;
+	}
+
+	private List<CartAndWishlistResponse> _getListOfCartWishListResponse(List<Object[]> response) {
+		List<CartAndWishlistResponse> list = new ArrayList<CartAndWishlistResponse>();
+		if (response != null) {
+			for (Object[] object : response) {
+				BigDecimal id = new BigDecimal(object[0].toString());
+				String brandName = object[1].toString();
+				String modelName = object[2].toString();
+				String imgUrl = object[4].toString();
+				BigDecimal priceEur = new BigDecimal(object[3].toString());
+				list.add(new CartAndWishlistResponse(id, brandName, modelName, imgUrl, priceEur));
+			}
+		}
+		return list;
 	}
 
 }

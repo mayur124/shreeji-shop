@@ -1,13 +1,17 @@
 package com.shreejiShop.demo.model;
 
+import java.math.BigDecimal;
+
 public class CartAndWishlistResponse {
+	private BigDecimal id;
 	private String brandName;
 	private String modelName;
 	private String modelImgUrl;
-	private Long priceEur;
+	private BigDecimal priceEur;
 
-	public CartAndWishlistResponse(String brandName, String modelName, String modelImgUrl, Long priceEur) {
+	public CartAndWishlistResponse(BigDecimal id, String brandName, String modelName, String modelImgUrl, BigDecimal priceEur) {
 		super();
+		this.setId(id);
 		this.brandName = brandName;
 		this.modelName = modelName;
 		this.modelImgUrl = modelImgUrl;
@@ -38,12 +42,20 @@ public class CartAndWishlistResponse {
 		this.modelImgUrl = modelImgUrl;
 	}
 
-	public Long getPriceEur() {
+	public BigDecimal getPriceEur() {
 		return priceEur;
 	}
 
-	public void setPriceEur(Long priceEur) {
+	public void setPriceEur(BigDecimal priceEur) {
 		this.priceEur = priceEur;
+	}
+
+	public BigDecimal getId() {
+		return id;
+	}
+
+	public void setId(BigDecimal id) {
+		this.id = id;
 	}
 
 }
