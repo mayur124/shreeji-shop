@@ -66,7 +66,8 @@ public class JwtProviderImpl implements IJwtProvider {
 
 	@Override
 	public String getUsernameFromJwt(String token) {
-		Claims claims = Jwts.parser().setSigningKey(getPublicKey()).parseClaimsJwt(token).getBody();
+//		Claims claims = Jwts.parser().setSigningKey(getPublicKey()).parseClaimsJwt(token).getBody();
+		Claims claims = Jwts.parser().setSigningKey(getPublicKey()).parseClaimsJws(token).getBody();
 		return claims.getSubject();
 	}
 

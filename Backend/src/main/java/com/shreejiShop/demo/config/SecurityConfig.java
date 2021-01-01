@@ -32,11 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.PUT, "/auth/user/update").authenticated()
 				.antMatchers(HttpMethod.GET, "/auth/user/details/**").authenticated()
 				.antMatchers("/transaction/**").authenticated()
+				.antMatchers("/auth/logout").authenticated()
 				.antMatchers(HttpMethod.GET, "/transaction/**").authenticated()
+				.antMatchers(HttpMethod.GET, "/filter/**").permitAll()
 				.antMatchers("/auth/login").permitAll()
-				.antMatchers("/auth/logout").permitAll()
-				.antMatchers("/auth/signup").permitAll()
-				.antMatchers(HttpMethod.GET, "/filter/**").permitAll();
+				.antMatchers("/auth/signup").permitAll();
 		httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 

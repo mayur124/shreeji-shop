@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -12,11 +12,12 @@ import { BrandModelMap, PhoneData } from '../../models/home.model';
 export class PhoneModelComponent implements OnInit {
 
   @Input() phoneResponse: Observable<PhoneData>;
+  @Output() addToCart: EventEmitter<BrandModelMap> = new EventEmitter();
 
   phones: BrandModelMap[] = [];
 
   constructor(private router: Router,
-    private common: CommonService) { }
+    private common: CommonService,) { }
 
   ngOnInit(): void {
     this.phoneResponse.subscribe(
@@ -34,12 +35,16 @@ export class PhoneModelComponent implements OnInit {
       (error) => {
         console.log("Error while getting phone data > ", error);
       }
-    )
+    );
   }
 
   openPhoneDetails(phoneDetails: BrandModelMap) {
     phoneDetails.id = phoneDetails["phoneId"];
-    this.router.navigate([]).then((result: never) => { window.open(`/phone/${phoneDetails.brandName}/${phoneDetails.brandId}/${phoneDetails.id}`, '_blank') });
+    this.router.navigate([]).then((_result: never) => { window.open(`/phone/${phoneDetails.brandName}/${phoneDetails.brandId}/${phoneDetails.id}`, '_blank') });
+  }
+
+  emitAddToCart(phone: BrandModelMap) {
+    this.addToCart.emit(phone);
   }
 
 }

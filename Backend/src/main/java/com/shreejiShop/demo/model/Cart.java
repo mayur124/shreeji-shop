@@ -17,8 +17,8 @@ public class Cart {
 	@Column(name = "CART_ID")
 	private Long cartId;
 
-	@Column(name = "USER_ID")
-	private Long userId;
+	@Column(name = "USERNAME")
+	private String username;
 
 	@Column(name = "BRAND_ID")
 	private Long brandId;
@@ -34,12 +34,12 @@ public class Cart {
 		this.cartId = cartId;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Long getBrandId() {
@@ -60,7 +60,7 @@ public class Cart {
 
 	@Override
 	public String toString() {
-		return "Cart [cartId=" + cartId + ", userId=" + userId + ", brandId=" + brandId + ", modelId=" + modelId + "]";
+		return "Cart [cartId=" + cartId + ", username=" + username + ", brandId=" + brandId + ", modelId=" + modelId + "]";
 	}
 
 }

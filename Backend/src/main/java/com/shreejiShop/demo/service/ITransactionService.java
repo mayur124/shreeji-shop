@@ -15,15 +15,15 @@ public interface ITransactionService {
 
 	Wishlist deleteWishListRecord(Long wishlist_id) throws Exception;
 
-	List<CartAndWishlistResponse> getWishlistItemsOfUser(Long userId);
+	List<CartAndWishlistResponse> getWishlistItemsOfUser(String userName);
 
 	Cart addToCart(Cart cart);
 
 	Cart deleteCartRecord(Long cartId) throws Exception;
 
-	List<CartAndWishlistResponse> getCartItemsOfUser(Long userId);
+	List<CartAndWishlistResponse> getCartItemsOfUser(String userName);
 
-	List<Order> getOrdersOfUser(Long userId);
+	List<Order> getOrdersOfUser(String userName);
 
 	List<OrderItemResponse> getOrderItems(Long orderId);
 

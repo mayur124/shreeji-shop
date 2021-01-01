@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { PhoneData } from 'src/app/models/home.model';
+import { BrandModelMap, PhoneData } from 'src/app/models/home.model';
 import { PhoneModel } from 'src/app/models/phoneModel.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
 
@@ -24,7 +25,9 @@ export class PhoneDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private http: HttpService,
     private titleService: Title,
-    private common: CommonService) { }
+    private common: CommonService,
+    private auth: AuthService,
+    private router: Router,) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(
@@ -109,6 +112,25 @@ export class PhoneDetailComponent implements OnInit {
       "network technology": phoneData.networkTechnology,
       "sim": phoneData.sim,
       "wlan": phoneData.wlan,
+    }
+  }
+
+  checkAndAddToCart(phone: BrandModelMap) {
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(["authenticate"], { relativeTo: this.activatedRoute });
+    } else {
+      this.http.addToCart(phone).subscribe(
+        (cartResponse) => {
+          if (cartResponse) {
+            console.log('Phone added succussfully in cart > ', cartResponse);
+          } else {
+            console.log('Phone not added to cart {empty response}');
+          }
+        },
+        (error) => {
+          console.log('Error while adding phone to cart > ', error);
+        }
+      );
     }
   }
 }

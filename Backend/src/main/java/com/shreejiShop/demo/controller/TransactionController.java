@@ -42,9 +42,9 @@ public class TransactionController {
 		return null;
 	}
 
-	@GetMapping("/wishlist/list/{userId}")
-	public List<CartAndWishlistResponse> getWishlistItemsOfUser(@PathVariable Long userId) {
-		return transactionService.getWishlistItemsOfUser(userId);
+	@GetMapping("/wishlist/list/{username}")
+	public List<CartAndWishlistResponse> getWishlistItemsOfUser(@PathVariable String username) {
+		return transactionService.getWishlistItemsOfUser(username);
 	}
 
 	@PostMapping("/cart/add")
@@ -62,9 +62,9 @@ public class TransactionController {
 		return null;
 	}
 
-	@GetMapping("/cart/list/{userId}")
-	public List<CartAndWishlistResponse> getCartItemsOfUser(@PathVariable Long userId) {
-		return transactionService.getCartItemsOfUser(userId);
+	@GetMapping("/cart/list/{userName}")
+	public List<CartAndWishlistResponse> getCartItemsOfUser(@PathVariable String userName) {
+		return transactionService.getCartItemsOfUser(userName);
 	}
 
 	@PostMapping("/order/add")
@@ -73,8 +73,8 @@ public class TransactionController {
 	}
 
 	@GetMapping("/order/list/{userId}")
-	public List<Order> getOrderList(@PathVariable Long userId) {
-		return transactionService.getOrdersOfUser(userId);
+	public List<Order> getOrderList(@PathVariable String userName) {
+		return transactionService.getOrdersOfUser(userName);
 	}
 
 	@GetMapping("/order/details/{orderId}")

@@ -59,6 +59,16 @@ export class AuthService {
       );
   }
 
+  refreshToken() {
+    return this.http.post<ILoginResponse>(URLS.REFRESH_TOKEN, this.refreshTokenRequest)
+      .pipe(tap(loginResponse => {
+        localStorage.removeItem('authenticationToken');
+        localStorage.removeItem('expiresAt');
+        localStorage.setItem('authenticationToken', loginResponse.authenticationToken);
+        localStorage.setItem('expiresAt', new Date(loginResponse.expiresAt).toISOString());
+      }));
+  }
+
   private _addDataInLocalStorage(loginResponse: ILoginResponse) {
     localStorage.setItem('authenticationToken', loginResponse.authenticationToken);
     localStorage.setItem('username', loginResponse.username);

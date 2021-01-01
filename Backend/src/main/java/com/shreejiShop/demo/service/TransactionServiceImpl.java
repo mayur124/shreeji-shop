@@ -52,8 +52,8 @@ public class TransactionServiceImpl implements ITransactionService {
 	}
 
 	@Override
-	public List<CartAndWishlistResponse> getWishlistItemsOfUser(Long userId) {
-		List<Object[]> wishlistResponse = wishlistRepo.getWishlistsOfUser(userId);
+	public List<CartAndWishlistResponse> getWishlistItemsOfUser(String username) {
+		List<Object[]> wishlistResponse = wishlistRepo.getWishlistsOfUser(username);
 		return _getListOfCartWishListResponse(wishlistResponse);
 	}
 
@@ -74,8 +74,8 @@ public class TransactionServiceImpl implements ITransactionService {
 	}
 
 	@Override
-	public List<CartAndWishlistResponse> getCartItemsOfUser(Long userId) {
-		List<Object[]> cartItemsResponse = cartRepo.getCartItemsOfUser(userId);
+	public List<CartAndWishlistResponse> getCartItemsOfUser(String userName) {
+		List<Object[]> cartItemsResponse = cartRepo.getCartItemsOfUser(userName);
 		return _getListOfCartWishListResponse(cartItemsResponse);
 	}
 
@@ -83,7 +83,7 @@ public class TransactionServiceImpl implements ITransactionService {
 	public Order addOrder(AddOrderRequest orderRequest) {
 		Order order = new Order();
 		order.setOrderDate(new Date());
-		order.setUserId(orderRequest.getUserId());
+		order.setUserName(orderRequest.getUserName());
 		Order savedOrder = ordersRepo.save(order);
 		if (savedOrder != null) {
 			for (AddOrderCartItem ci : orderRequest.getItemList()) {
@@ -100,8 +100,8 @@ public class TransactionServiceImpl implements ITransactionService {
 	}
 
 	@Override
-	public List<Order> getOrdersOfUser(Long userId) {
-		return ordersRepo.findByUserId(userId);
+	public List<Order> getOrdersOfUser(String userName) {
+		return ordersRepo.findByUsername(userName);
 	}
 
 	@Override

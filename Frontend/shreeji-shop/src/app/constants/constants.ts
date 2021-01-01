@@ -8,6 +8,8 @@ export const URLS = {
     SIGN_UP: BASE_URL + '/auth/signup',
     LOGIN: BASE_URL + '/auth/login',
     LOGOUT: BASE_URL + '/auth/logout',
+    REFRESH_TOKEN: BASE_URL + '/auth/refresh/token',
+    ADD_TO_CART: BASE_URL + '/transaction/cart/add',
 }
 export type SORT_TYPE = "" | "asc" | "desc";
 export type SPAN_TYPES = 'error' | 'progress' | 'success';

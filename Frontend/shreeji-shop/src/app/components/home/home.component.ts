@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { SORT_TYPE } from 'src/app/constants/constants';
 import { Page } from 'src/app/models/page.model';
 import { PriceRange } from 'src/app/models/priceRange.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { HttpService } from 'src/app/services/http/http.service';
-import { PhoneData } from "../../models/home.model";
+import { BrandModelMap, PhoneData } from "../../models/home.model";
 
 @Component({
   selector: 'app-home',
@@ -21,10 +23,13 @@ export class HomeComponent implements OnInit {
   pageNo: number;
   priceRange: PriceRange;
 
-  constructor(private http: HttpService,) { }
+  constructor(private http: HttpService,
+    private auth: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,) { }
 
   ngOnInit(): void { }
-  
+
   private getDefaultPhones() {
     this.http.getDefaultPhoneModels(this.pageNo, this.sortType, this.priceRange).subscribe(
       (response: PhoneData) => {
@@ -70,5 +75,23 @@ export class HomeComponent implements OnInit {
   setPriceRange(priceRange: PriceRange) {
     this.priceRange = priceRange;
     this.getPhonesForSelectedBrandsSafe(this.brandIds);
+  }
+  checkAndAddToCart(phone: BrandModelMap) {
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(["authenticate"], { relativeTo: this.activatedRoute });
+    } else {
+      this.http.addToCart(phone).subscribe(
+        (cartResponse) => {
+          if (cartResponse) {
+            console.log('Phone added succussfully in cart > ', cartResponse);
+          } else {
+            console.log('Phone not added to cart {empty response}');
+          }
+        },
+        (error) => {
+          console.log('Error while adding phone to cart > ', error);
+        }
+      );
+    }
   }
 }

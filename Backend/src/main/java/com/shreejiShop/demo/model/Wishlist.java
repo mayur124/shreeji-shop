@@ -17,8 +17,8 @@ public class Wishlist {
 	@Column(name = "WISHLIST_ID")
 	private Long wishlistId;
 
-	@Column(name = "USER_ID")
-	private Long userId;
+	@Column(name = "USERNAME")
+	private String username;
 
 	@Column(name = "BRAND_ID")
 	private Long brandId;
@@ -34,12 +34,12 @@ public class Wishlist {
 		this.wishlistId = wishlistId;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public String getUserId() {
+		return username;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Long getBrandId() {
@@ -60,7 +60,7 @@ public class Wishlist {
 
 	@Override
 	public String toString() {
-		return "Wishlist [wishlistId=" + wishlistId + ", userId=" + userId + ", brandId=" + brandId + ", modelId="
+		return "Wishlist [wishlistId=" + wishlistId + ", username=" + username + ", brandId=" + brandId + ", modelId="
 				+ modelId + "]";
 	}
 

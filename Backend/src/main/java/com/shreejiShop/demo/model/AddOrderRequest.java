@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddOrderRequest {
-	private Long userId;
+	private String userName;
 	private List<AddOrderCartItem> itemList = new ArrayList<AddOrderCartItem>();
 
 	public AddOrderRequest() {
 	}
 
-	public Long getUserId() {
-		return userId;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public List<AddOrderCartItem> getItemList() {

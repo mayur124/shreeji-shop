@@ -8,6 +8,6 @@ import com.shreejiShop.demo.model.Order;
 
 public interface OrdersRepo extends JpaRepository<Order, Long> {
 
-	List<Order> findByUserId(Long userId);
+	List<Order> findByUsername(String userName);
 
 }

@@ -22,12 +22,12 @@ public class Order {
 	@Column(name = "ORDER_DATE")
 	private Date orderDate;
 	
-	@Column(name = "USER_ID")
-	private Long userId;
+	@Column(name = "USERNAME")
+	private String username;
 
 	@Override
 	public String toString() {
-		return "Orders [orderId=" + orderId + ", orderDate=" + orderDate + ", userId=" + userId + "]";
+		return "Orders [orderId=" + orderId + ", orderDate=" + orderDate + ", userName=" + username + "]";
 	}
 
 	public Long getOrderId() {
@@ -46,11 +46,11 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public String getUserName() {
+		return username;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUserName(String userName) {
+		this.username = userName;
 	}
 }

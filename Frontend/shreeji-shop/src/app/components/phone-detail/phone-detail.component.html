@@ -56,5 +56,6 @@
   <p class="other-phones">More from {{ brandName }}</p>
   <app-phone-model
     [phoneResponse]="phoneModelSubject.asObservable()"
+    (addToCart)="checkAndAddToCart($event)"
   ></app-phone-model>
 </div>
