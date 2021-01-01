@@ -12,7 +12,7 @@
   <div class="col-sm-7 col-lg-8 col-xl-9">
     <app-phone-model
       [phoneResponse]="phoneModelSubject.asObservable()"
-      (addToCart)="checkAndAddToCart($event)"
+      (addToCart)="authenticatekAndAddToCart($event)"
     ></app-phone-model>
     <app-pagination
       [paginationResponse]="paginationSub.asObservable()"

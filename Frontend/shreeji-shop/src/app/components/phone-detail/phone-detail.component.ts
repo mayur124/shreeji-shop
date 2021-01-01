@@ -20,6 +20,8 @@ export class PhoneDetailComponent implements OnInit {
   phoneDetail: PhoneModel;
   phoneAttributes: { [category: string]: { [key: string]: string } } = {};
   tagLineSub: Subject<string> = new Subject();
+  brandId: number;
+  phoneId: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -32,12 +34,11 @@ export class PhoneDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(
       params => {
-        const brandId = Number(params["brandId"]);
-        const phoneId = Number(params["id"]);
-        const brandName = params["brandName"];
-        this._getSimilarPhones(brandId, phoneId);
-        this.brandName = brandName;
-        this._setPhoneDetails(phoneId);
+        this.brandId = Number(params["brandId"]);
+        this.phoneId = Number(params["id"]);
+        this.brandName = params["brandName"];
+        this._getSimilarPhones(this.brandId, this.phoneId);
+        this._setPhoneDetails(this.phoneId);
       },
       error => {
         console.log("Error in activatedRoute > ", error);
@@ -115,7 +116,14 @@ export class PhoneDetailComponent implements OnInit {
     }
   }
 
-  checkAndAddToCart(phone: BrandModelMap) {
+  addToCartDetailBtn(){
+    const phone = new BrandModelMap;
+    phone.phoneId = this.phoneId;
+    phone.brandId = this.brandId;
+    this.authenticatekAndAddToCart(phone);
+  }
+
+  authenticatekAndAddToCart(phone: BrandModelMap) {
     if (!this.auth.isLoggedIn()) {
       this.router.navigate(["authenticate"], { relativeTo: this.activatedRoute });
     } else {

@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
     this.priceRange = priceRange;
     this.getPhonesForSelectedBrandsSafe(this.brandIds);
   }
-  checkAndAddToCart(phone: BrandModelMap) {
+  authenticatekAndAddToCart(phone: BrandModelMap) {
     if (!this.auth.isLoggedIn()) {
       this.router.navigate(["authenticate"], { relativeTo: this.activatedRoute });
     } else {

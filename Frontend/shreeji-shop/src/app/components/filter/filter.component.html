@@ -116,6 +116,7 @@
         type="text"
         placeholder="Search for Brands"
         (keyup)="filterBrands($event)"
+        [(ngModel)]="brandInput"
       />
       <div class="px-2 brand-alphabets d-flex flex-fill">
         <p

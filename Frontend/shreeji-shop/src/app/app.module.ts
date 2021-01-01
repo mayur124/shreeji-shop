@@ -11,7 +11,6 @@ import { FilterComponent } from './components/filter/filter.component';
 import { HomeComponent } from './components/home/home.component';
 import { PaginationComponent } from "./components/home/pagination/pagination.component";
 import { TaglineComponent } from "./components/tagline/tagline.component";
-import { ModelFilterComponent } from './components/model-filter/model-filter.component';
 import { PhoneModelComponent } from './components/phone-model/phone-model.component';
 import { PhoneDetailComponent } from './components/phone-detail/phone-detail.component';
 import { AuthComponent } from './components/auth/auth.component';
@@ -30,7 +29,6 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     HeaderComponent,
     FilterComponent,
     HomeComponent,
-    ModelFilterComponent,
     PhoneModelComponent,
     PaginationComponent,
     TaglineComponent,

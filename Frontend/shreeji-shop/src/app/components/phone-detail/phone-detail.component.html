@@ -37,6 +37,7 @@
     <div class="mt-3 d-flex">
       <button
         class="btn d-flex align-items-baseline justify-content-center w-100 add-to-cart-btn mr-2"
+        (click)="addToCartDetailBtn()"
       >
         <img src="/assets/icons/cart.svg" class="bi bi-cart2" />
         <span class="pl-1 text-white">Add to cart</span>
@@ -56,6 +57,6 @@
   <p class="other-phones">More from {{ brandName }}</p>
   <app-phone-model
     [phoneResponse]="phoneModelSubject.asObservable()"
-    (addToCart)="checkAndAddToCart($event)"
+    (addToCart)="authenticatekAndAddToCart($event)"
   ></app-phone-model>
 </div>

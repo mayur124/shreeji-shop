@@ -1,7 +1,7 @@
 export class PhoneModel {
     announced: string;
     audioJack: string;
-    id: number;
+    phoneId: number;
     imgUrl: string;
     name: string;
     status: string;

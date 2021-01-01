@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 
 @Service
@@ -60,8 +61,20 @@ public class JwtProviderImpl implements IJwtProvider {
 	
 	@Override
 	public boolean validateToken(String jwt) {
-		Jwts.parser().setSigningKey(getPublicKey()).parseClaimsJws(jwt);
-		return true;
+		try {
+			Jwts.parser().setSigningKey(getPublicKey()).parseClaimsJws(jwt);
+			return true;
+		}
+		catch(ExpiredJwtException e) {
+			System.out.println("JWT expired");
+			System.out.println(e);
+			return false;
+		}
+		catch(Exception e) {
+			System.out.println("Some other JWT exception");
+			System.out.println(e);
+			return false;
+		}
 	}
 
 	@Override
