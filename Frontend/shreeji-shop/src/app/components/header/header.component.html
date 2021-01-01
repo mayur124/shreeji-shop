@@ -12,9 +12,9 @@
       <div class="p-2 border profile-options">
         <ng-container *ngIf="isLoggedIn">
           <p class="user-welcome-msg border-bottom">Hello {{ userName }}</p>
-          <p class="login-action m-0" (click)="showOrders()">Orders</p>
-          <p class="login-action m-0" (click)="showWishlist()">Wishlist</p>
-          <p class="login-action m-0" (click)="editProfile()">Edit Profile</p>
+          <p class="login-action m-0" (click)="navigateToOrders()">Orders</p>
+          <p class="login-action m-0" (click)="navigateToWishlist()">Wishlist</p>
+          <p class="login-action m-0" (click)="navigateToEditProfile()">Edit Profile</p>
           <p class="login-action m-0" (click)="logout()">Logout</p>
         </ng-container>
         <ng-container *ngIf="!isLoggedIn">
@@ -28,16 +28,13 @@
         </ng-container>
       </div>
     </div>
-    <div class="header-btn wishlist">
+    <div class="header-btn wishlist" (click)="navigateToWishlist()">
       <img src="/assets/icons/wishlist.svg" class="action-icon wishlist-icon" />
       <span class="text-secondary">Wishlist</span>
     </div>
-    <div class="header-btn bag">
+    <div class="header-btn bag" (click)="navigateToCart()">
       <img src="/assets/icons/bag.svg" class="action-icon bag-icon" />
       <span class="text-secondary">Bag</span>
     </div>
-    <!-- <button class="btn btn-primary mr-2" type="button" (click)="openProfileSafe()">Profile</button>
-    <button class="btn btn-primary mr-2" type="button">Wishlist</button>
-    <button class="btn btn-primary mr-2" type="button">Bag</button> -->
   </div>
 </nav>

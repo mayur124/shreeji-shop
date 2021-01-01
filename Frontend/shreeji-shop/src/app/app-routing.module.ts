@@ -20,6 +20,10 @@ const routes: Routes = [
       { path: 'authenticate', component: AuthComponent }
     ]
   },
+  {
+    path: 'user',
+    loadChildren: () => import('./components/user-action/user-action.module').then(m => m.UserActionModule),
+  }
 ];
 
 @NgModule({
