@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SORT_TYPE } from 'src/app/constants/constants';
 import { HttpService } from 'src/app/services/http/http.service';
@@ -8,15 +8,17 @@ import { HttpService } from 'src/app/services/http/http.service';
   templateUrl: './tagline.component.html',
   styleUrls: ['./tagline.component.scss']
 })
-export class TaglineComponent implements OnInit {
+export class TaglineComponent implements OnInit, AfterViewInit {
 
   @Input() tagLine: Observable<string>;
   @Output() applySort: EventEmitter<string> = new EventEmitter();
 
-  tagline: string = "Own your latest one";
+  // tagline: string = "Own your latest one";
+  tagline: string;
   sortType: SORT_TYPE = "";
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.tagLine?.subscribe(
@@ -26,6 +28,10 @@ export class TaglineComponent implements OnInit {
       error => {
         console.log("Error in tagline watcher > ", error);
       });
+  }
+
+  ngAfterViewInit(): void {
+    this.cdr.detectChanges();
   }
 
   sortPhones() {

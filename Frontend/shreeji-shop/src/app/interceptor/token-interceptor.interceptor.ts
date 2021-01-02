@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { ILoginResponse } from '../models/authentication.model';
 
 @Injectable()
@@ -45,8 +45,15 @@ export class TokenInterceptor implements HttpInterceptor {
           return next.handle(this._addToken(request, refreshTokenResponse.authenticationToken));
         })
       );
+    } else {
+      return this.refreshTokenSubject.pipe(
+        filter(result => result !== null),
+        take(1),
+        switchMap((_res) => {
+          return next.handle(this._addToken(request, this.auth.getJwtToken()));
+        })
+      );
     }
-    return;
   }
 
   private _addToken(request: HttpRequest<unknown>, jwtToken: string) {

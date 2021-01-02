@@ -37,26 +37,23 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateToOrders() {
-    this.router.navigate(['user']);
-    // this.router.navigate(['user/orders']);
+    this.router.navigate(['user/orders']);
   }
 
   navigateToWishlist() {
-    this.router.navigate(['user']);
-    // this.router.navigate(['user/wishlist']);
+    this.router.navigate(['user/wishlist']);
   }
 
   navigateToEditProfile() {
-    this.router.navigate(['user']);
-    // this.router.navigate(['user/profile']);
+    this.router.navigate(['user/profile']);
   }
 
   navigateToCart() {
-    this.router.navigate(['user']);
-    // this.router.navigate(['user/cart']);
+    this.router.navigate(['user/cart']);
   }
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['home']);
   }
 }
