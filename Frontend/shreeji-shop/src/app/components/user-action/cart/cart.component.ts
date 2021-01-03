@@ -25,7 +25,6 @@ export class CartComponent implements OnInit {
     this.http.getCartItemsOfUser().subscribe(
       cartItems => {
         if (cartItems.length > 0) {
-          console.log(cartItems);
           this.cartItems = cartItems;
         } else {
           console.log('No items in cart');

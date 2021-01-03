@@ -5,7 +5,7 @@ import { Brand } from 'src/app/models/brand.model';
 import { BrandModelMap, PhoneData } from 'src/app/models/home.model';
 import { PhoneModel } from 'src/app/models/phoneModel.model';
 import { PriceRange } from "src/app/models/priceRange.model";
-import { Cart, CartAndWishlistResponse } from "src/app/models/transaction.model";
+import { Cart, CartAndWishlistResponse, Wishlist } from "src/app/models/transaction.model";
 import { User } from "src/app/models/user.model";
 
 @Injectable({
@@ -81,5 +81,14 @@ export class HttpService {
 
   removeItemFromCart(cartId: number) {
     return this.http.delete<Cart>(`${URLS.REMOVE_FROM_CART}/${cartId}`);
+  }
+
+  getWishlistOfUser() {
+    const username = localStorage.getItem('username');
+    return this.http.get<CartAndWishlistResponse[]>(`${URLS.GET_WISHLIST_ITEMS}/${username}`);
+  }
+
+  removeItemFromWishlist(wishlistId: number) {
+    return this.http.delete<Wishlist>(`${URLS.REMOVE_FROM_WISHLIST}/${wishlistId}`);
   }
 }
