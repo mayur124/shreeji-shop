@@ -79,7 +79,7 @@ export class AuthComponent implements OnInit {
       this.authService.signIn(this.loginRequest).subscribe(
         (response) => {
           if (response) {
-            this.common.hideElement(this.progressSpan.nativeElement);
+            this.common.removeElement(this.progressSpan.nativeElement);
             this.closeModal();
           } else {
             this._handleUnsuccessfulLogin();

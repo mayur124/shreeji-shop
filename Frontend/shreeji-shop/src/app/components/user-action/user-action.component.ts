@@ -87,10 +87,8 @@ export class UserActionComponent implements OnInit, AfterViewInit {
     this.actionName = action;
   }
 
-  updateUsername(newName: string) {
-    if (newName.trim().length) {
-      this.userDetails.name = newName;
-    }
+  updateUsername(newUserDetails: User) {
+    this.userDetails = newUserDetails;
   }
 
 }

@@ -1,5 +1,8 @@
 package com.shreejiShop.demo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,11 +58,14 @@ public class AuthController {
 	}
 
 	@PutMapping("/user/update")
-	public ResponseEntity<String> updateUserDetails(@RequestBody User user) {
+	public ResponseEntity<Map<String, String>> updateUserDetails(@RequestBody User user) {
 		Boolean isUpdated = authService.updateUserDetails(user);
+		Map<String, String> responseMap = new HashMap<String, String>();
 		if (isUpdated.equals(true)) {
-			return ResponseEntity.status(HttpStatus.OK).body("User details updated successfully!");
+			responseMap.put("message", "User details updated successfully!");
+			return ResponseEntity.status(HttpStatus.OK).body(responseMap);
 		}
-		return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("User details not updated!");
+		responseMap.put("message", "User details not updated!");
+		return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseMap);
 	}
 }

@@ -68,9 +68,9 @@ export class HttpService {
   updateUserDetails(user: User) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       })
     }
-    return this.http.post<User>(URLS.UPDATE_USER_DETAILS, user, httpOptions);
+    return this.http.put<{ message: string }>(URLS.UPDATE_USER_DETAILS, user, httpOptions);
   }
 }

@@ -33,7 +33,7 @@ export class CommonService {
   }
 
   setSpanType(spanElement: HTMLElement, type: SPAN_TYPES) {
-    spanElement.classList.remove('text-danger', 'text-primary', 'text-success');
+    spanElement.classList.remove('text-danger', 'text-primary', 'text-success', 'visibility-hidden');
     switch (type) {
       case 'error':
         spanElement.classList.add('text-danger');
@@ -49,7 +49,11 @@ export class CommonService {
     }
   }
 
-  hideElement(spanElement: HTMLElement) {
+  removeElement(spanElement: HTMLElement) {
     spanElement.remove();
+  }
+
+  hideElement(spanElement: HTMLElement){
+    spanElement.classList.toggle('visibility-hidden');
   }
 }

@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
+import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
 
 @Component({
@@ -11,10 +13,12 @@ import { HttpService } from 'src/app/services/http/http.service';
 export class UserProfileComponent implements OnInit {
 
   @Input() userDetails: User;
-  @Output() usernameChanged: EventEmitter<string> = new EventEmitter();
+  @Output() usernameChanged: EventEmitter<User> = new EventEmitter();
+  @ViewChild('progressSpan') progressSpan: ElementRef<HTMLElement>;
   profileForm: FormGroup;
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService,
+    private common: CommonService) { }
 
   ngOnInit(): void {
     this._setUserDetailsIfUndefined();
@@ -38,10 +42,10 @@ export class UserProfileComponent implements OnInit {
   private _initProfileForm() {
     this.profileForm = new FormGroup({
       name: new FormControl(this.userDetails?.name, Validators.required),
-      phone: new FormControl(this.userDetails?.phoneNumber, [Validators.required, Validators.pattern(new RegExp(/^\d{10}/, "g"))]),
-      email: new FormControl({ value: this.userDetails?.email, disabled: true }, [Validators.required, Validators.email]),
+      phone: new FormControl(this.userDetails?.phoneNumber, [Validators.required, Validators.pattern(/^\d{10}/)]),
+      email: new FormControl(this.userDetails?.email, [Validators.required, Validators.email]),
       address: new FormControl(this.userDetails?.address, Validators.required),
-      pinCode: new FormControl(this.userDetails?.pinCode, [Validators.required, Validators.pattern(new RegExp(/^\d{6}/, "g"))]),
+      pinCode: new FormControl(this.userDetails?.pinCode, [Validators.required, Validators.pattern(/^\d{6}/)]),
     });
   }
 
@@ -57,8 +61,44 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateProfile() {
+    this._hideProgressMessage();
     this._validateForm(this.profileForm);
-    console.log(this.userDetails);
+    if (this.profileForm.valid) {
+      this.userDetails.userName = localStorage.getItem('username');
+      this.userDetails.name = this.profileForm.get('name').value;
+      this.userDetails.phoneNumber = Number(this.profileForm.get('phone').value);
+      this.userDetails.email = this.profileForm.get('email').value;
+      this.userDetails.address = this.profileForm.get('address').value;
+      this.userDetails.pinCode = Number(this.profileForm.get('pinCode').value);
+      this.common.setSpanMessage(this.progressSpan.nativeElement, 'Updating details...');
+      this.common.setSpanType(this.progressSpan.nativeElement, 'progress');
+      this.http.updateUserDetails(this.userDetails).subscribe(
+        (updateResponse) => {
+          if (updateResponse.message === 'User details updated successfully!') {
+            this.usernameChanged.emit(this.userDetails);
+            this.common.setSpanMessage(this.progressSpan.nativeElement, 'Details updated successfuly!');
+            this.common.setSpanType(this.progressSpan.nativeElement, 'success');
+            setTimeout(() => {
+              this._hideProgressMessage();
+            }, 1000);
+          } else {
+            this._handleFailedResponse();
+          }
+        },
+        error => {
+          this._handleFailedResponse();
+          console.log('Error while updating user details > ', error);
+        }
+      )
+    }
   }
 
+  private _handleFailedResponse() {
+    this.common.setSpanMessage(this.progressSpan.nativeElement, 'Details not updated!');
+    this.common.setSpanType(this.progressSpan.nativeElement, 'error');
+  }
+
+  private _hideProgressMessage() {
+    this.common.hideElement(this.progressSpan.nativeElement);
+  }
 }
