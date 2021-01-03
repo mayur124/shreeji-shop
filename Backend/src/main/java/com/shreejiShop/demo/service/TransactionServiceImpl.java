@@ -129,11 +129,13 @@ public class TransactionServiceImpl implements ITransactionService {
 		if (response != null) {
 			for (Object[] object : response) {
 				BigDecimal id = new BigDecimal(object[0].toString());
-				String brandName = object[1].toString();
-				String modelName = object[2].toString();
-				String imgUrl = object[4].toString();
-				BigDecimal priceEur = new BigDecimal(object[3].toString());
-				list.add(new CartAndWishlistResponse(id, brandName, modelName, imgUrl, priceEur));
+				BigDecimal brandId = new BigDecimal(object[1].toString());
+				String brandName = object[2].toString();
+				BigDecimal modelId = new BigDecimal(object[3].toString());
+				String modelName = object[4].toString();
+				BigDecimal priceEur = new BigDecimal(object[5].toString());
+				String imgUrl = object[6].toString();
+				list.add(new CartAndWishlistResponse(id, brandId, brandName, modelId, modelName, priceEur, imgUrl));
 			}
 		}
 		return list;

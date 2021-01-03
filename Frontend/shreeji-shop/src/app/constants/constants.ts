@@ -11,7 +11,9 @@ export const URLS = {
     REFRESH_TOKEN: BASE_URL + '/auth/refresh/token',
     ADD_TO_CART: BASE_URL + '/transaction/cart/add',
     GET_USER_DETAILS: BASE_URL + '/auth/user/details',
-    UPDATE_USER_DETAILS: BASE_URL + '/auth/user/update'
+    UPDATE_USER_DETAILS: BASE_URL + '/auth/user/update',
+    GET_CART_ITEMS: BASE_URL + '/transaction/cart/list',
+    REMOVE_FROM_CART: BASE_URL + '/transaction/cart/remove'
 }
 export type SORT_TYPE = "" | "asc" | "desc";
 export type SPAN_TYPES = 'error' | 'progress' | 'success';

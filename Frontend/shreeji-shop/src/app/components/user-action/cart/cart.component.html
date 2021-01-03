@@ -1,1 +1,31 @@
-<p>cart works!</p>
+<table class="table" *ngIf="cartItems?.length > 0; else emptyCart">
+  <tbody>
+    <tr *ngFor="let cartItem of cartItems; let i = index">
+      <td class="phone-image-td">
+        <img
+          [src]="cartItem.modelImgUrl"
+          [alt]="cartItem.modelName"
+          class="phone-image"
+        />
+      </td>
+      <td class="phone-desc-td">
+        <p class="p-0 m-0 mt-2 phone-name" (click)="openPhoneDetails(cartItem)">
+          {{ cartItem.brandName }}-{{ cartItem.modelName }}
+        </p>
+        <p class="p-0 m-0 price">
+          Rs.{{ getConvertedPrice(cartItem.priceEur) }}
+        </p>
+      </td>
+      <td class="remove-phone-td">
+        <button
+          type="button"
+          class="btn btn-sm btn-danger"
+          (click)="removePhone(cartItem)"
+        >
+          Remove
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ng-template #emptyCart></ng-template>

@@ -4,18 +4,31 @@ import java.math.BigDecimal;
 
 public class CartAndWishlistResponse {
 	private BigDecimal id;
+	private BigDecimal brandId;
 	private String brandName;
+	private BigDecimal modelId;
 	private String modelName;
 	private String modelImgUrl;
 	private BigDecimal priceEur;
 
-	public CartAndWishlistResponse(BigDecimal id, String brandName, String modelName, String modelImgUrl, BigDecimal priceEur) {
+	public CartAndWishlistResponse(BigDecimal id, BigDecimal brandId, String brandName, BigDecimal modelId,
+			String modelName, BigDecimal priceEur, String modelImgUrl) {
 		super();
 		this.setId(id);
-		this.brandName = brandName;
-		this.modelName = modelName;
-		this.modelImgUrl = modelImgUrl;
-		this.priceEur = priceEur;
+		this.setBrandId(brandId);
+		this.setBrandName(brandName);
+		this.setModelId(modelId);
+		this.setModelName(modelName);
+		this.setModelImgUrl(modelImgUrl);
+		this.setPriceEur(priceEur);
+	}
+
+	public BigDecimal getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(BigDecimal brandId) {
+		this.brandId = brandId;
 	}
 
 	public String getBrandName() {
@@ -24,6 +37,14 @@ public class CartAndWishlistResponse {
 
 	public void setBrandName(String brandName) {
 		this.brandName = brandName;
+	}
+
+	public BigDecimal getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(BigDecimal modelId) {
+		this.modelId = modelId;
 	}
 
 	public String getModelName() {

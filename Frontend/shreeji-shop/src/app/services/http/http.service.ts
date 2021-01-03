@@ -73,4 +73,13 @@ export class HttpService {
     }
     return this.http.put<{ message: string }>(URLS.UPDATE_USER_DETAILS, user, httpOptions);
   }
+
+  getCartItemsOfUser() {
+    const username = localStorage.getItem('username');
+    return this.http.get<CartAndWishlistResponse[]>(`${URLS.GET_CART_ITEMS}/${username}`);
+  }
+
+  removeItemFromCart(cartId: number) {
+    return this.http.delete<Cart>(`${URLS.REMOVE_FROM_CART}/${cartId}`);
+  }
 }

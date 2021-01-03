@@ -1,0 +1,41 @@
+$price-color: #4e54c8;
+$name-color: #373f50;
+$custom-orange: #fe696a;
+
+.table {
+  .phone-image-td {
+    width: 10%;
+
+    .phone-image {
+      height: 120px;
+    }
+  }
+  .phone-desc-td {
+    width: 60%;
+
+    .phone-name,
+    .price {
+      font-size: 0.875rem;
+    }
+    .phone-name {
+      width: 180px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: $name-color;
+      cursor: pointer;
+      transition: color 0.5s ease;
+
+      &:hover {
+        color: $custom-orange;
+      }
+    }
+    .price {
+      color: $price-color;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+  }
+  .remove-phone-td {
+    width: 5%;
+  }
+}
