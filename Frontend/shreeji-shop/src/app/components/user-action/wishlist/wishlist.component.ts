@@ -22,12 +22,12 @@ export class WishlistComponent implements OnInit {
   }
 
   private _initCartItems() {
-    this.http.getCartItemsOfUser().subscribe(
+    this.http.getWishlistOfUser().subscribe(
       wishlistItems => {
         if (wishlistItems.length > 0) {
           this.wishlistItems = wishlistItems;
         } else {
-          console.log('No items in cart');
+          console.log('No items in wishlist');
           this.wishlistItems = [];
         }
       },
