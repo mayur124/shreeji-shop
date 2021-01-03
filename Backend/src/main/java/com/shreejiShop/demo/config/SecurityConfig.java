@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.cors().and().csrf().disable().authorizeRequests()
-//				.antMatchers("/auth/refresh/token").authenticated()
+				.antMatchers("/auth/refresh/token").authenticated()
 				.antMatchers(HttpMethod.PUT, "/auth/user/update").authenticated()
 				.antMatchers(HttpMethod.GET, "/auth/user/details/**").authenticated()
 				.antMatchers("/transaction/**").authenticated()

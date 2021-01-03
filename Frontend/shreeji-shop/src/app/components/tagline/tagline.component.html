@@ -1,9 +1,9 @@
 <div class="d-flex tagline-container">
   <div class="offset-sm-auto offset-lg-1">
-    <h1 class="h3 m-0 text-light">{{ tagline }}</h1>
+    <h1 class="h3 m-0 text-light">{{ taglineStr }}</h1>
   </div>
   <div
-    *ngIf="tagline == 'Own your latest one'"
+    *ngIf="taglineStr == 'Own your latest one'"
     class="filter-container d-flex align-items-center"
   >
     <span class="text-white mr-2">Sort by</span>
@@ -13,4 +13,7 @@
       <option value="desc">Price High to Low</option>
     </select>
   </div>
+  <h5 class="subTagline text-white" *ngIf="subTaglineStr?.trim().length > 0">
+    {{ subTaglineStr }}
+  </h5>
 </div>

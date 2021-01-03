@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { SORT_TYPE } from 'src/app/constants/constants';
@@ -13,10 +13,11 @@ import { BrandModelMap, PhoneData } from "../../models/home.model";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   phoneModelSubject: Subject<PhoneData> = new Subject();
   paginationSub: Subject<{ brandIds: string, paginationData: Page }> = new Subject();
+  tagLineSub: Subject<string> = new Subject();
 
   brandIds: string;
   sortType: SORT_TYPE;
@@ -29,6 +30,10 @@ export class HomeComponent implements OnInit {
     private activatedRoute: ActivatedRoute,) { }
 
   ngOnInit(): void { }
+
+  ngAfterViewInit(): void {
+    this.tagLineSub.next('Own your latest one');
+  }
 
   private getDefaultPhones() {
     this.http.getDefaultPhoneModels(this.pageNo, this.sortType, this.priceRange).subscribe(

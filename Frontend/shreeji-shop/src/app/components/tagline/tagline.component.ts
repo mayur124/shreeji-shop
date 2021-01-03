@@ -11,26 +11,34 @@ import { HttpService } from 'src/app/services/http/http.service';
 export class TaglineComponent implements OnInit, AfterViewInit {
 
   @Input() tagLine: Observable<string>;
+  @Input() subTagLine: Observable<string>;
   @Output() applySort: EventEmitter<string> = new EventEmitter();
 
-  // tagline: string = "Own your latest one";
-  tagline: string;
+  taglineStr: string = "Own your latest one";
+  subTaglineStr: string;
   sortType: SORT_TYPE = "";
 
   constructor(private http: HttpService,
     private cdr: ChangeDetectorRef) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  ngAfterViewInit(): void {
     this.tagLine?.subscribe(
       response => {
-        this.tagline = response;
+        this.taglineStr = response;
       },
       error => {
         console.log("Error in tagline watcher > ", error);
       });
-  }
-
-  ngAfterViewInit(): void {
+    this.subTagLine?.subscribe(
+      subTagLine => {
+        this.subTaglineStr = subTagLine;
+      },
+      error => {
+        console.log("Error in sub tagline watcher > ", error);
+      }
+    );
     this.cdr.detectChanges();
   }
 

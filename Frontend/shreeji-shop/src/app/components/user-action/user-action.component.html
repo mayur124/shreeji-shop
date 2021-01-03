@@ -1,4 +1,90 @@
 <app-header></app-header>
-<app-tagline [tagLine]="tagLineSub.asObservable()"></app-tagline>
-<p>user-action works!</p>
+<app-tagline
+  [tagLine]="tagLineSub.asObservable()"
+  [subTagLine]="subTagLineSub.asObservable()"
+></app-tagline>
+<div class="d-flex offset-sm-auto offset-lg-2 p-2">
+  <div
+    class="col-sm-4 col-lg-3 col-xl-2 py-2 px-0 bg-white all-filters-container card h-100"
+  >
+    <div
+      class="d-flex flex-column justify-content-between all-filters w-100 px-3 mt-2"
+    >
+      <p class="heading m-0">{{ userDetails?.name }}</p>
+      <p class="user-email">{{ userDetails?.email }}</p>
+    </div>
+    <div class="action-group-wrapper p-3">
+      <h3 class="action-group-heading m-0">Dashboard</h3>
+    </div>
+    <div
+      class="action-item d-flex align-items-center p-3 border-bottom"
+      (click)="initTemplate('orders')"
+    >
+      <img src="/assets/icons/bag.svg" class="action-icon bag-icon" />
+      <span
+        class="action-text text-secondary pl-2"
+        [ngClass]="{ 'active-action': actionName == 'orders' }"
+      >
+        Orders
+      </span>
+    </div>
+    <div
+      class="action-item d-flex align-items-center p-3 border-bottom"
+      (click)="initTemplate('wishlist')"
+    >
+      <img src="/assets/icons/wishlist.svg" class="action-icon wishlist-icon" />
+      <span
+        class="action-text text-secondary pl-2"
+        [ngClass]="{ 'active-action': actionName == 'wishlist' }"
+      >
+        Wishlist
+      </span>
+    </div>
+    <div
+      class="action-item d-flex align-items-center p-3"
+      (click)="initTemplate('cart')"
+    >
+      <img src="/assets/icons/cart-black.svg" class="action-icon bag-icon" />
+      <span
+        class="action-text text-secondary pl-2"
+        [ngClass]="{ 'active-action': actionName == 'cart' }"
+      >
+        Cart
+      </span>
+    </div>
+    <div class="action-group-wrapper p-3">
+      <h3 class="action-group-heading m-0">Accout Settings</h3>
+    </div>
+    <div
+      class="action-item d-flex align-items-center p-3"
+      (click)="initTemplate('profile')"
+    >
+      <img src="/assets/icons/person.svg" class="action-icon bag-icon" />
+      <span
+        class="action-text text-secondary pl-2"
+        [ngClass]="{ 'active-action': actionName == 'profile' }"
+      >
+        Profile info
+      </span>
+    </div>
+  </div>
+  <div class="col-7 p-3 pl-5">
+    <ng-container *ngTemplateOutlet="templateToActivate"></ng-container>
+  </div>
+</div>
+<ng-template #template id="orders">
+  <app-order></app-order>
+</ng-template>
+<ng-template #template id="wishlist">
+  <app-wishlist></app-wishlist>
+</ng-template>
+<ng-template #template id="cart">
+  <app-cart></app-cart>
+</ng-template>
+<ng-template #template id="profile">
+  <app-user-profile
+    [userDetails]="userDetails"
+    (usernameChanged)="updateUsername($event)"
+  ></app-user-profile>
+</ng-template>
 <router-outlet></router-outlet>

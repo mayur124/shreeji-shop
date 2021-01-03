@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { SORT_TYPE, URLS } from '../../constants/constants'
-import { Brand } from '../../models/brand.model';
+import { SORT_TYPE, URLS } from 'src/app/constants/constants'
+import { Brand } from 'src/app/models/brand.model';
 import { BrandModelMap, PhoneData } from 'src/app/models/home.model';
 import { PhoneModel } from 'src/app/models/phoneModel.model';
-import { PriceRange } from "../../models/priceRange.model";
-import { Cart, CartAndWishlistResponse } from "../../models/transaction.model";
+import { PriceRange } from "src/app/models/priceRange.model";
+import { Cart, CartAndWishlistResponse } from "src/app/models/transaction.model";
+import { User } from "src/app/models/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,19 @@ export class HttpService {
       })
     }
     return this.http.post<CartAndWishlistResponse>(URLS.ADD_TO_CART, cart, httpOptions);
+  }
+
+  getUserDetails() {
+    const username = localStorage.getItem('username');
+    return this.http.get<User>(`${URLS.GET_USER_DETAILS}/${username}`);
+  }
+
+  updateUserDetails(user: User) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+    return this.http.post<User>(URLS.UPDATE_USER_DETAILS, user, httpOptions);
   }
 }

@@ -23,6 +23,7 @@ import { TokenInterceptor } from "./interceptor/token-interceptor.interceptor";
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { UserActionComponent } from './components/user-action/user-action.component';
+import { UserActionModule } from './components/user-action/user-action.module';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { UserActionComponent } from './components/user-action/user-action.compon
     HttpClientModule,
     FormsModule,
     NgxSliderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UserActionModule,
   ],
   providers: [HttpService, CommonService, AuthService, {
     provide: HTTP_INTERCEPTORS,

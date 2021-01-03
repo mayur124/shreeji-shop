@@ -1,1 +1,129 @@
-<p>user-profile works!</p>
+<form
+  class="form-grid"
+  autocomplete="off"
+  novalidate=""
+  [formGroup]="profileForm"
+>
+  <span #progressSpan class="small py-2" id="progress-span"></span>
+  <div class="form-group" id="name-group">
+    <label for="name">Full name</label>
+    <!-- [(ngModel)]="userDetails.name" -->
+    <input
+      [formControlName]="'name'"
+      class="form-control"
+      [ngClass]="{
+        'border border-danger':
+          !profileForm.get('name').valid && profileForm.get('name').touched
+      }"
+      type="text"
+      id="name"
+      required
+    />
+    <span
+      class="text-danger small"
+      *ngIf="!profileForm.get('name').valid && profileForm.get('name').touched"
+    >
+      Please fill in your name.
+    </span>
+  </div>
+  <div class="form-group" id="phone-group">
+    <label for="phone">Phone number</label>
+    <!-- [(ngModel)]="userDetails.phoneNumber" -->
+    <input
+      [formControlName]="'phone'"
+      class="form-control"
+      [ngClass]="{
+        'border border-danger':
+          !profileForm.get('phone').valid && profileForm.get('phone').touched
+      }"
+      type="number"
+      id="phone"
+      required
+    />
+    <span
+      class="text-danger small"
+      *ngIf="
+        !profileForm.get('phone').valid && profileForm.get('phone').touched
+      "
+    >
+      Please provide a valid phone number.
+    </span>
+  </div>
+  <div class="form-group" id="email-group">
+    <label for="email">Email address</label>
+    <!-- [(ngModel)]="userDetails.email" -->
+    <input
+      [formControlName]="'email'"
+      class="form-control"
+      [ngClass]="{
+        'border border-danger':
+          !profileForm.get('email').valid && profileForm.get('email').touched
+      }"
+      type="email"
+      id="email"
+      required
+    />
+    <span
+      class="text-danger small"
+      *ngIf="
+        !profileForm.get('email').valid && profileForm.get('email').touched
+      "
+    >
+      Please provide a valid email address.
+    </span>
+  </div>
+  <div class="form-group" id="pincode-group">
+    <label for="pincode">Pincode</label>
+    <!-- [(ngModel)]="userDetails.pinCode" -->
+    <input
+      [formControlName]="'pinCode'"
+      class="form-control"
+      [ngClass]="{
+        'border border-danger':
+          !profileForm.get('pinCode').valid &&
+          profileForm.get('pinCode').touched
+      }"
+      type="number"
+      id="pincode"
+      required
+    />
+    <span
+      class="text-danger small"
+      *ngIf="
+        !profileForm.get('pinCode').valid && profileForm.get('pinCode').touched
+      "
+    >
+      Please enter valid pincode.
+    </span>
+  </div>
+  <div class="form-group" id="address-group">
+    <label for="address">Address</label>
+    <!-- [(ngModel)]="userDetails.address" -->
+    <textarea
+      [formControlName]="'address'"
+      class="form-control"
+      [ngClass]="{
+        'border border-danger':
+          !profileForm.get('address').valid &&
+          profileForm.get('address').touched
+      }"
+      id="address"
+      required
+    ></textarea>
+    <span
+      class="text-danger small"
+      *ngIf="
+        !profileForm.get('address').valid && profileForm.get('address').touched
+      "
+    >
+      Address cannot be empty.
+    </span>
+  </div>
+  <button
+    class="btn btn-theme btn-block btn-shadow p-2 ml-auto"
+    type="submit"
+    (click)="updateProfile()"
+  >
+    <span class="text-white">Update profile</span>
+  </button>
+</form>
