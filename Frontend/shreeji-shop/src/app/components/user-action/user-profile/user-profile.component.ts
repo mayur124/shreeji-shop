@@ -42,10 +42,10 @@ export class UserProfileComponent implements OnInit {
   private _initProfileForm() {
     this.profileForm = new FormGroup({
       name: new FormControl(this.userDetails?.name, Validators.required),
-      phone: new FormControl(this.userDetails?.phoneNumber, [Validators.required, Validators.pattern(/^\d{10}/)]),
+      phone: new FormControl(this.userDetails?.phoneNumber, [Validators.required, Validators.pattern(/^\d{10}$/)]),
       email: new FormControl(this.userDetails?.email, [Validators.required, Validators.email]),
       address: new FormControl(this.userDetails?.address, Validators.required),
-      pinCode: new FormControl(this.userDetails?.pinCode, [Validators.required, Validators.pattern(/^\d{6}/)]),
+      pinCode: new FormControl(this.userDetails?.pinCode, [Validators.required, Validators.pattern(/^\d{6}$/)]),
     });
   }
 
