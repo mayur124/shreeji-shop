@@ -2,10 +2,18 @@
 <div class="row pl-3">
   <ng-container *ngFor="let p of phones">
     <div class="phone-card card mx-3 mb-3">
-      <div class="card-body" (click)="openPhoneDetails(p)">
-        <img [src]="p.imgUrl" [alt]="p.name" class="phone-image" />
-        <p class="p-0 m-0 mt-2 phone-name">{{ p.brandName }}-{{ p.name }}</p>
-        <p class="p-0 m-0 price">Rs.{{ p.priceEur }}</p>
+      <div class="card-body">
+        <button
+          class="btn d-flex align-items-center justify-content-center wishlist-btn"
+          (click)="emitAddToWishlist(p)"
+        >
+          <img src="/assets/icons/wishlist-heart.svg" />
+        </button>
+        <div (click)="openPhoneDetails(p)">
+          <img [src]="p.imgUrl" [alt]="p.name" class="phone-image" />
+          <p class="p-0 m-0 mt-2 phone-name">{{ p.brandName }}-{{ p.name }}</p>
+          <p class="p-0 m-0 price">Rs.{{ p.priceEur }}</p>
+        </div>
       </div>
       <div
         class="card-body extra-options p-0 m-0 pb-3 d-flex justify-content-center"

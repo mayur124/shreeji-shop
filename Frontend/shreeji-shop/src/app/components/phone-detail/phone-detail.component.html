@@ -43,10 +43,10 @@
         <span class="pl-1 text-white">Add to cart</span>
       </button>
       <button
-        class="btn btn-secondary d-flex align-items-baseline justify-content-center w-100 add-to-wishlist-btn ml-2"
+        class="btn btn-secondary d-flex align-items-center justify-content-center w-100 add-to-wishlist-btn ml-2"
       >
-        <img src="/assets/icons/heart.svg" class="bi bi-heart" />
-        <span class="pl-1 text-white">Add to wishlist</span>
+        <img src="/assets/icons/wishlist-heart.svg" />
+        <span class="pl-1">Add to wishlist</span>
       </button>
     </div>
   </div>
@@ -57,6 +57,10 @@
   <p class="other-phones">More from {{ brandName }}</p>
   <app-phone-model
     [phoneResponse]="phoneModelSubject.asObservable()"
-    (addToCart)="authenticatekAndAddToCart($event)"
+    (addToCart)="addToCartWithAuth($event)"
+    (addToWishlist)="addToWishlistWithAuth($event)"
   ></app-phone-model>
 </div>
+<p #toaster class="toaster p-2 text-white bg-dark mb-3 w-auto rounded">
+  {{ toasterMessage }}
+</p>

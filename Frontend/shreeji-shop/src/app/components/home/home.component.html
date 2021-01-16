@@ -15,7 +15,8 @@
   <div class="col-sm-7 col-lg-8 col-xl-9">
     <app-phone-model
       [phoneResponse]="phoneModelSubject.asObservable()"
-      (addToCart)="authenticatekAndAddToCart($event)"
+      (addToCart)="addToCartWithAuth($event)"
+      (addToWishlist)="addToWishlistWithAuth($event)"
     ></app-phone-model>
     <app-pagination
       [paginationResponse]="paginationSub.asObservable()"
@@ -23,4 +24,5 @@
     ></app-pagination>
   </div>
 </div>
+<p #toaster class="toaster p-2 text-white bg-dark mb-3 w-auto rounded">{{ toasterMessage }}</p>
 <router-outlet></router-outlet>

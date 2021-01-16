@@ -67,3 +67,18 @@ $button-bg-color: #fe696a;
   background-color: #ff4142;
   box-shadow: none;
 }
+.wishlist-btn {
+  background-color: #f8f9fa;
+  border-radius: 50%;
+  box-shadow: 0px 0px 2px 1px #dee2e6;
+  height: 2.5rem;
+  width: 2.5rem;
+  position: absolute;
+  z-index: 1;
+  right: 1rem;
+
+  &:hover {
+    box-shadow: 0px 0px 5px 1px #dee2e6;
+    background-color: #fff;
+  }
+}

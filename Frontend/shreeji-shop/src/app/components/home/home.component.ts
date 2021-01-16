@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { SORT_TYPE } from 'src/app/constants/constants';
 import { Page } from 'src/app/models/page.model';
 import { PriceRange } from 'src/app/models/priceRange.model';
+import { Wishlist } from 'src/app/models/transaction.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { HttpService } from 'src/app/services/http/http.service';
 import { BrandModelMap, PhoneData } from "../../models/home.model";
@@ -15,6 +16,8 @@ import { BrandModelMap, PhoneData } from "../../models/home.model";
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('toaster') toaster: ElementRef<HTMLElement>;
+
   phoneModelSubject: Subject<PhoneData> = new Subject();
   paginationSub: Subject<{ brandIds: string, paginationData: Page }> = new Subject();
   tagLineSub: Subject<string> = new Subject();
@@ -23,6 +26,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   sortType: SORT_TYPE;
   pageNo: number;
   priceRange: PriceRange;
+  toasterMessage: string;
 
   constructor(private http: HttpService,
     private auth: AuthService,
@@ -81,14 +85,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.priceRange = priceRange;
     this.getPhonesForSelectedBrandsSafe(this.brandIds);
   }
-  authenticatekAndAddToCart(phone: BrandModelMap) {
+  addToCartWithAuth(phone: BrandModelMap) {
     if (!this.auth.isLoggedIn()) {
       this.router.navigate(["authenticate"], { relativeTo: this.activatedRoute });
     } else {
       this.http.addToCart(phone).subscribe(
         (cartResponse) => {
           if (cartResponse) {
-            console.log('Phone added succussfully in cart > ', cartResponse);
+            this._showToaster('Phone added in the cart');
+            console.log('Phone successfully added in the cart > ', cartResponse);
           } else {
             console.log('Phone not added to cart {empty response}');
           }
@@ -98,5 +103,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       );
     }
+  }
+  addToWishlistWithAuth(wishlist: Wishlist) {
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(["authenticate"], { relativeTo: this.activatedRoute });
+    } else {
+      this.http.addToWishlist(wishlist).subscribe(
+        (wishlist) => {
+          this._showToaster('Phone added in the wishlist');
+          console.log('Phone added succussfully in wishlist > ', wishlist);
+        },
+        (error) => {
+          console.log('Error while adding phone to wishlist > ', error);
+        }
+      );
+    }
+  }
+  private _showToaster(message: string) {
+    this.toasterMessage = message;
+    this.toaster.nativeElement.classList.add('show');
+    setTimeout(() => {
+      this.toaster.nativeElement.classList.remove('show');
+    }, 2500);
   }
 }
