@@ -13,7 +13,14 @@
       <option value="desc">Price High to Low</option>
     </select>
   </div>
-  <h5 class="subTagline text-white" *ngIf="subTaglineStr?.trim().length > 0">
+  <h5
+    class="subTagline text-white"
+    [ngClass]="{
+      subTaglineCenter: subTagLinePos == 'center',
+      subTaglineLeft: subTagLinePos == 'left'
+    }"
+    *ngIf="subTaglineStr?.trim().length > 0"
+  >
     {{ subTaglineStr }}
   </h5>
 </div>

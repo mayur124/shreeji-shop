@@ -1,7 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SORT_TYPE } from 'src/app/constants/constants';
-import { HttpService } from 'src/app/services/http/http.service';
 
 @Component({
   selector: 'app-tagline',
@@ -12,14 +11,15 @@ export class TaglineComponent implements OnInit, AfterViewInit {
 
   @Input() tagLine: Observable<string>;
   @Input() subTagLine: Observable<string>;
+  @Input() subTagLinePosition: Observable<'left' | 'center'>;
   @Output() applySort: EventEmitter<string> = new EventEmitter();
 
   taglineStr: string = "Own your latest one";
   subTaglineStr: string;
   sortType: SORT_TYPE = "";
+  subTagLinePos: 'left' | 'center' = 'center';
 
-  constructor(private http: HttpService,
-    private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void { }
 
@@ -39,6 +39,14 @@ export class TaglineComponent implements OnInit, AfterViewInit {
         console.log("Error in sub tagline watcher > ", error);
       }
     );
+    this.subTagLinePosition?.subscribe(
+      subTagLinePos => {
+        this.subTagLinePos = subTagLinePos;
+      },
+      error => {
+        console.log("Error in subTaglinePosition watcher > ", error);
+      }
+    )
     this.cdr.detectChanges();
   }
 

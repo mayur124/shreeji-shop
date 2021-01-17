@@ -18,10 +18,69 @@ $price-color: #4e54c8;
 .price {
   font-size: 0.8rem;
 }
+.total-wrapper {
+  color: #4b566b;
+}
 .phone-name {
   color: #373f50;
 }
 .price {
   color: $price-color;
   font-weight: 400;
+}
+.form-grid {
+  display: grid;
+  grid-template-areas:
+    "progress-span progress-span"
+    "name-group phone-group"
+    "pincode-group address-group"
+    ". btn-grid";
+  gap: 0 1rem;
+  grid-template-columns: repeat(2, 1fr);
+
+  #progress-span {
+    grid-area: progress-span;
+    height: 1.5rem;
+  }
+  #name-group {
+    grid-area: name-group;
+  }
+  #phone-group {
+    grid-area: phone-group;
+  }
+  #pincode-group {
+    grid-area: pincode-group;
+  }
+  #address-group {
+    grid-area: address-group;
+  }
+  .btn-grid {
+    grid-area: btn-grid;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    .btn-theme,
+    .add-to-wishlist-btn {
+      font-size: 1rem;
+      border-radius: 0.2rem;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-theme {
+      background-color: #fe696a;
+      box-shadow: 0 0.5rem 1.125rem -0.5rem rgb(254 105 106 / 90%);
+      &:hover {
+        background-color: #ff4142;
+        box-shadow: none;
+      }
+    }
+    .add-to-wishlist-btn {
+      background-color: #f8f9fa;
+      color: #000;
+      box-shadow: 0 0.5rem 1.125rem -0.5rem #5a62686e;
+      &:hover {
+        box-shadow: none;
+      }
+    }
+  }
 }

@@ -1,26 +1,164 @@
 <app-header></app-header>
-<app-tagline [tagLine]="tagLineSub.asObservable()"></app-tagline>
-<div class="d-flex offset-sm-auto offset-lg-2 p-2">
-  <div class="col-7 pt-1 pr-3 pb-3 pl-5"></div>
+<app-tagline
+  [tagLine]="tagLineSub.asObservable()"
+  [subTagLine]="subTagLineSub.asObservable()"
+  [subTagLinePosition]="subTagLinePositionSub.asObservable()"
+></app-tagline>
+<div class="d-flex offset-sm-auto offset-lg-2">
+  <div class="col-7 pr-3 pl-2">
+    <form
+      class="form-grid"
+      autocomplete="off"
+      novalidate=""
+      [formGroup]="shippingAddressForm"
+    >
+      <span
+        #progressSpan
+        class="small pb-2 visibility-hidden"
+        id="progress-span"
+      ></span>
+      <div class="form-group" id="name-group">
+        <label for="name">Full name</label>
+        <input
+          [formControlName]="'name'"
+          class="form-control"
+          [ngClass]="{
+            'border border-danger':
+              !shippingAddressForm.get('name').valid &&
+              shippingAddressForm.get('name').touched
+          }"
+          type="text"
+          id="name"
+          required
+        />
+        <span
+          class="text-danger small"
+          *ngIf="
+            !shippingAddressForm.get('name').valid &&
+            shippingAddressForm.get('name').touched
+          "
+        >
+          Please fill in your name.
+        </span>
+      </div>
+      <div class="form-group" id="phone-group">
+        <label for="phone">Phone number</label>
+        <input
+          [formControlName]="'phone'"
+          class="form-control"
+          [ngClass]="{
+            'border border-danger':
+              !shippingAddressForm.get('phone').valid &&
+              shippingAddressForm.get('phone').touched
+          }"
+          type="number"
+          id="phone"
+          required
+        />
+        <span
+          class="text-danger small"
+          *ngIf="
+            !shippingAddressForm.get('phone').valid &&
+            shippingAddressForm.get('phone').touched
+          "
+        >
+          Please provide a valid phone number.
+        </span>
+      </div>
+      <div class="form-group" id="pincode-group">
+        <label for="pincode">Pincode</label>
+        <input
+          [formControlName]="'pinCode'"
+          class="form-control"
+          [ngClass]="{
+            'border border-danger':
+              !shippingAddressForm.get('pinCode').valid &&
+              shippingAddressForm.get('pinCode').touched
+          }"
+          type="number"
+          id="pincode"
+          required
+        />
+        <span
+          class="text-danger small"
+          *ngIf="
+            !shippingAddressForm.get('pinCode').valid &&
+            shippingAddressForm.get('pinCode').touched
+          "
+        >
+          Please enter valid pincode.
+        </span>
+      </div>
+      <div class="form-group" id="address-group">
+        <label for="address">Address</label>
+        <textarea
+          [formControlName]="'address'"
+          class="form-control"
+          [ngClass]="{
+            'border border-danger':
+              !shippingAddressForm.get('address').valid &&
+              shippingAddressForm.get('address').touched
+          }"
+          id="address"
+          required
+        ></textarea>
+        <span
+          class="text-danger small"
+          *ngIf="
+            !shippingAddressForm.get('address').valid &&
+            shippingAddressForm.get('address').touched
+          "
+        >
+          Address cannot be empty.
+        </span>
+      </div>
+      <div class="btn-grid">
+        <button
+          class="btn btn-theme d-flex align-items-baseline justify-content-center p-2"
+          type="submit"
+          (click)="placeOrder()"
+        >
+          <img src="/assets/icons/bag-check.svg" />
+          <span class="pl-2 text-white">Place order</span>
+        </button>
+        <button
+          class="btn add-to-wishlist-btn d-flex align-items-center justify-content-center p-2 ml-2"
+          (click)="cancel()"
+        >
+          <img src="/assets/icons/x-cancel.svg" />
+          <span class="pl-2">Cancel</span>
+        </button>
+      </div>
+    </form>
+  </div>
   <div class="col-sm-4 col-lg-3 p-3 bg-white all-filters-container card h-100">
     <p class="text-center font-weight-500 order-summary mt-3">Order summary</p>
-    <ng-container *ngFor="let cartItem of cartItems">
-      <div class="border-bottom d-flex p-2 px-3">
-        <img
-          [src]="cartItem.modelImgUrl"
-          [alt]="cartItem.modelName"
-          class="phone-image"
-          width="64"
-        />
-        <div class="pl-3">
-          <p class="m-0 font-weight-500 phone-name">
-            {{ cartItem.brandName }}-{{ cartItem.modelName }}
-          </p>
-          <p class="m-0 mt-1 price">
-            Rs.{{ getConvertedPrice(cartItem.priceEur) }}
-          </p>
+    <div class="p-2 px-3">
+      <ng-container *ngFor="let cartItem of cartItems">
+        <div class="border-bottom d-flex p-2">
+          <img
+            [src]="cartItem.modelImgUrl"
+            [alt]="cartItem.modelName"
+            class="phone-image"
+            width="64"
+          />
+          <div class="pl-3">
+            <p class="m-0 font-weight-500 phone-name">
+              {{ cartItem.brandName }}-{{ cartItem.modelName }}
+            </p>
+            <p class="m-0 mt-1 price">
+              Rs.{{ getConvertedPrice(cartItem.priceEur) }}
+              <span class="text-muted">x {{ cartItem.quantity }}</span>
+            </p>
+          </div>
         </div>
+      </ng-container>
+      <div
+        class="d-flex align-items-center justify-content-between p-2 total-wrapper"
+      >
+        <p class="font-weight-500 m-0">Total</p>
+        <p class="m-0">Rs.{{ getConvertedPrice(totalPrice) }}</p>
       </div>
-    </ng-container>
+    </div>
   </div>
 </div>
