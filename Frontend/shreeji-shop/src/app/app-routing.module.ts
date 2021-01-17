@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
 import { PhoneDetailComponent } from './components/phone-detail/phone-detail.component';
+import { CheckoutComponent } from "./components/checkout/checkout.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -23,6 +24,9 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./components/user-action/user-action.module').then(m => m.UserActionModule),
+  },
+  {
+    path: 'user/order/checkout', component: CheckoutComponent
   }
 ];
 

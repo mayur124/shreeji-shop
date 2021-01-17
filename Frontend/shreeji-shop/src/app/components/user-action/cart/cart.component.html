@@ -17,9 +17,15 @@
         </p>
       </td>
       <td class="remove-phone-td">
+        <p class="m-0 mt-1 p-0 quantity-text">Quantity</p>
+        <input
+          type="number"
+          class="form-control quantity-input"
+          [(ngModel)]="cartItem.quantity"
+        />
         <button
           type="button"
-          class="btn btn-sm btn-danger"
+          class="btn btn-sm btn-danger mt-1 w-100"
           (click)="removePhone(cartItem)"
         >
           Remove
@@ -27,5 +33,18 @@
       </td>
     </tr>
   </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3">
+        <button
+          class="btn d-flex align-items-center justify-content-center w-auto add-to-cart-btn ml-auto px-4"
+          (click)="checkout()"
+        >
+          <img src="/assets/icons/credit-card.svg" />
+          <span class="pl-2 text-white">Proceed to checkout</span>
+        </button>
+      </td>
+    </tr>
+  </tfoot>
 </table>
 <ng-template #emptyCart></ng-template>

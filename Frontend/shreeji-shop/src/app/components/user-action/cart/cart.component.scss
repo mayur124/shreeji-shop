@@ -10,6 +10,12 @@ $custom-orange: #fe696a;
       height: 120px;
     }
   }
+  .quantity-text,
+  .phone-name {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: $name-color;
+  }
   .phone-desc-td {
     width: 60%;
 
@@ -19,9 +25,6 @@ $custom-orange: #fe696a;
     }
     .phone-name {
       width: 180px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      color: $name-color;
       cursor: pointer;
       transition: color 0.5s ease;
 
@@ -37,5 +40,26 @@ $custom-orange: #fe696a;
   }
   .remove-phone-td {
     width: 5%;
+    .quantity-text {
+      font-size: 0.875rem;
+    }
+    .quantity-input {
+      font-size: small;
+    }
+  }
+  tfoot {
+    .add-to-cart-btn {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 0.2rem;
+      border: none;
+      transition: all 0.2s ease;
+      background-color: $custom-orange;
+      box-shadow: 0 0.5rem 1.125rem -0.5rem rgba(254, 105, 106, 0.9);
+    }
+    .add-to-cart-btn:hover {
+      box-shadow: none;
+      background-color: #ff4142;
+    }
   }
 }

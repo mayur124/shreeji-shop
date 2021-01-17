@@ -24,6 +24,7 @@ import { TokenInterceptor } from "./interceptor/token-interceptor.interceptor";
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { UserActionComponent } from './components/user-action/user-action.component';
 import { UserActionModule } from './components/user-action/user-action.module';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { UserActionModule } from './components/user-action/user-action.module';
     PhoneDetailComponent,
     AuthComponent,
     UserActionComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,

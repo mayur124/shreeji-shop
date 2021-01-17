@@ -83,7 +83,7 @@ public class TransactionServiceImpl implements ITransactionService {
 	public Order addOrder(AddOrderRequest orderRequest) {
 		Order order = new Order();
 		order.setOrderDate(new Date());
-		order.setUserName(orderRequest.getUserName());
+		order.setUserName(orderRequest.getUsername());
 		Order savedOrder = ordersRepo.save(order);
 		if (savedOrder != null) {
 			for (AddOrderCartItem ci : orderRequest.getItemList()) {

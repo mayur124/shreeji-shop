@@ -124,6 +124,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.toaster.nativeElement.classList.add('show');
     setTimeout(() => {
       this.toaster.nativeElement.classList.remove('show');
-    }, 2500);
+    }, 3000);
   }
 }

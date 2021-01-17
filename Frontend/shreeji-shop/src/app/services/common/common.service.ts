@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SPAN_TYPES } from 'src/app/constants/constants';
+import { CartAndWishlistResponse } from 'src/app/models/transaction.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
 
+  cartResponse: CartAndWishlistResponse[];
   constructor() { }
 
   getInrPrice(priceInEur: number): string | number {
@@ -53,7 +55,15 @@ export class CommonService {
     spanElement.remove();
   }
 
-  hideElement(spanElement: HTMLElement){
+  hideElement(spanElement: HTMLElement) {
     spanElement.classList.toggle('visibility-hidden');
+  }
+
+  setCartItems(response: CartAndWishlistResponse[]) {
+    this.cartResponse = response;
+  }
+
+  getCartItems() {
+    return this.cartResponse;
   }
 }

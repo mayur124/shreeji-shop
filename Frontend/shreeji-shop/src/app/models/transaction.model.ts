@@ -17,4 +17,25 @@ export class CartAndWishlistResponse {
     modelName: string;
     modelImgUrl: string;
     priceEur: number;
+    quantity?: number;
+}
+
+export class AddOrderRequest {
+    username: string;
+    itemList: AddOrderCartItem[];
+    constructor(username: string, itemList: AddOrderCartItem[]) {
+        this.username = username;
+        this.itemList = itemList;
+    }
+}
+
+export class AddOrderCartItem {
+    brandId: number;
+    modelId: number;
+    quantity: number;
+    constructor(brandId: number, modelId: number, quantity: number) {
+        this.brandId = brandId;
+        this.modelId = modelId;
+        this.quantity = quantity;
+    }
 }

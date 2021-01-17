@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartAndWishlistResponse } from 'src/app/models/transaction.model';
+import { AddOrderCartItem, AddOrderRequest, CartAndWishlistResponse } from 'src/app/models/transaction.model';
 import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
 
@@ -26,6 +26,7 @@ export class CartComponent implements OnInit {
       cartItems => {
         if (cartItems.length > 0) {
           this.cartItems = cartItems;
+          this.cartItems.forEach(item => item.quantity = 1);
         } else {
           console.log('No items in cart');
           this.cartItems = [];
@@ -59,6 +60,11 @@ export class CartComponent implements OnInit {
 
   openPhoneDetails(cartItem: CartAndWishlistResponse) {
     this.router.navigate([]).then((_result: never) => { window.open(`/phone/${cartItem.brandName}/${cartItem.brandId}/${cartItem.modelId}`, '_blank') });
+  }
+
+  checkout() {
+    this.common.setCartItems(this.cartItems);
+    this.router.navigate(['user/order/checkout']);
   }
 
 }
