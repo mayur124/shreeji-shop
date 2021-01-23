@@ -1,6 +1,27 @@
+$custom-orage: #fe696a;
+
+nav,
+.pagination-message {
+  font-size: 13px;
+}
+.pagination-message {
+  font-weight: 500;
+}
 nav {
-  margin-left: 5rem;
   ul li {
     cursor: pointer;
+  }
+}
+.page-item.active .page-link {
+  background-color: $custom-orage;
+  border-color: $custom-orage;
+  &:hover {
+    color: #fff;
+  }
+}
+.page-link {
+  color: $custom-orage;
+  &:hover {
+    color: $custom-orage;
   }
 }
