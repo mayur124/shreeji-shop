@@ -24,7 +24,6 @@ export class CartAndWishlistResponse {
     priceEur: number;
     quantity?: number;
 }
-
 export class AddOrderRequest {
     username: string;
     itemList: AddOrderCartItem[];
@@ -33,7 +32,6 @@ export class AddOrderRequest {
         this.itemList = itemList;
     }
 }
-
 export class AddOrderCartItem {
     brandId: number;
     modelId: number;
@@ -43,4 +41,19 @@ export class AddOrderCartItem {
         this.modelId = modelId;
         this.quantity = quantity;
     }
+}
+export class OrderItemResponse {
+    brandId: number;
+    brandName: string;
+    /**
+     * phoneId
+     */
+    modelId: string;
+    /**
+     * phoneName
+     */
+    modelName: string;
+    imgUrl: string;
+    priceEur: number;
+    quantity: number;
 }

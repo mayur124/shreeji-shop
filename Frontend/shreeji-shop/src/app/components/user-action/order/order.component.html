@@ -1,1 +1,45 @@
-<p>order works!</p>
+<table class="table" *ngIf="orderList?.length > 0; else emptyCart">
+  <thead>
+    <tr>
+      <th>Order #</th>
+      <th>Order date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orderList; let i = index">
+      <td class="order-id-td">
+        <p
+          class="p-0 m-0 mt-2 w-auto"
+          (click)="openOrderDetails(order.orderId)"
+        >
+          {{ order.orderId }}
+        </p>
+      </td>
+      <td class="order-date-td">
+        <p class="p-0 m-0 mt-2 w-auto">
+          {{ order.orderDate | date: "MMM d, y, h:mm:ss a" }}
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ng-template #emptyCart></ng-template>
+<div class="order-details" *ngIf="showOrderDetailPopup === true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Order details</h5>
+        <button
+          type="button"
+          class="close"
+          (click)="showOrderDetailPopup = false"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ orderDetails | json }}
+      </div>
+    </div>
+  </div>
+</div>

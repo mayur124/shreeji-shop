@@ -18,6 +18,8 @@ export const URLS = {
     REMOVE_FROM_CART: BASE_URL + '/transaction/cart/remove',
     GET_WISHLIST_ITEMS: BASE_URL + '/transaction/wishlist/list',
     REMOVE_FROM_WISHLIST: BASE_URL + '/transaction/wishlist/remove',
+    GET_ORDER_LIST: BASE_URL + '/transaction/order/list',
+    GET_ORDER_DETAILS: BASE_URL + '/transaction/order/details'
 }
 export type SORT_TYPE = "" | "asc" | "desc";
 export type SPAN_TYPES = 'error' | 'progress' | 'success';

@@ -1,0 +1,38 @@
+$custom-orange: #fe696a;
+tbody {
+  font-size: 0.9rem;
+  .order-id-td p {
+    transition: color 0.1s ease;
+    cursor: pointer;
+    &:hover {
+      color: $custom-orange;
+    }
+  }
+}
+.order-details {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1030;
+  height: 100%;
+  width: 100%;
+  background-color: #00000073;
+  display: flex;
+  align-items: center;
+
+  .modal-dialog {
+    max-width: initial;
+
+    .modal-content {
+      width: 50vw;
+      .modal-header .close {
+        outline: none;
+      }
+
+      .modal-body {
+        max-height: 60vh;
+        overflow: auto;
+      }
+    }
+  }
+}
