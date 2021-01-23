@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +82,7 @@ public class TransactionServiceImpl implements ITransactionService {
 	}
 
 	@Override
+	@Transactional()
 	public Order addOrder(AddOrderRequest orderRequest) {
 		Order order = new Order();
 		order.setOrderDate(new Date());
@@ -97,6 +100,12 @@ public class TransactionServiceImpl implements ITransactionService {
 			return savedOrder;
 		}
 		return null;
+	}
+
+	@Override
+	@Transactional()
+	public void emptyCart(String username) {
+		cartRepo.deleteByUsername(username);
 	}
 
 	@Override

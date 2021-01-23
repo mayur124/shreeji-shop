@@ -5,7 +5,7 @@ import { Brand } from 'src/app/models/brand.model';
 import { BrandModelMap, PhoneData } from 'src/app/models/home.model';
 import { PhoneModel } from 'src/app/models/phoneModel.model';
 import { PriceRange } from "src/app/models/priceRange.model";
-import { Cart, CartAndWishlistResponse, Wishlist } from "src/app/models/transaction.model";
+import { AddOrderRequest, Cart, CartAndWishlistResponse, Order, Wishlist } from "src/app/models/transaction.model";
 import { User } from "src/app/models/user.model";
 
 @Injectable({
@@ -67,6 +67,15 @@ export class HttpService {
       })
     }
     return this.http.post<Wishlist>(URLS.ADD_TO_WISHLIST, wishlist, httpOptions);
+  }
+
+  addOrder(order: AddOrderRequest) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+    return this.http.post<Order>(URLS.ADD_ORDER, order, httpOptions);
   }
 
   getUserDetails() {

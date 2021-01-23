@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AddOrderCartItem, AddOrderRequest, CartAndWishlistResponse } from 'src/app/models/transaction.model';
 import { CommonService } from 'src/app/services/common/common.service';
+import { HttpService } from 'src/app/services/http/http.service';
 
 @Component({
   selector: 'app-checkout',
@@ -22,7 +23,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   constructor(private common: CommonService,
     private cdr: ChangeDetectorRef,
-    private router: Router,) { }
+    private router: Router,
+    private http: HttpService,) { }
 
   ngOnInit(): void {
     this.cartItems = this.common.getCartItems();
@@ -71,7 +73,25 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       const username = localStorage.getItem('username');
       const itemList = this.cartItems.map(item => new AddOrderCartItem(item.brandId, item.modelId, item.quantity || 1));
       const order = new AddOrderRequest(username, itemList);
-      console.log(order);
+      this.common.setSpanMessage(this.progressSpan.nativeElement, 'Placing your order...');
+      this.common.setSpanType(this.progressSpan.nativeElement, 'progress');
+      this.http.addOrder(order).subscribe(
+        (orderResponse) => {
+          if (orderResponse) {
+            this.common.setSpanMessage(this.progressSpan.nativeElement, 'Order placed successfuly!');
+            this.common.setSpanType(this.progressSpan.nativeElement, 'success');
+            setTimeout(() => {
+              this._hideProgressMessage();
+              this.router.navigate(['/user/orders']);
+            }, 1000);
+          } else {
+            this._handleFailedResponse();
+          }
+        },
+        (error) => {
+          console.log('Error while adding order > ', error);
+          this._handleFailedResponse();
+        });
     }
   }
 

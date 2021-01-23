@@ -28,4 +28,6 @@ public interface ITransactionService {
 	List<OrderItemResponse> getOrderItems(Long orderId);
 
 	Order addOrder(AddOrderRequest orderRequest);
+
+	void emptyCart(String username);
 }

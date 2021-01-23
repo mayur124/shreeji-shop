@@ -69,10 +69,11 @@ public class TransactionController {
 
 	@PostMapping("/order/add")
 	public Order addOrder(@RequestBody AddOrderRequest orderRequest) {
+		transactionService.emptyCart(orderRequest.getUsername());
 		return transactionService.addOrder(orderRequest);
 	}
 
-	@GetMapping("/order/list/{userId}")
+	@GetMapping("/order/list/{userName}")
 	public List<Order> getOrderList(@PathVariable String userName) {
 		return transactionService.getOrdersOfUser(userName);
 	}

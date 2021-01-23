@@ -11,6 +11,7 @@ export const URLS = {
     REFRESH_TOKEN: BASE_URL + '/auth/refresh/token',
     ADD_TO_CART: BASE_URL + '/transaction/cart/add',
     ADD_TO_WISHLIST: BASE_URL + '/transaction/wishlist/add',
+    ADD_ORDER: BASE_URL + '/transaction/order/add',
     GET_USER_DETAILS: BASE_URL + '/auth/user/details',
     UPDATE_USER_DETAILS: BASE_URL + '/auth/user/update',
     GET_CART_ITEMS: BASE_URL + '/transaction/cart/list',

@@ -9,6 +9,11 @@ export class Cart extends CartWishlistCommonAttributes {
 export class Wishlist extends CartWishlistCommonAttributes {
     wishlistId: number;
 }
+export class Order {
+    orderId: number;
+    orderDate: Date;
+    username: string;
+}
 export class CartAndWishlistResponse {
     id: number;
     brandId: number;
