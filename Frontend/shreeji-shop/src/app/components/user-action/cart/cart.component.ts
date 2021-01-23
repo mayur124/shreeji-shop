@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AddOrderCartItem, AddOrderRequest, CartAndWishlistResponse } from 'src/app/models/transaction.model';
+import { CartAndWishlistResponse } from 'src/app/models/transaction.model';
 import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
 

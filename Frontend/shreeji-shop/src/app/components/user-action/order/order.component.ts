@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Order, OrderItemResponse } from 'src/app/models/transaction.model';
+import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
 
 @Component({
@@ -10,9 +11,10 @@ import { HttpService } from 'src/app/services/http/http.service';
 export class OrderComponent implements OnInit {
 
   orderList: Order[];
-  orderDetails: OrderItemResponse;
+  orderDetails: OrderItemResponse[];
   showOrderDetailPopup: boolean;
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService,
+    private common: CommonService,) { }
 
   ngOnInit(): void {
     this.http.getOrderList().subscribe(
@@ -28,7 +30,6 @@ export class OrderComponent implements OnInit {
   openOrderDetails(orderId: number) {
     this.http.getOrderDetails(orderId).subscribe(
       orderDetails => {
-        console.log(orderDetails);
         this.orderDetails = orderDetails;
         this.showOrderDetailPopup = true;
       },
@@ -38,4 +39,14 @@ export class OrderComponent implements OnInit {
     );
   }
 
+  getCurrentINRValue() {
+    return this.common.getCurrentINRValue();
+  }
+
+  getTotal() {
+    return this.orderDetails.reduce((prev, curr) => {
+      prev = prev + (curr.quantity * curr.priceEur * this.getCurrentINRValue())
+      return prev;
+    }, 0)
+  }
 }

@@ -1,4 +1,4 @@
-<table class="table" *ngIf="orderList?.length > 0; else emptyCart">
+<table class="table table-hover" *ngIf="orderList?.length > 0; else emptyCart">
   <thead>
     <tr>
       <th>Order #</th>
@@ -9,7 +9,7 @@
     <tr *ngFor="let order of orderList; let i = index">
       <td class="order-id-td">
         <p
-          class="p-0 m-0 mt-2 w-auto"
+          class="p-0 m-0 mt-2 w-auto font-weight-bold"
           (click)="openOrderDetails(order.orderId)"
         >
           {{ order.orderId }}
@@ -37,8 +37,44 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        {{ orderDetails | json }}
+      <div class="modal-body pb-0">
+        <table class="table">
+          <tbody>
+            <tr *ngFor="let item of orderDetails">
+              <td class="w-15 phone-image-td">
+                <img
+                  [src]="item.imgUrl"
+                  [alt]="item.brandName + '-' + item.modelName"
+                />
+              </td>
+              <td>
+                <p class="m-0 phone-name">
+                  {{ item.brandName + "-" + item.modelName }}
+                </p>
+                <p class="price">
+                  {{ item.priceEur * getCurrentINRValue() | currency: "INR" }}
+                </p>
+              </td>
+              <td class="w-15">
+                <p class="m-0 text-secondary text-center">Quantity</p>
+                <p class="text-center">{{ item.quantity }}</p>
+              </td>
+              <td class="w-15">
+                <p class="m-0 text-secondary text-center">Subtotal</p>
+                <p class="text-center">
+                  {{
+                    item.quantity * item.priceEur * getCurrentINRValue()
+                      | currency: "INR"
+                  }}
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <p class="text-secondary ml-auto">Total:</p>
+        <span> {{ getTotal() | currency: "INR" }}</span>
       </div>
     </div>
   </div>

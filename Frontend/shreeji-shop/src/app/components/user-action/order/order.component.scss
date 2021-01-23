@@ -1,3 +1,5 @@
+$price-color: #4e54c8;
+$name-color: #373f50;
 $custom-orange: #fe696a;
 tbody {
   font-size: 0.9rem;
@@ -24,7 +26,7 @@ tbody {
     max-width: initial;
 
     .modal-content {
-      width: 50vw;
+      width: 40vw;
       .modal-header .close {
         outline: none;
       }
@@ -32,6 +34,29 @@ tbody {
       .modal-body {
         max-height: 60vh;
         overflow: auto;
+
+        table {
+          .w-15 {
+            width: 15%;
+          }
+          .phone-image-td img {
+            height: 7rem;
+          }
+          .phone-name,
+          .price {
+            font-size: 0.875rem;
+          }
+          .phone-name {
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: $name-color;
+          }
+          .price {
+            color: $price-color;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+          }
+        }
       }
     }
   }

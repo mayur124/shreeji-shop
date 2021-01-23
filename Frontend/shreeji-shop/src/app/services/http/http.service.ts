@@ -116,6 +116,6 @@ export class HttpService {
   }
 
   getOrderDetails(orderId: number) {
-    return this.http.get<OrderItemResponse>(`${URLS.GET_ORDER_DETAILS}/${orderId}`);
+    return this.http.get<OrderItemResponse[]>(`${URLS.GET_ORDER_DETAILS}/${orderId}`);
   }
 }
