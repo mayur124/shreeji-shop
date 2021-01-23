@@ -59,4 +59,10 @@ export class PhoneModelComponent implements OnInit {
     return this.common.getCurrentINRValue();
   }
 
+  pictNotLoading(event: Event) {
+    (event.target as HTMLImageElement).src = "/assets/images/default-phone.png";
+    (event.target as HTMLImageElement).classList.remove('phone-image');
+    (event.target as HTMLImageElement).classList.add('default-phone-image');
+  }
+
 }

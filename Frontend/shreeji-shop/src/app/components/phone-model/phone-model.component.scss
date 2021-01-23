@@ -3,9 +3,15 @@ $price-color: #4e54c8;
 $name-color: #373f50;
 $border-radius: 0.4375rem !important;
 $button-bg-color: #fe696a;
+.default-phone-image,
+.phone-image {
+  height: 250px;
+}
 .phone-image {
   width: 180px;
-  height: 250px;
+}
+.default-phone-image {
+  width: 140px;
 }
 .phone-name,
 .price {
