@@ -60,6 +60,17 @@ export class HttpService {
     return this.http.post<CartAndWishlistResponse>(URLS.ADD_TO_CART, cart, httpOptions);
   }
 
+  addToCartFromWishlist(request: { wishlistId: number, brandId: number, modelId: number }) {
+    const username = localStorage.getItem('username');
+    request['username'] = username;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+    return this.http.post<Cart>(URLS.ADD_TO_CART_FROM_WISHLIST, request, httpOptions);
+  }
+
   addToWishlist(wishlist: Wishlist) {
     const httpOptions = {
       headers: new HttpHeaders({

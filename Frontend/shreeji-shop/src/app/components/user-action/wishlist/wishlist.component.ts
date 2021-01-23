@@ -18,10 +18,10 @@ export class WishlistComponent implements OnInit {
     private router: Router,) { }
 
   ngOnInit(): void {
-    this._initCartItems();
+    this._initWishlistItems();
   }
 
-  private _initCartItems() {
+  private _initWishlistItems() {
     this.http.getWishlistOfUser().subscribe(
       wishlistItems => {
         if (wishlistItems.length > 0) {
@@ -46,13 +46,30 @@ export class WishlistComponent implements OnInit {
       removedItem => {
         if (removedItem) {
           console.log(removedItem);
-          this._initCartItems();
+          this._initWishlistItems();
         } else {
           console.log('Failed to remove the phone from cart');
         }
       },
       error => {
         console.log('Failed to remove the phone from cart', error);
+      }
+    );
+  }
+
+  addToCartFromWishlist(wishlistItem: CartAndWishlistResponse) {
+    const request = {
+      wishlistId: wishlistItem.id,
+      brandId: wishlistItem.brandId,
+      modelId: wishlistItem.modelId
+    }
+    this.http.addToCartFromWishlist(request).subscribe(
+      cartResponse => {
+        console.log(cartResponse);
+        this._initWishlistItems();
+      },
+      error => {
+        console.log('Error occurred while adding phone to cart from wishlist > ', error);
       }
     );
   }

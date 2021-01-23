@@ -2,6 +2,7 @@ package com.shreejiShop.demo.service;
 
 import java.util.List;
 
+import com.shreejiShop.demo.model.AddToCartFromWishlistRequest;
 import com.shreejiShop.demo.model.AddOrderRequest;
 import com.shreejiShop.demo.model.Cart;
 import com.shreejiShop.demo.model.Wishlist;
@@ -28,6 +29,8 @@ public interface ITransactionService {
 	List<OrderItemResponse> getOrderItems(Long orderId);
 
 	Order addOrder(AddOrderRequest orderRequest);
+	
+	Cart addToCartFromWishlist(AddToCartFromWishlistRequest request);
 
 	void emptyCart(String username);
 }

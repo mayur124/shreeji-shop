@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shreejiShop.demo.model.AddOrderRequest;
+import com.shreejiShop.demo.model.AddToCartFromWishlistRequest;
 import com.shreejiShop.demo.model.Cart;
 import com.shreejiShop.demo.model.Wishlist;
 import com.shreejiShop.demo.model.CartAndWishlistResponse;
@@ -50,6 +51,11 @@ public class TransactionController {
 	@PostMapping("/cart/add")
 	public Cart addToCart(@RequestBody Cart cart) {
 		return transactionService.addToCart(cart);
+	}
+
+	@PostMapping("/cart/add/from/wishlist")
+	public Cart addToCartFromWishlist(@RequestBody AddToCartFromWishlistRequest request) {
+		return transactionService.addToCartFromWishlist(request);
 	}
 
 	@DeleteMapping("/cart/remove/{cartId}")

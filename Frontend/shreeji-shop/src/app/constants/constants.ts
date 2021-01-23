@@ -10,6 +10,7 @@ export const URLS = {
     LOGOUT: BASE_URL + '/auth/logout',
     REFRESH_TOKEN: BASE_URL + '/auth/refresh/token',
     ADD_TO_CART: BASE_URL + '/transaction/cart/add',
+    ADD_TO_CART_FROM_WISHLIST: BASE_URL + '/transaction/cart/add/from/wishlist',
     ADD_TO_WISHLIST: BASE_URL + '/transaction/wishlist/add',
     ADD_ORDER: BASE_URL + '/transaction/order/add',
     GET_USER_DETAILS: BASE_URL + '/auth/user/details',

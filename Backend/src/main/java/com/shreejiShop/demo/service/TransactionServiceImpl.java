@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shreejiShop.demo.model.AddOrderCartItem;
+import com.shreejiShop.demo.model.AddToCartFromWishlistRequest;
 import com.shreejiShop.demo.model.AddOrderRequest;
 import com.shreejiShop.demo.model.Cart;
 import com.shreejiShop.demo.model.Wishlist;
@@ -98,6 +99,23 @@ public class TransactionServiceImpl implements ITransactionService {
 				cartItemRepo.save(cartItem);
 			}
 			return savedOrder;
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional()
+	public Cart addToCartFromWishlist(AddToCartFromWishlistRequest request) {
+		try {
+			this.deleteWishListRecord(request.getWishlistId());
+			Cart cart = new Cart();
+			cart.setUsername(request.getUsername());
+			cart.setBrandId(request.getBrandId());
+			cart.setModelId(request.getModelId());
+			return this.addToCart(cart);
+		} catch (Exception e) {
+			System.out.println("Exception occurred while adding order from wishlist");
+			System.out.println(e);
 		}
 		return null;
 	}

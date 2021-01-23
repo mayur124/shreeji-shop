@@ -22,10 +22,17 @@
       <td class="remove-phone-td">
         <button
           type="button"
-          class="btn btn-sm btn-danger"
+          class="btn btn-sm btn-danger w-100"
           (click)="removePhone(wishlistItem)"
         >
           Remove
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-light mt-2 w-100 px-0 py-2"
+          (click)="addToCartFromWishlist(wishlistItem)"
+        >
+          Add to cart
         </button>
       </td>
     </tr>
