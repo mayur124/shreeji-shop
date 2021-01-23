@@ -37,8 +37,8 @@ export class WishlistComponent implements OnInit {
     )
   }
 
-  getConvertedPrice(priceEur: number) {
-    return this.common.getInrPrice(priceEur);
+  getCurrentINRValue() {
+    return this.common.getCurrentINRValue();
   }
 
   removePhone(wishlistItem: CartAndWishlistResponse) {

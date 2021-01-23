@@ -11,21 +11,6 @@ export class CommonService {
   cartResponse: CartAndWishlistResponse[];
   constructor() { }
 
-  getInrPrice(priceInEur: number): string | number {
-    const answer = this.getInrPriceNoLocale(priceInEur);
-    return answer.toLocaleString('en-IN', { maximumSignificantDigits: 3 });
-  }
-
-  getInrPriceNoLocale(priceInEur: number): number {
-    const inrAmt = this.getCurrentINRValue();
-    return priceInEur * inrAmt;
-  }
-
-  getEurPrice(priceINR: number): number {
-    const inrAmt = this.getCurrentINRValue();
-    return Math.round(priceINR / inrAmt)
-  }
-
   getCurrentINRValue(): number {
     return 87;
   }

@@ -12,7 +12,9 @@
         <div (click)="openPhoneDetails(p)">
           <img [src]="p.imgUrl" [alt]="p.name" class="phone-image" />
           <p class="p-0 m-0 mt-2 phone-name">{{ p.brandName }}-{{ p.name }}</p>
-          <p class="p-0 m-0 price">Rs.{{ p.priceEur }}</p>
+          <p class="p-0 m-0 price">
+            {{ p.priceEur * getCurrentINRValue() | currency: "INR" }}
+          </p>
         </div>
       </div>
       <div

@@ -62,8 +62,9 @@ export class FilterComponent implements OnInit {
         this.brandsMapCopy = this.getBrandsMap(brandResponse.brands);
 
         this.priceRange = JSON.parse(JSON.stringify(resp[1] as PriceRange));
-        this.priceRange.minPrice = this.common.getInrPriceNoLocale(this.priceRange.minPrice);
-        this.priceRange.maxPrice = this.common.getInrPriceNoLocale(this.priceRange.maxPrice);
+        const inrAmount = this._getCurrentINRValue();
+        this.priceRange.minPrice = this.priceRange.minPrice * inrAmount;
+        this.priceRange.maxPrice = this.priceRange.maxPrice * inrAmount;
         this.selectedMinPrice = JSON.parse(JSON.stringify(this.priceRange.minPrice));
         this.selectedMaxPrice = JSON.parse(JSON.stringify(this.priceRange.maxPrice));
         this.options.floor = JSON.parse(JSON.stringify(this.priceRange.minPrice));
@@ -203,8 +204,14 @@ export class FilterComponent implements OnInit {
 
   private _emitPriceChange() {
     const priceRange = new PriceRange();
-    priceRange.minPrice = this.common.getEurPrice(this.selectedMinPrice);
-    priceRange.maxPrice = this.common.getEurPrice(this.selectedMaxPrice);
+    const inrAmount = this._getCurrentINRValue();
+    priceRange.minPrice = Math.round(this.selectedMinPrice / inrAmount);
+    priceRange.maxPrice = Math.round(this.selectedMaxPrice / inrAmount);
     this.priceRangeChange.emit(priceRange);
   }
+
+  private _getCurrentINRValue() {
+    return this.common.getCurrentINRValue();
+  }
+
 }

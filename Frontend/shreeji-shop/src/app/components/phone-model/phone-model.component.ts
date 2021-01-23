@@ -29,7 +29,6 @@ export class PhoneModelComponent implements OnInit {
           response.data.forEach(d => {
             let phone = d;
             phone.name = d["phoneName"];
-            phone.priceEur = this.common.getInrPrice(Number(phone.priceEur));
             this.phones.push(phone);
           });
         }
@@ -54,6 +53,10 @@ export class PhoneModelComponent implements OnInit {
     wishlist.modelId = phone.phoneId;
     wishlist.username = localStorage.getItem('username');
     this.addToWishlist.emit(wishlist);
+  }
+
+  getCurrentINRValue() {
+    return this.common.getCurrentINRValue();
   }
 
 }

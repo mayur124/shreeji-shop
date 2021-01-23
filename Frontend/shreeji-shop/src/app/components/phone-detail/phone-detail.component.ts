@@ -65,8 +65,7 @@ export class PhoneDetailComponent implements OnInit {
     this.http.getPhoneDetails(phoneId).subscribe(
       response => {
         this.phoneDetail = response;
-        this.phoneDetail.priceEur = this.common.getInrPrice(this.phoneDetail.priceEur);
-        this.titleService.setTitle(`${this.brandName} ${this.phoneDetail.name} @ Rs.${this.phoneDetail.priceEur}`);
+        this.titleService.setTitle(`${this.brandName} ${this.phoneDetail.name}`);
         this.tagLineSub.next(`${this.brandName} ${this.phoneDetail.name}`);
         this._setPhoneAttributes(this.phoneDetail);
       },
@@ -86,7 +85,7 @@ export class PhoneDetailComponent implements OnInit {
       "cpu": phoneData.cpu,
       "gpu": phoneData.gpu,
       "operating system": phoneData.os,
-      "price": `Rs.${phoneData.priceEur}`,
+      "price": phoneData.priceEur,
       "sensors": phoneData.sensors,
       "speaker": phoneData.speaker,
       "usb": phoneData.usb,
@@ -167,5 +166,8 @@ export class PhoneDetailComponent implements OnInit {
     setTimeout(() => {
       this.toaster.nativeElement.classList.remove('show');
     }, 3000);
+  }
+  getCurrentINRValue() {
+    return this.common.getCurrentINRValue();
   }
 }

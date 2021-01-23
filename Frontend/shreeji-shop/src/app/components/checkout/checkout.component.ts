@@ -37,9 +37,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.subTagLinePositionSub.next('left');
     this.cdr.detectChanges();
   }
-  getConvertedPrice(priceEur: number) {
-    return this.common.getInrPrice(priceEur);
+  
+  getCurrentINRValue() {
+    return this.common.getCurrentINRValue();
   }
+
   private _setTotalCount() {
     this.totalPrice = this.cartItems?.reduce((prev, curr) => {
       prev += curr.priceEur * curr.quantity

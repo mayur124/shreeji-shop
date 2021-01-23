@@ -147,7 +147,7 @@
               {{ cartItem.brandName }}-{{ cartItem.modelName }}
             </p>
             <p class="m-0 mt-1 price">
-              Rs.{{ getConvertedPrice(cartItem.priceEur) }}
+              {{ cartItem.priceEur * getCurrentINRValue() | currency: "INR" }}
               <span class="text-muted">x {{ cartItem.quantity }}</span>
             </p>
           </div>
@@ -157,7 +157,9 @@
         class="d-flex align-items-center justify-content-between p-2 total-wrapper"
       >
         <p class="font-weight-500 m-0">Total</p>
-        <p class="m-0">Rs.{{ getConvertedPrice(totalPrice) }}</p>
+        <p class="m-0">
+          {{ totalPrice * getCurrentINRValue() | currency: "INR" }}
+        </p>
       </div>
     </div>
   </div>

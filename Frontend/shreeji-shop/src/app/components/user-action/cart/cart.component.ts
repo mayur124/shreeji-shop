@@ -38,10 +38,6 @@ export class CartComponent implements OnInit {
     )
   }
 
-  getConvertedPrice(priceEur: number) {
-    return this.common.getInrPrice(priceEur);
-  }
-
   removePhone(cartItem: CartAndWishlistResponse) {
     this.http.removeItemFromCart(cartItem.id).subscribe(
       removedItem => {
@@ -65,6 +61,10 @@ export class CartComponent implements OnInit {
   checkout() {
     this.common.setCartItems(this.cartItems);
     this.router.navigate(['user/order/checkout']);
+  }
+
+  getCurrentINRValue() {
+    return this.common.getCurrentINRValue();
   }
 
 }

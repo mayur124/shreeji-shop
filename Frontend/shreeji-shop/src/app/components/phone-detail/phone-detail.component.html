@@ -10,7 +10,7 @@
   <div class="w-100 p-3">
     <div class="card highlights-container">
       <h3 class="card-header bg-white price pb-2 border-bottom">
-        Rs.{{ phoneDetail?.priceEur }}
+        {{ phoneDetail?.priceEur * getCurrentINRValue() | currency: "INR" }}
       </h3>
       <ng-container *ngFor="let att of phoneAttributes | keyvalue">
         <div class="category-content d-flex flex-column border-bottom pb-3">
