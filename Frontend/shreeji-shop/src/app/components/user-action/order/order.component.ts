@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Order, OrderItemResponse } from 'src/app/models/transaction.model';
 import { CommonService } from 'src/app/services/common/common.service';
 import { HttpService } from 'src/app/services/http/http.service';
@@ -14,7 +15,8 @@ export class OrderComponent implements OnInit {
   orderDetails: OrderItemResponse[];
   showOrderDetailPopup: boolean;
   constructor(private http: HttpService,
-    private common: CommonService,) { }
+    private common: CommonService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.http.getOrderList().subscribe(
@@ -48,5 +50,9 @@ export class OrderComponent implements OnInit {
       prev = prev + (curr.quantity * curr.priceEur * this.getCurrentINRValue())
       return prev;
     }, 0)
+  }
+
+  redirectToHome() {
+    this.router.navigate(['/home']);
   }
 }

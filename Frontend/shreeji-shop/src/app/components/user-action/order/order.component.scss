@@ -1,6 +1,5 @@
-$price-color: #4e54c8;
-$name-color: #373f50;
-$custom-orange: #fe696a;
+@import "../../../../assets/css/variables";
+
 tbody {
   font-size: 0.9rem;
   .order-id-td p {
@@ -18,7 +17,7 @@ tbody {
   z-index: 1030;
   height: 100%;
   width: 100%;
-  background-color: #00000073;
+  background-color: $modal-outer-bg-color;
   display: flex;
   align-items: center;
 

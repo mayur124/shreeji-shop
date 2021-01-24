@@ -1,10 +1,12 @@
+@import "../../../assets/css/variables";
+
 .tab-content > .tab-pane,
 .modal {
   display: block;
 }
 .modal {
   opacity: 1;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $modal-outer-bg-color;
   .modal-header {
     .nav-tabs {
       .nav-link {
@@ -12,16 +14,16 @@
           box-shadow 0.25s ease-in-out, border-color 0.25s ease-in-out;
         font-weight: 500;
         border-color: transparent;
-        color: #4b566b;
+        color: $auth-tab-color;
         margin-bottom: -4px;
         &:hover,
         &.active {
-          color: #fe696a;
+          color: $custom-orange;
           cursor: pointer;
         }
         &.active {
-          border-bottom: 1px solid #fe696a;
-          border-color: transparent transparent #fe696a;
+          border-bottom: 1px solid $custom-orange;
+          border-color: transparent transparent $custom-orange;
         }
       }
     }
@@ -40,12 +42,12 @@
     .btn-theme {
       font-size: 1rem;
       border-radius: 0.2rem;
-      background-color: #fe696a;
+      background-color: $custom-orange;
       border: none;
-      box-shadow: 0 0.5rem 1.125rem -0.5rem rgb(254 105 106 / 90%);
-      transition: all 0.2s ease;
+      box-shadow: $theme-btn-box-shadow;
+      transition: $transition-ease;
       &:hover {
-        background-color: #ff4142;
+        background-color: $custom-orange-dark;
         box-shadow: none;
       }
     }

@@ -50,4 +50,16 @@
     </tr>
   </tfoot>
 </table>
-<ng-template #emptyCart></ng-template>
+<ng-template #emptyCart>
+  <div
+    class="d-flex align-items-center justify-content-center flex-column h-100 w-100"
+  >
+    <h3 class="letter-spacing-point-5">Empty cart</h3>
+    <button
+      class="letter-spacing-point-5 btn redirect-btn mt-2"
+      (click)="redirectToHome()"
+    >
+      Continue shopping
+    </button>
+  </div>
+</ng-template>

@@ -1,4 +1,4 @@
-<table class="table table-hover" *ngIf="orderList?.length > 0; else emptyCart">
+<table class="table table-hover" *ngIf="orderList?.length > 0; else emptyOrders">
   <thead>
     <tr>
       <th>Order #</th>
@@ -23,7 +23,14 @@
     </tr>
   </tbody>
 </table>
-<ng-template #emptyCart></ng-template>
+<ng-template #emptyOrders>
+  <div class="d-flex align-items-center justify-content-center flex-column h-100 w-100">
+    <h3 class="letter-spacing-point-5">No orders placed</h3>
+    <button class="letter-spacing-point-5 btn redirect-btn mt-2" (click)="redirectToHome()">
+      Continue shopping
+    </button>
+  </div>
+</ng-template>
 <div class="order-details" *ngIf="showOrderDetailPopup === true">
   <div class="modal-dialog">
     <div class="modal-content">

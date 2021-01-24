@@ -67,4 +67,7 @@ export class CartComponent implements OnInit {
     return this.common.getCurrentINRValue();
   }
 
+  redirectToHome() {
+    this.router.navigate(['/home']);
+  }
 }

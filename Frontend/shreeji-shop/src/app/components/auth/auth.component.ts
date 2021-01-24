@@ -4,7 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
-import { ILoginRequest, ILoginResponse, IRegisterRequest } from "../../models/authentication.model";
+import { ILoginRequest, IRegisterRequest } from "../../models/authentication.model";
 
 @Component({
   selector: 'app-login',

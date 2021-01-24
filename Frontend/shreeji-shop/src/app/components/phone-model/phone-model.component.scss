@@ -1,8 +1,5 @@
-$box-shadow: 0 0.3rem 1.525rem -0.375rem rgba(0, 0, 0, 0.2);
-$price-color: #4e54c8;
-$name-color: #373f50;
-$border-radius: 0.4375rem !important;
-$button-bg-color: #fe696a;
+@import "../../../assets/css/variables";
+
 .default-phone-image,
 .phone-image {
   height: 250px;
@@ -24,15 +21,14 @@ $button-bg-color: #fe696a;
   color: $name-color;
 }
 .card {
-  border-radius: 0 !important;
   border: none !important;
   background-color: #fff !important;
-  border-radius: 0.4375rem !important;
+  border-radius: $border-radius !important;
 }
 .phone-card:hover {
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: $box-shadow;
+  transition: $transition-ease;
+  box-shadow: $phone-modal-box-shadow;
 }
 .phone-card:hover > .extra-options {
   display: flex !important;
@@ -45,7 +41,7 @@ $button-bg-color: #fe696a;
 .extra-options {
   display: none !important;
   transition: all 0.15s ease-in-out;
-  box-shadow: $box-shadow;
+  box-shadow: $phone-modal-box-shadow;
   position: absolute;
   top: 100%;
   margin-top: -0.8rem !important;
@@ -64,19 +60,19 @@ $button-bg-color: #fe696a;
   font-size: 0.75rem;
   line-height: 1.5;
   border-radius: 0.2rem;
-  background-color: $button-bg-color;
+  background-color: $custom-orange;
   border: none;
-  box-shadow: 0 0.5rem 1.125rem -0.5rem rgba(254, 105, 106, 0.9);
-  transition: all 0.2s ease;
+  box-shadow: $theme-btn-box-shadow;
+  transition: $transition-ease;
 }
 .add-to-cart-btn:hover {
-  background-color: #ff4142;
+  background-color: $custom-orange-dark;
   box-shadow: none;
 }
 .wishlist-btn {
-  background-color: #f8f9fa;
+  background-color: $light-bg-color;
   border-radius: 50%;
-  box-shadow: 0px 0px 2px 1px #dee2e6;
+  box-shadow: $wishlist-btn-box-shadow;
   height: 2.5rem;
   width: 2.5rem;
   position: absolute;
@@ -84,7 +80,7 @@ $button-bg-color: #fe696a;
   right: 1rem;
 
   &:hover {
-    box-shadow: 0px 0px 5px 1px #dee2e6;
+    box-shadow: $wishlist-hover-btn-box-shadow;
     background-color: #fff;
   }
 }

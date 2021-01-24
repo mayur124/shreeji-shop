@@ -1,4 +1,4 @@
-$custom-orage: #fe696a;
+@import "../../../../assets/css/variables";
 
 nav,
 .pagination-message {
@@ -13,15 +13,15 @@ nav {
   }
 }
 .page-item.active .page-link {
-  background-color: $custom-orage;
-  border-color: $custom-orage;
+  background-color: $custom-orange;
+  border-color: $custom-orange;
   &:hover {
     color: #fff;
   }
 }
 .page-link {
-  color: $custom-orage;
+  color: $custom-orange;
   &:hover {
-    color: $custom-orage;
+    color: $custom-orange;
   }
 }

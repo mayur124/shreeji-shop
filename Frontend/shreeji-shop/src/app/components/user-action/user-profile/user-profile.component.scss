@@ -1,3 +1,5 @@
+@import "../../../../assets/css/variables";
+
 .form-grid {
   display: grid;
   grid-template-areas:
@@ -32,13 +34,13 @@
     grid-area: button;
     font-size: 1rem;
     border-radius: 0.2rem;
-    background-color: #fe696a;
+    background-color: $custom-orange;
     border: none;
-    box-shadow: 0 0.5rem 1.125rem -0.5rem rgb(254 105 106 / 90%);
-    transition: all 0.2s ease;
+    box-shadow: $theme-btn-box-shadow;
+    transition: $transition-ease;
     width: 10rem;
     &:hover {
-      background-color: #ff4142;
+      background-color: $custom-orange-dark;
       box-shadow: none;
     }
   }

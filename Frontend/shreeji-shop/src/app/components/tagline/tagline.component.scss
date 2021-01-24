@@ -1,7 +1,7 @@
-$container-bg: #373f50;
+@import "../../../assets/css/variables";
 
 .tagline-container {
-  background-color: $container-bg;
+  background-color: $name-color;
   margin-top: 5rem;
   padding: 3rem 1rem 5rem 11.3rem;
   h1 {

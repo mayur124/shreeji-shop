@@ -1,4 +1,4 @@
-<table class="table" *ngIf="wishlistItems?.length > 0; else emptyCart">
+<table class="table" *ngIf="wishlistItems?.length > 0; else emptyWishlist">
   <tbody>
     <tr *ngFor="let wishlistItem of wishlistItems; let i = index">
       <td class="phone-image-td">
@@ -38,4 +38,11 @@
     </tr>
   </tbody>
 </table>
-<ng-template #emptyCart></ng-template>
+<ng-template #emptyWishlist>
+  <div class="d-flex align-items-center justify-content-center flex-column h-100 w-100">
+    <h3 class="letter-spacing-point-5">Empty wishlist</h3>
+    <button class="letter-spacing-point-5 btn redirect-btn mt-2" (click)="redirectToHome()">
+      Continue shopping
+    </button>
+  </div>
+</ng-template>

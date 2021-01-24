@@ -1,3 +1,4 @@
+@import "./assets/css/variables";
 @import "./assets/css/bootstrap.min.scss";
 
 * {
@@ -11,7 +12,7 @@
 }
 
 .text-muted {
-  color: #7d879c !important;
+  color: $muted-text-color !important;
 }
 
 .visibility-hidden {
@@ -65,5 +66,17 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+.letter-spacing-point-5 {
+  letter-spacing: 0.5px;
+}
+.redirect-btn {
+  background-color: $name-color;
+  color: #fff;
+
+  &:hover {
+    color: #fff;
   }
 }

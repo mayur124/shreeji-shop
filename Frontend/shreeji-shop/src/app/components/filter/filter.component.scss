@@ -1,10 +1,9 @@
-$heading-color: #282c3f;
+@import "../../../assets/css/variables";
+
 $count-color: #94969f;
 $input-bg-color: #f5f5f6;
 $bootstrap-blue: #007bff;
-$box-shadow: rgba(0, 0, 0, 0.1);
 $indicator-color: #737373;
-$custom-orange: #fe696a;
 
 .all-filters {
   position: relative;
@@ -80,7 +79,7 @@ input[type="checkbox"] {
 .form-check-label {
   letter-spacing: 0.5px;
   cursor: pointer;
-  color: $heading-color;
+  color: $name-color;
 }
 .model-count {
   color: $count-color;
@@ -96,9 +95,9 @@ input[type="checkbox"] {
   height: 30rem;
   top: 9.5rem;
   left: 0;
-  box-shadow: 0 0.3rem 1.525rem -0.375rem $box-shadow;
+  box-shadow: $modal-box-shadow;
   z-index: 15;
-  border-radius: 0.4375rem;
+  border-radius: $border-radius;
 
   .top-bar {
     position: sticky;
@@ -171,7 +170,7 @@ input[type="checkbox"] {
       color: #fff !important;
       font-size: 0.75rem !important;
       border: 0;
-      background-color: #373f50;
+      background-color: $name-color;
       line-height: 1.2;
       border-radius: 0.1875rem;
     }

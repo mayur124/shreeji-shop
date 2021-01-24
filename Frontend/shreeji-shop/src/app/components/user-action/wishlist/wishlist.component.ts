@@ -78,4 +78,8 @@ export class WishlistComponent implements OnInit {
     this.router.navigate([]).then((_result: never) => { window.open(`/phone/${cartItem.brandName}/${cartItem.brandId}/${cartItem.modelId}`, '_blank') });
   }
 
+  redirectToHome() {
+    this.router.navigate(['/home']);
+  }
+
 }
