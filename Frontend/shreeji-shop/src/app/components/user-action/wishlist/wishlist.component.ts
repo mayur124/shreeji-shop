@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartAndWishlistResponse } from 'src/app/models/transaction.model';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -11,6 +11,7 @@ import { HttpService } from 'src/app/services/http/http.service';
 })
 export class WishlistComponent implements OnInit {
 
+  @ViewChild('progressSpan') progressSpan: ElementRef<HTMLElement>;
   wishlistItems: CartAndWishlistResponse[];
 
   constructor(private http: HttpService,
@@ -58,6 +59,8 @@ export class WishlistComponent implements OnInit {
   }
 
   addToCartFromWishlist(wishlistItem: CartAndWishlistResponse) {
+    this.common.setSpanMessage(this.progressSpan.nativeElement, 'Adding to cart...');
+    this.common.setSpanType(this.progressSpan.nativeElement, 'progress');
     const request = {
       wishlistId: wishlistItem.id,
       brandId: wishlistItem.brandId,
@@ -67,9 +70,15 @@ export class WishlistComponent implements OnInit {
       cartResponse => {
         console.log(cartResponse);
         this._initWishlistItems();
+        this.common.setSpanMessage(this.progressSpan.nativeElement, 'Added to cart successfuly!');
+        this.common.setSpanType(this.progressSpan.nativeElement, 'success');
+        setTimeout(() => {
+          this._hideProgressMessage();
+        }, 1000);
       },
       error => {
         console.log('Error occurred while adding phone to cart from wishlist > ', error);
+        this._handleFailedResponse();
       }
     );
   }
@@ -80,6 +89,15 @@ export class WishlistComponent implements OnInit {
 
   redirectToHome() {
     this.router.navigate(['/home']);
+  }
+
+  private _handleFailedResponse() {
+    this.common.setSpanMessage(this.progressSpan.nativeElement, 'Phone not added to the cart!');
+    this.common.setSpanType(this.progressSpan.nativeElement, 'error');
+  }
+
+  private _hideProgressMessage() {
+    this.common.hideElement(this.progressSpan.nativeElement);
   }
 
 }
