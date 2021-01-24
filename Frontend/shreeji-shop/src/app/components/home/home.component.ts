@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   phoneModelSubject: Subject<PhoneData> = new Subject();
   paginationSub: Subject<{ brandIds: string, paginationData: Page }> = new Subject();
+  resetPaginationSub: Subject<boolean> = new Subject();
   tagLineSub: Subject<string> = new Subject();
 
   brandIds: string;
@@ -63,6 +64,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
   getPhonesForSelectedBrandsSafe(brandIds?: string) {
     this.brandIds = brandIds;
+    this.pageNo = 0;
+    this.resetPaginationSub.next(true);
     if (!brandIds || !brandIds.length) {
       this.getDefaultPhones();
     } else {

@@ -20,9 +20,12 @@
     ></app-phone-model>
     <app-pagination
       [paginationResponse]="paginationSub.asObservable()"
+      [resetCurrentPage]="resetPaginationSub.asObservable()"
       (paginationReq)="performPagination($event)"
     ></app-pagination>
   </div>
 </div>
-<p #toaster class="toaster p-2 text-white bg-dark mb-3 w-auto rounded">{{ toasterMessage }}</p>
+<p #toaster class="toaster p-2 text-white bg-dark mb-3 w-auto rounded">
+  {{ toasterMessage }}
+</p>
 <router-outlet></router-outlet>

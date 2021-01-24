@@ -10,6 +10,7 @@ import { Page } from 'src/app/models/page.model';
 export class PaginationComponent implements OnInit {
 
   @Input() paginationResponse: Observable<{ brandIds: string, paginationData: Page }>
+  @Input() resetCurrentPage: Observable<boolean>;
   @Output() paginationReq: EventEmitter<{ isBrandsSelected: boolean, pageNo: number }> = new EventEmitter();
 
   page: Page = new Page();
@@ -29,6 +30,11 @@ export class PaginationComponent implements OnInit {
       },
       (error) => {
         console.log("Error in pageinationResponse child-comp > ", error);
+      }
+    );
+    this.resetCurrentPage.subscribe(
+      doReset => {
+        if (doReset === true) this.currentPage = 0;
       }
     )
   }
