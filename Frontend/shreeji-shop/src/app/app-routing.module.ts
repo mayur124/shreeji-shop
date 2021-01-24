@@ -4,6 +4,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { HomeComponent } from './components/home/home.component';
 import { PhoneDetailComponent } from './components/phone-detail/phone-detail.component';
 import { CheckoutComponent } from "./components/checkout/checkout.component";
+import { AuthGuard } from "./guard/auth.guard";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,12 +22,16 @@ const routes: Routes = [
       { path: 'authenticate', component: AuthComponent }
     ]
   },
+  { path: 'authenticate', component: AuthComponent },
   {
     path: 'user',
     loadChildren: () => import('./components/user-action/user-action.module').then(m => m.UserActionModule),
+    canActivate: [AuthGuard]
   },
   {
-    path: 'user/order/checkout', component: CheckoutComponent
+    path: 'user/order/checkout',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
