@@ -23,7 +23,7 @@ Screenshots:
 ![](Screenshots/6_phone_details.png)
 ![](Screenshots/7_more_from_brand.png)
 
-- Sign in
+- Login screen
 ![](Screenshots/8_sign_in.png)
 
 - User actions
